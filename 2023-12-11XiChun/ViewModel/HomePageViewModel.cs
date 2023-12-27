@@ -18,7 +18,7 @@ namespace _2023_12_11XiChun.ViewModel
         byte[] buffer = new byte[100];
         public static AutoProcess Process { get; set; } = MainPageViewModel.mainPage.Process;
         public string IP { get; set; } = "127.0.0.1";
-        public string Port { get; set; } = "8001";
+        public string Port { get; set; } = "8002";
         public static Socket MySocket { get; set; } = null;
         public ParameterModel Parameter { get; set; } = ParameterModel.GetParameter();
         public static HomePageModel homemodel { get; set; } = new HomePageModel();
