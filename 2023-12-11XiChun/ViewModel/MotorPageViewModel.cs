@@ -18,11 +18,14 @@ namespace _2023_12_11XiChun.ViewModel
     {
         short sRtn;
         public static System.Timers.Timer _timer = null;
+        public static MotorPageModel MotorModel { get; set; }= new MotorPageModel();
         public CommandBase XEnableCommand { get; set; } = new CommandBase();//X轴使能
         public CommandBase XLimitCommand { get; set; } = new CommandBase();//X轴限位开关
         public CommandBase XClrAlarmCommand { get; set; } = new CommandBase();//X轴清报警
         public CommandBase XJogNDownCommand { get; set; } = new CommandBase();//X轴JOG-按下 
         public CommandBase XJogNUpCommand { get; set; } = new CommandBase();//X轴JOG-抬起
+        public CommandBase XJogPDownCommand { get; set; } = new CommandBase();//X轴JOG-按下 
+        public CommandBase XJogPUpCommand { get; set; } = new CommandBase();//X轴JOG-抬起
         public CommandBase XModeCommand { get; set; } = new CommandBase();
         public CommandBase XAutoCommand { get; set; } = new CommandBase();
         public CommandBase XAutoStopCommand { get; set; } = new CommandBase();
@@ -40,7 +43,7 @@ namespace _2023_12_11XiChun.ViewModel
                 InitCard();
                 _timer = new System.Timers.Timer();
                 _timer.AutoReset = true;
-                _timer.Interval = 2000;
+                _timer.Interval = 200;
                 _timer.Elapsed += OnTmrTrg;
                 _timer.Start();
             }
@@ -62,6 +65,28 @@ namespace _2023_12_11XiChun.ViewModel
             XAutoCommand.DoExecute = new Action<object>((obj) => { XAutoRun(); });
             XAutoStopCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             XAutoStopCommand.DoExecute = new Action<object>((obj) => { gts.mc.GT_Stop(1, 0); });
+            XJogPDownCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            XJogPDownCommand.DoExecute = new Action<object>((obj) => { XJogPDown(); });
+            XJogPUpCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            XJogPUpCommand.DoExecute = new Action<object>((obj) => { XJogPUp(); });
+        }
+
+        private void XJogPUp()
+        {
+            gts.mc.GT_Stop(1, 0);
+        }
+
+        private void XJogPDown()
+        {
+            double vel = Parameter.XMotor.RefVelocity * Parameter.XMotor.Pulse / 1000;
+            jog.acc = 0.5;
+            jog.dec = 0.5;
+
+            gts.mc.GT_SetJogPrm(1, ref jog);//设置jog运动参数
+
+            gts.mc.GT_SetVel(1, -vel);//设置目标速度
+
+            gts.mc.GT_Update(1);//更新轴运动
         }
 
         private void XAutoRun()
@@ -103,11 +128,11 @@ namespace _2023_12_11XiChun.ViewModel
             int XAxisState;
             double dRealPos, dRealVel;
             gts.mc.GT_GetSts(1, out XAxisState, 1, out clk);
-            Parameter.XMotor.Alarm = ((XAxisState & 0x02) == 1) ? true : false;
-            Parameter.XMotor.Enable = ((XAxisState & 0x0200) == 1) ? true : false;
-            Parameter.XMotor.OPL = ((XAxisState & 0x020) == 1) ? true : false;
-            Parameter.XMotor.ONL = ((XAxisState & 0x040) == 1) ? true : false;
-            Parameter.XMotor.RunOver = ((XAxisState & 0x0800) == 1) ? true : false;
+            Parameter.XMotor.Alarm = ((XAxisState & 0x02) !=0) ? true : false;
+            Parameter.XMotor.Enable = ((XAxisState & 0x0200) !=0 ) ? true : false;
+            Parameter.XMotor.OPL = ((XAxisState & 0x020) !=0 ) ? true : false;
+            Parameter.XMotor.ONL = ((XAxisState & 0x040) != 0) ? true : false;
+            Parameter.XMotor.RunOver = ((XAxisState & 0x0800) != 0) ? true : false;
 
             sRtn = gts.mc.GT_GetEncPos(1, out dRealPos, 1, out clk);
             gts.mc.commandhandler("GT_GetPrfPos", sRtn);
@@ -164,7 +189,12 @@ namespace _2023_12_11XiChun.ViewModel
             Button button = obj as Button;
             if (!Parameter.XMotor.Enable)
             {
-                gts.mc.GT_AxisOn(1);//上伺服
+                short sRtn = gts.mc.GT_AxisOn(1);//上伺服
+                if( sRtn != 0 )
+                {
+                    MotorModel.Message = "Enable Fail:" + sRtn.ToString();
+                    return;
+                }
                 await Task.Delay(300);
                 if (Parameter.XMotor.Enable)
                 {
@@ -174,7 +204,12 @@ namespace _2023_12_11XiChun.ViewModel
             }
             else
             {
-                gts.mc.GT_AxisOff(1);//下伺服
+                sRtn = gts.mc.GT_AxisOff(1);//下伺服
+                if (sRtn != 0)
+                {
+                    MotorModel.Message = "DisEnable Fail:" + sRtn.ToString();
+                    return;
+                }
                 await Task.Delay(300);
                 if (!Parameter.XMotor.Enable)
                 {
@@ -187,40 +222,67 @@ namespace _2023_12_11XiChun.ViewModel
         /// <summary>
         /// 初始化运动控制卡板卡
         /// </summary>
-        private async void InitCard()
+        private  void InitCard()
         {
             sRtn = gts.mc.GT_Open(0, 1);//打开运动控制卡
-            gts.mc.commandhandler("GT_Open", sRtn);
+            if(sRtn!=0)
+            {
+                MotorModel.Message = "Open Fail:"+sRtn.ToString();
+                return;
+            }
             sRtn = gts.mc.GT_Reset();   //复位控制卡
-            gts.mc.commandhandler("GT_Reset", sRtn);
+            if (sRtn != 0)
+            {
+                MotorModel.Message = "Reset Fail:"+ sRtn.ToString();
+                return;
+            }
 
             //gts.mc.GT_LoadConfig("GT800_test.cfg");//加载配置文件
 
             sRtn = gts.mc.GT_ClrSts(1, 4);//清除各轴报警和限位
-            gts.mc.commandhandler("GT_ClrSts", sRtn);
-
-            sRtn = gts.mc.GT_HomeInit();			        // 初始化自动回原点功能
-            sRtn = gts.mc.GT_AxisOn(1);					    // 使能轴1
-            sRtn = gts.mc.GT_AxisOn(2);					    // 使能轴2			
-            sRtn = gts.mc.GT_Home(1, 200000, 10, 0.5, 2000);
-            sRtn = gts.mc.GT_Home(2, 200000, 10, 0.5, 3000);
-            await Task.Run(() =>
+            if (sRtn != 0)
             {
-                uint clk;
-                int XAxisState, YAxisState;
-                do
-                {
-                    // 读取1轴的状态
-                    gts.mc.GT_GetSts(1, out XAxisState, 1, out clk);
-                    //读取2轴的状态
-                    gts.mc.GT_GetSts(1, out YAxisState, 1, out clk);
-                } while (((XAxisState & 0x400) !=0)||((YAxisState& 0x400)!=0));// 等待XY轴规划停止
-            });         
+                MotorModel.Message = "ClrSts Fail:" + sRtn.ToString();
+                return;
+            }
+
+            //sRtn = gts.mc.GT_HomeInit();			        // 初始化自动回原点功能
+            //sRtn = gts.mc.GT_AxisOn(1);					    // 使能轴1
+            //sRtn = gts.mc.GT_AxisOn(2);					    // 使能轴2			
+            //sRtn = gts.mc.GT_Home(1, 200000, 10, 0.5, 2000);
+            //sRtn = gts.mc.GT_Home(2, 200000, 10, 0.5, 3000);
+            //await Task.Run(() =>
+            //{
+            //    uint clk;
+            //    int XAxisState, YAxisState;
+            //    do
+            //    {
+            //        // 读取1轴的状态
+            //        gts.mc.GT_GetSts(1, out XAxisState, 1, out clk);
+            //        //读取2轴的状态
+            //        gts.mc.GT_GetSts(1, out YAxisState, 1, out clk);
+            //    } while (((XAxisState & 0x400) !=0)||((YAxisState& 0x400)!=0));// 等待XY轴规划停止
+            //});         
             sRtn = gts.mc.GT_ZeroPos(1, 2);
+            if (sRtn != 0)
+            {
+                MotorModel.Message = "ZeroPos Fail:" + sRtn.ToString();
+                return;
+            }
             sRtn = gts.mc.GT_PrfTrap(1);
+            if (sRtn != 0)
+            {
+                MotorModel.Message = "PrfTrap1 Fail:" + sRtn.ToString();
+                return;
+            }
             sRtn = gts.mc.GT_PrfTrap(2);//设置为点位模式
+            if (sRtn != 0)
+            {
+                MotorModel.Message = "PrfTrap2 Fail:" + sRtn.ToString();
+                return;
+            }
             Parameter.XMotor.AxisMode = Motor.Mode.AUTO;
-            gts.mc.commandhandler("GT_PrfJog", sRtn);
+            
         }
 
     }

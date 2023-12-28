@@ -73,6 +73,7 @@
     <Compile Include="Model\HomePageModel.cs" />
     <Compile Include="Model\MainPageModel.cs" />
     <Compile Include="Model\MarkPageModel.cs" />
+    <Compile Include="Model\MotorPageModel.cs" />
     <Compile Include="Model\ParameterModel.cs" />
     <Compile Include="Settings\MyApp.Designer.cs">
       <AutoGen>True</AutoGen>
