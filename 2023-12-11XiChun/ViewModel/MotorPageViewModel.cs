@@ -112,13 +112,22 @@ namespace _2023_12_11XiChun.ViewModel
                 Parameter.XMotor.AxisMode = Motor.Mode.JOG;
                 button.Content = "点动";
                 sRtn = gts.mc.GT_PrfJog(1);//设置为jog模式
-                gts.mc.commandhandler("GT_PrfJog", sRtn);
+                if (sRtn != 0)
+                {
+                    MotorModel.Message = "PrfJOG Fail:" + sRtn.ToString();
+                    return;
+                }
             }
             else
             {
                 Parameter.XMotor.AxisMode = Motor.Mode.AUTO;
                 button.Content = "自动";
                 sRtn = gts.mc.GT_PrfTrap(1);
+                if (sRtn != 0)
+                {
+                    MotorModel.Message = "PrfTrap2 Fail:" + sRtn.ToString();
+                    return;
+                }
             }
         }
 
@@ -127,7 +136,12 @@ namespace _2023_12_11XiChun.ViewModel
             uint clk;
             int XAxisState;
             double dRealPos, dRealVel;
-            gts.mc.GT_GetSts(1, out XAxisState, 1, out clk);
+            sRtn=gts.mc.GT_GetSts(1, out XAxisState, 1, out clk);
+            if (sRtn != 0)
+            {
+                MotorModel.Message = "GetSts1 Fail:" + sRtn.ToString();
+                return;
+            }
             Parameter.XMotor.Alarm = ((XAxisState & 0x02) !=0) ? true : false;
             Parameter.XMotor.Enable = ((XAxisState & 0x0200) !=0 ) ? true : false;
             Parameter.XMotor.OPL = ((XAxisState & 0x020) !=0 ) ? true : false;
@@ -135,10 +149,18 @@ namespace _2023_12_11XiChun.ViewModel
             Parameter.XMotor.RunOver = ((XAxisState & 0x0800) != 0) ? true : false;
 
             sRtn = gts.mc.GT_GetEncPos(1, out dRealPos, 1, out clk);
-            gts.mc.commandhandler("GT_GetPrfPos", sRtn);
+            if (sRtn != 0)
+            {
+                MotorModel.Message = "GetRealPos1 Fail:" + sRtn.ToString();
+                return;
+            }
             Parameter.XMotor.RealPosition = dRealPos;
             sRtn = gts.mc.GT_GetEncVel(1, out dRealVel, 1, out clk);
-            gts.mc.commandhandler("GT_GetPrfVel", sRtn);
+            if (sRtn != 0)
+            {
+                MotorModel.Message = "GetRealV1 Fail:" + sRtn.ToString();
+                return;
+            }
             Parameter.XMotor.RealVelocity = dRealVel;
         }
 
@@ -148,17 +170,34 @@ namespace _2023_12_11XiChun.ViewModel
             jog.acc = 0.5;
             jog.dec = 0.5;
 
-            gts.mc.GT_SetJogPrm(1, ref jog);//设置jog运动参数
-
-            gts.mc.GT_SetVel(1, vel);//设置目标速度
-
-            gts.mc.GT_Update(1);//更新轴运动
-
+            sRtn=gts.mc.GT_SetJogPrm(1, ref jog);//设置jog运动参数
+            if (sRtn != 0)
+            {
+                MotorModel.Message = "SetJogPrm Fail:" + sRtn.ToString();
+                return;
+            }
+            sRtn=gts.mc.GT_SetVel(1, vel);//设置目标速度
+            if (sRtn != 0)
+            {
+                MotorModel.Message = "SetVel Fail:" + sRtn.ToString();
+                return;
+            }
+            sRtn =gts.mc.GT_Update(1);//更新轴运动
+            if (sRtn != 0)
+            {
+                MotorModel.Message = "Run Fail:" + sRtn.ToString();
+                return;
+            }
         }
 
         private void XJogNUp()
         {
-            gts.mc.GT_Stop(1, 0);
+            sRtn = gts.mc.GT_Stop(1, 0);
+            if (sRtn != 0)
+            {
+                MotorModel.Message = "Stop Fail:" + sRtn.ToString();
+                return;
+            }
         }
 
         private void XClrAlarm()
@@ -189,7 +228,7 @@ namespace _2023_12_11XiChun.ViewModel
             Button button = obj as Button;
             if (!Parameter.XMotor.Enable)
             {
-                short sRtn = gts.mc.GT_AxisOn(1);//上伺服
+                sRtn = gts.mc.GT_AxisOn(1);//上伺服
                 if( sRtn != 0 )
                 {
                     MotorModel.Message = "Enable Fail:" + sRtn.ToString();
@@ -225,19 +264,24 @@ namespace _2023_12_11XiChun.ViewModel
         private  void InitCard()
         {
             sRtn = gts.mc.GT_Open(0, 1);//打开运动控制卡
-            if(sRtn!=0)
+            if (sRtn != 0)
             {
-                MotorModel.Message = "Open Fail:"+sRtn.ToString();
+                MotorModel.Message = "Open Fail:" + sRtn.ToString();
                 return;
             }
             sRtn = gts.mc.GT_Reset();   //复位控制卡
             if (sRtn != 0)
             {
-                MotorModel.Message = "Reset Fail:"+ sRtn.ToString();
+                MotorModel.Message = "Reset Fail:" + sRtn.ToString();
                 return;
             }
 
-            //gts.mc.GT_LoadConfig("GT800_test.cfg");//加载配置文件
+            sRtn =gts.mc.GT_LoadConfig("GTS800.cfg");//加载配置文件
+            if (sRtn != 0)
+            {
+                MotorModel.Message = "LoadFile Fail:" + sRtn.ToString();
+                return;
+            }
 
             sRtn = gts.mc.GT_ClrSts(1, 4);//清除各轴报警和限位
             if (sRtn != 0)
