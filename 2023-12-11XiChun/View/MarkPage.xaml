@@ -10,177 +10,181 @@
       x:Name="markpage"
       Title="MarkPage">
 
-    <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="45"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="{Binding markPageModel.FileName}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20"/>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="9*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0">
-                <Button Content="加载模板" Height="45" FontSize="20" Command="{Binding LoadCommand}" CommandParameter="{Binding ElementName=image}" Margin="0,10"/>
-                <Button Content="刷新预览" Height="45" FontSize="20" Command="{Binding RefreshCommand}" CommandParameter="{Binding ElementName=image}" Margin="0,10"/>
-                <Button Content="打标" Height="45" FontSize="20" Command="{Binding MarkCommand}" Margin="0,10"/>
-                <Button Content="开启红光" Height="45" FontSize="20" Command="{Binding RedMarkCommand}" Margin="0,10"/>
-                <Button Content="关闭红光" Height="45" FontSize="20" Command="{Binding CloseRedMarkCommand}" Margin="0,10"/>
-                <Button Content="关闭板卡" Height="45" FontSize="20" Command="{Binding CloseCardCommand}" Margin="0,10"/>
-            </StackPanel>
-            <Grid Grid.Column="1">
+    <Border Background="White" CornerRadius="0,10,10,0">
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding markPageModel.FileName}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20"/>
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="9*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel>
-                    <TextBlock Height="90" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Text="{Binding markPageModel.Message}"/>
-                    <Border BorderThickness="1" BorderBrush="Black">
-                        <Image x:Name="image" Height="622" Width="622" Source="{Binding markPageModel.MyImage}"/>
-                    </Border>
-                    
+                <StackPanel Grid.Column="0">
+                    <Button Content="加载模板" Height="45" FontSize="20" Command="{Binding LoadCommand}" CommandParameter="{Binding ElementName=image}" Margin="0,10" Background="Transparent"/>
+                    <Button Content="刷新预览" Height="45" FontSize="20" Command="{Binding RefreshCommand}" CommandParameter="{Binding ElementName=image}" Margin="0,10" Background="Transparent"/>
+                    <Button Content="打标" Height="45" FontSize="20" Command="{Binding MarkCommand}" Margin="0,10" Background="Transparent"/>
+                    <Button Content="开启红光" Height="45" FontSize="20" Command="{Binding RedMarkCommand}" Margin="0,10" Background="Transparent"/>
+                    <Button Content="关闭红光" Height="45" FontSize="20" Command="{Binding CloseRedMarkCommand}" Margin="0,10" Background="Transparent"/>
+                    <Button Content="关闭板卡" Height="45" FontSize="20" Command="{Binding CloseCardCommand}" Margin="0,10" Background="Transparent"/>
                 </StackPanel>
                 <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="180"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Height="90" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Text="{Binding markPageModel.Message}"/>
+                        <Border Height="622" Width="622" BorderThickness="1" BorderBrush="Black" CornerRadius="10">
+                            <Image x:Name="image" Height="602" Width="602" Source="{Binding markPageModel.MyImage}" Margin="10,10,10,10"/>
+                        </Border>
+
+                    </StackPanel>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="180"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="45"/>
+                                    <RowDefinition Height="45"/>
+                                    <RowDefinition Height="45"/>
+                                    <RowDefinition Height="45"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="输入" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="0" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="1" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="2" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="3" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="4" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="5" Grid.Row="0" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="6" Grid.Row="0" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="7" Grid.Row="0" Grid.Column="8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="状态" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="输出" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="0" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="1" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="2" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="3" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="4" Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="5" Grid.Row="2" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="6" Grid.Row="2" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="7" Grid.Row="2" Grid.Column="8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="状态" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                <!--<controls:LED Grid.Column="1" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="2" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="3" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="4" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="5" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="6" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="7" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="8" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>-->
+                                <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="8">
+                                    <ItemsControl ItemsSource="{Binding Parameter.IN}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <controls:LED Style="{StaticResource myLED}" Height="40" IsTrue="{Binding}" Margin="2.5"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                                <!--<controls:LED Grid.Column="1" Grid.Row="3" IsTrue="{Binding Parameter.OUT[0]}" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="2" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="3" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="4" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="5" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="6" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="7" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
+                        <controls:LED Grid.Column="8" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>-->
+                                <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="8">
+                                    <ItemsControl ItemsSource="{Binding Parameter.OUT}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <controls:LED Style="{StaticResource myLED}" Height="40" IsTrue="{Binding}" Margin="2.5"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        <Grid Grid.Row="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="45"/>
                                 <RowDefinition Height="45"/>
                                 <RowDefinition Height="45"/>
                                 <RowDefinition Height="45"/>
+                                <RowDefinition Height="45"/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="90"/>
-                                <ColumnDefinition Width="45"/>
-                                <ColumnDefinition Width="45"/>
-                                <ColumnDefinition Width="45"/>
-                                <ColumnDefinition Width="45"/>
-                                <ColumnDefinition Width="45"/>
-                                <ColumnDefinition Width="45"/>
-                                <ColumnDefinition Width="45"/>
-                                <ColumnDefinition Width="45"/>
+                                <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Label Content="输入" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="0" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="1" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="2" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="3" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="4" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="5" Grid.Row="0" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="6" Grid.Row="0" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="7" Grid.Row="0" Grid.Column="8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="状态" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="输出" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="0" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="1" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="2" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="3" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="4" Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="5" Grid.Row="2" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="6" Grid.Row="2" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="7" Grid.Row="2" Grid.Column="8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <Label Content="状态" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                            <!--<controls:LED Grid.Column="1" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="2" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="3" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="4" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="5" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="6" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="7" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="8" Grid.Row="1" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>-->
-                            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="8">
-                                <ItemsControl ItemsSource="{Binding Parameter.IN}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <controls:LED Style="{StaticResource myLED}" Height="40" IsTrue="{Binding}" Margin="2.5"/>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </Grid>
-                            <!--<controls:LED Grid.Column="1" Grid.Row="3" IsTrue="{Binding Parameter.OUT[0]}" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="2" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="3" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="4" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="5" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="6" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="7" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>
-                            <controls:LED Grid.Column="8" Grid.Row="3" IsTrue="False" Height="40" Style="{StaticResource myLED}"/>-->
-                            <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="8">
-                                <ItemsControl ItemsSource="{Binding Parameter.OUT}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <controls:LED Style="{StaticResource myLED}" Height="40" IsTrue="{Binding}" Margin="2.5"/>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </Grid>
-                        </Grid>
-                    </Border>
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="45"/>
-                            <RowDefinition Height="45"/>
-                            <RowDefinition Height="45"/>
-                            <RowDefinition Height="45"/>
-                            <RowDefinition Height="45"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="设置IO输出状态" FontSize="20"/>
-                        <ComboBox x:Name="iocom" Grid.Row="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="20">
-                            <ComboBoxItem IsSelected="True">0</ComboBoxItem>
-                            <ComboBoxItem>1</ComboBoxItem>
-                            <ComboBoxItem>2</ComboBoxItem>
-                            <ComboBoxItem>3</ComboBoxItem>
-                            <ComboBoxItem>4</ComboBoxItem>
-                            <ComboBoxItem>5</ComboBoxItem>
-                            <ComboBoxItem>6</ComboBoxItem>
-                            <ComboBoxItem>7</ComboBoxItem>
-                        </ComboBox>
-                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-                            <RadioButton x:Name="ishigh" Content="High" FontSize="30" Width="155"  />
-                            <RadioButton Content="Low" FontSize="30" Width="155"  />
-                        </StackPanel>
-                        <Button Grid.Row="4" Width="90" HorizontalAlignment="Left" Content="设置" FontSize="20" Command="{Binding SetPortCommand}" CommandParameter="{Binding ElementName=markpage}"/>
-                        <!--<Grid Grid.Row="5">
-                            <ItemsControl x:Name="my" >
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
+                            <Border Grid.ColumnSpan="2" Grid.RowSpan="5" BorderThickness="1" BorderBrush="Black" CornerRadius="10"/>
+                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="设置IO输出状态" FontSize="20"/>
+                            <ComboBox x:Name="iocom" Grid.Row="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="20" Style="{StaticResource cmbstyle}">
+                                <ComboBoxItem IsSelected="True">0</ComboBoxItem>
+                                <ComboBoxItem>1</ComboBoxItem>
+                                <ComboBoxItem>2</ComboBoxItem>
+                                <ComboBoxItem>3</ComboBoxItem>
+                                <ComboBoxItem>4</ComboBoxItem>
+                                <ComboBoxItem>5</ComboBoxItem>
+                                <ComboBoxItem>6</ComboBoxItem>
+                                <ComboBoxItem>7</ComboBoxItem>
+                            </ComboBox>
+                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                                <RadioButton x:Name="ishigh" Content="High" FontSize="30" Width="155"  />
+                                <RadioButton Content="Low" FontSize="30" Width="155"  />
+                            </StackPanel>
+                            <Button Grid.Row="4" Width="90" HorizontalAlignment="Center" Content="设置" FontSize="20" Command="{Binding SetPortCommand}" CommandParameter="{Binding ElementName=markpage}" Background="Transparent"/>
+                            <!--<Grid Grid.Row="5">
+                        <ItemsControl x:Name="my" >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                
+                                <DataTemplate>
                                     
-                                    <DataTemplate>
-                                        
-                                        <controls:LED Style="{StaticResource myLED}" Height="40" IsTrue="{Binding}" Margin="5"/>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </Grid>-->
+                                    <controls:LED Style="{StaticResource myLED}" Height="40" IsTrue="{Binding}" Margin="5"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>-->
+                        </Grid>
                     </Grid>
+                    <Border Height="90" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="1" CornerRadius="10"/>
                 </Grid>
-                <Border Height="90" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="1"/>
             </Grid>
         </Grid>
-    </Grid>
+    </Border>
+    
 </Page>

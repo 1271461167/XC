@@ -8,29 +8,33 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="864" Width="1536"
         x:Name="myWindow"
-        WindowStyle="None" AllowsTransparency="True" MouseLeftButtonDown="Window_Move">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="9*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Background="#396fb5" Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="19*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <StackPanel >
-                <controls:IconButton Height="45" Style="{StaticResource IconTextButton}" IconData="&#xe660;" IconSize="30" Content="主页" FontSize="25" Command="{Binding ChangePageCommand}" CommandParameter="HomePage.xaml"/>
-                <controls:IconButton Height="45" Style="{StaticResource IconTextButton}" IconData="&#xe607;" IconSize="30" Content="参数" FontSize="25" Command="{Binding ChangePageCommand}" CommandParameter="MainPage.xaml"/>
-                <controls:IconButton Height="45" Style="{StaticResource IconTextButton}" IconData="&#xe605;" IconSize="30" Content="电机" FontSize="25" Command="{Binding ChangePageCommand}" CommandParameter="MotorPage.xaml"/>
-                <controls:IconButton Height="45" Style="{StaticResource IconTextButton}" IconData="&#xe60c;" IconSize="30" Content="打标" FontSize="25" Command="{Binding ChangePageCommand}" CommandParameter="MarkPage.xaml"/>
-                <controls:IconButton Height="45" Style="{StaticResource IconTextButton}" IconData="&#xe715;" IconSize="30" Content="日志" FontSize="25"/>
-                
-
-            </StackPanel>
-            <controls:IconButton Grid.Row="1" Height="45" Style="{StaticResource IconTextButton}" IconData="&#xe651;" IconSize="20" Content="退出" FontSize="25" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=myWindow}"/>
+        WindowStyle="None" AllowsTransparency="True" MouseLeftButtonDown="Window_Move" Background="{x:Null}">
+    <Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="154"/>
+                <ColumnDefinition Width="1382"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Background="#396fb5" CornerRadius="10,0,0,10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="19*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel >
+                        <controls:IconButton Height="45" Style="{StaticResource IconTextButton}" IconData="&#xe660;" IconSize="30" Content="主页" FontSize="25" Command="{Binding ChangePageCommand}" CommandParameter="HomePage.xaml"/>
+                        <controls:IconButton Height="45" Style="{StaticResource IconTextButton}" IconData="&#xe607;" IconSize="30" Content="参数" FontSize="25" Command="{Binding ChangePageCommand}" CommandParameter="MainPage.xaml"/>
+                        <controls:IconButton Height="45" Style="{StaticResource IconTextButton}" IconData="&#xe605;" IconSize="30" Content="电机" FontSize="25" Command="{Binding ChangePageCommand}" CommandParameter="MotorPage.xaml"/>
+                        <controls:IconButton Height="45" Style="{StaticResource IconTextButton}" IconData="&#xe60c;" IconSize="30" Content="打标" FontSize="25" Command="{Binding ChangePageCommand}" CommandParameter="MarkPage.xaml"/>
+                        <controls:IconButton Height="45" Style="{StaticResource IconTextButton}" IconData="&#xe715;" IconSize="30" Content="日志" FontSize="25"/>
+                    </StackPanel>
+                    <controls:IconButton Grid.Row="1" Height="45" Style="{StaticResource IconTextButton}" IconData="&#xe651;" IconSize="20" Content="退出" FontSize="25" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=myWindow}"/>
+                </Grid>
+            </Border>
+            <Border  Grid.Column="1" CornerRadius="0,10,10,0" Background="White">
+                <Frame NavigationUIVisibility="Hidden" Source="{Binding MainModel.PageName}"/>
+            </Border>
         </Grid>
-        <Frame Margin="-1" Grid.Column="1" NavigationUIVisibility="Hidden" Source="{Binding MainModel.PageName}"/>
-        
-    </Grid>
+    </Border>
+    
 </Window>

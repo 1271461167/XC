@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Control/IconButton.xaml"/>
                 <ResourceDictionary Source="Control/LED.xaml"/>
+                <ResourceDictionary Source="Control/MyComBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
