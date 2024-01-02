@@ -277,7 +277,7 @@
                     <Grid Grid.Row="8" Grid.Column="0" Grid.RowSpan="5" Grid.ColumnSpan="3">
                         <DataGrid ItemsSource="{Binding mainPage.Process.MovePosition}" AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" GridLinesVisibility="None">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="电机位置" Binding="{Binding ID}" Width="*" />
+                                <DataGridTextColumn Header="工位" Binding="{Binding ID}" Width="*" />
                                 <DataGridTextColumn Header="XPosition" Binding="{Binding XPosition}" Width="*" />
                                 <DataGridTextColumn Header="YPosition" Binding="{Binding YPosition}" Width="*"/>
                             </DataGrid.Columns>

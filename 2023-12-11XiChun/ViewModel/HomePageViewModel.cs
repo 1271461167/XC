@@ -14,7 +14,7 @@ namespace _2023_12_11XiChun.ViewModel
 {
     public class HomePageViewModel : CommandBase
     {
-        static int i = 0;
+        static int index = 0;
         byte[] buffer = new byte[100];
         public static AutoProcess Process { get; set; } = MainPageViewModel.mainPage.Process;
         public string IP { get; set; } = "127.0.0.1";
@@ -38,7 +38,9 @@ namespace _2023_12_11XiChun.ViewModel
             RunCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             RunCommand.DoExecute = new Action<object>((obj) =>
             {
-                HomePage homePage=obj as HomePage;
+                HomePage homePage = obj as HomePage;
+                AxisMove(1, Process.MovePosition[index % Process.MoveCount].XPosition, Process.XVelocity);
+                AxisMove(2, Process.MovePosition[index % Process.MoveCount].YPosition, Process.YVelocity);
                 MySocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), homePage);
                 //WorkCancellationTokenSource = new CancellationTokenSource();
                 //Task task = new Task(() => { Work(WorkCancellationTokenSource.Token, obj); }, WorkCancellationTokenSource.Token, TaskCreationOptions.LongRunning);
@@ -68,7 +70,7 @@ namespace _2023_12_11XiChun.ViewModel
                 if (JczLmc.GetInPort(MainPageViewModel.mainPage.StartMarkPort) == false)
                 {
                     Thread.Sleep(100);
-                    if (JczLmc.GetInPort(MainPageViewModel.mainPage.StartMarkPort) == false)
+                    if (JczLmc.GetInPort(MainPageViewModel.mainPage.StartMarkPort) == true)
                     {
                         //int i = Process.MoveCount;
                         //while (i-- > 0)
@@ -94,7 +96,7 @@ namespace _2023_12_11XiChun.ViewModel
                         //    Thread.Sleep(MainPageViewModel.mainPage.MarkFinishedWidth);
                         //    JczLmc.SetOutPutPort(MainPageViewModel.mainPage.MarkFinishedPort, !MainPageViewModel.mainPage.MarkFinishedLevel);
                         //});
-
+                        SendDataFuntion("T1");
                     }
                 }
                 if (token.IsCancellationRequested)
@@ -129,6 +131,7 @@ namespace _2023_12_11XiChun.ViewModel
 
         private void Disconnect()
         {
+            index = 0;
             MySocket?.Close();
             MySocket?.Dispose();
             MySocket = null;
@@ -152,7 +155,7 @@ namespace _2023_12_11XiChun.ViewModel
                         string str = ((i + 1) * 100).ToString();
                         JczLmc.SetEntityNameByIndex(i, str);
                         Process.AllEntNameList[i] = JczLmc.GetEntityNameByIndex(i);
-                    }                   
+                    }
                 }
                 catch (Exception e)
                 {
@@ -174,10 +177,10 @@ namespace _2023_12_11XiChun.ViewModel
                 return;
             }
             ar.AsyncWaitHandle.Close();
-            AxisMove(1, Process.MovePosition[i % Process.MoveCount].XPosition, Process.XVelocity);
-            AxisMove(2, Process.MovePosition[i % Process.MoveCount].XPosition, Process.XVelocity);            
             HomePage homePage = (HomePage)ar.AsyncState;
             string str1 = Encoding.UTF8.GetString(buffer);
+            if (str1 == "/0")
+            { return; }
             List<string> list = new List<string>();
             list.AddRange(str1.Split(','));
             for (int i = 0; i < Process.AllEntCount; i++)                             //将对应数据放入数据模型中
@@ -190,6 +193,7 @@ namespace _2023_12_11XiChun.ViewModel
                         Process.Rec[i].Y_Offset = double.Parse(list[5 * i + 4]);
                         Process.Rec[i].Angle_Offset = double.Parse(list[5 * i + 5]);
                         ModelMove(i);
+                        Thread.Sleep(20);
                         Mark(i);
                     }
                     catch (Exception e)
@@ -199,20 +203,23 @@ namespace _2023_12_11XiChun.ViewModel
                 }
             }
             Array.Clear(buffer, 0, buffer.Length);
-            list.Clear();           
+            list.Clear();
+            Thread.Sleep(30);
             int width = homePage.Dispatcher.Invoke(new Func<int>(() => { return (int)homePage.image.Width; }));
             int height = homePage.Dispatcher.Invoke(new Func<int>(() => { return (int)homePage.image.Height; }));
             Refresh(width, height, homePage);
-            i++;
-            Thread.Sleep(Process.DelayTime);
+            index++;
+            AxisMove(1, Process.MovePosition[index % Process.MoveCount].XPosition, Process.XVelocity);
+            AxisMove(2, Process.MovePosition[index % Process.MoveCount].YPosition, Process.YVelocity);
             MySocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), homePage);
-            if(i% Process.MoveCount!=0)
+            Thread.Sleep(Process.DelayTime);
+            if (index % Process.MoveCount != 0)
             {
                 SendDataFuntion("T1");
             }
             else
             {
-                i = 0;
+                index = 0;
             }
             Task.Run(() =>
             {
@@ -230,66 +237,66 @@ namespace _2023_12_11XiChun.ViewModel
             }
             return true;
         }
-        public void Rec_Data(HomePage homePage)
-        {
-            Socket myclient = MySocket;
-            if (myclient != null)
-            {
-                List<string> list = new List<string>();
-                byte[] rec = new byte[200];
-                int length = -1;
-                Array.Clear(rec, 0, rec.Length);
-                try
-                {
-                    length = myclient.Receive(rec);
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+        //public void Rec_Data(HomePage homePage)
+        //{
+        //    Socket myclient = MySocket;
+        //    if (myclient != null)
+        //    {
+        //        List<string> list = new List<string>();
+        //        byte[] rec = new byte[200];
+        //        int length = -1;
+        //        Array.Clear(rec, 0, rec.Length);
+        //        try
+        //        {
+        //            length = myclient.Receive(rec);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            throw e;
+        //        }
 
-                if (length == 0)
-                {
-                    throw new Exception("连接断开");
-                }
-                else
-                {
-                    string sb = Encoding.UTF8.GetString(rec);               //将接收到的数据转成字符串
-                    list.AddRange(sb.Split(','));                           //将接收到的字符串依据","进行分割
-                    for (int i = 0; i < Process.AllEntCount; i++)                             //将对应数据放入数据模型中
-                    {
-                        if (list[5 * i + 2] == "0")
-                        {
-                            try
-                            {
-                                Process.Rec[i].X_Offset = double.Parse(list[5 * i + 3]);
-                                Process.Rec[i].Y_Offset = double.Parse(list[5 * i + 4]);
-                                Process.Rec[i].Angle_Offset = double.Parse(list[5 * i + 5]);
-                                ModelMove(i);
-                                Mark(i);
-                            }
-                            catch (Exception e)
-                            {
+        //        if (length == 0)
+        //        {
+        //            throw new Exception("连接断开");
+        //        }
+        //        else
+        //        {
+        //            string sb = Encoding.UTF8.GetString(rec);               //将接收到的数据转成字符串
+        //            list.AddRange(sb.Split(','));                           //将接收到的字符串依据","进行分割
+        //            for (int i = 0; i < Process.AllEntCount; i++)                             //将对应数据放入数据模型中
+        //            {
+        //                if (list[5 * i + 2] == "0")
+        //                {
+        //                    try
+        //                    {
+        //                        Process.Rec[i].X_Offset = double.Parse(list[5 * i + 3]);
+        //                        Process.Rec[i].Y_Offset = double.Parse(list[5 * i + 4]);
+        //                        Process.Rec[i].Angle_Offset = double.Parse(list[5 * i + 5]);
+        //                        ModelMove(i);
+        //                        Mark(i);
+        //                    }
+        //                    catch (Exception e)
+        //                    {
 
-                            }
-                        }
-                    }
-                    list.Clear();
-                    try
-                    {
-                        int width = homePage.Dispatcher.Invoke(new Func<int>(() => { return (int)homePage.image.Width; }));
-                        int height = homePage.Dispatcher.Invoke(new Func<int>(() => { return (int)homePage.image.Height; }));
-                        Refresh(width, height, homePage);
-                    }
-                    catch (Exception e)
-                    {
-                        throw e;
-                    }
+        //                    }
+        //                }
+        //            }
+        //            list.Clear();
+        //            try
+        //            {
+        //                int width = homePage.Dispatcher.Invoke(new Func<int>(() => { return (int)homePage.image.Width; }));
+        //                int height = homePage.Dispatcher.Invoke(new Func<int>(() => { return (int)homePage.image.Height; }));
+        //                Refresh(width, height, homePage);
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                throw e;
+        //            }
 
-                }
-            }
+        //        }
+        //    }
 
-        }
+        //}
 
         private void Refresh(int width, int height, HomePage homePage)
         {
