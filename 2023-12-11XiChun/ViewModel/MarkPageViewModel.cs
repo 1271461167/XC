@@ -241,6 +241,10 @@ namespace _2023_12_11XiChun.ViewModel
             {
                 markPageModel.Message = "初始化成功";
             }
+            for(int i=0;i<8;i++)
+            {
+                JczLmc.SetOutPutPort(i, true);
+            }
             IsInit = true;
         }
     }

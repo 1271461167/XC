@@ -14,6 +14,7 @@ namespace _2023_12_11XiChun.ViewModel
 {
     public class HomePageViewModel : CommandBase
     {
+        public static CancellationTokenSource WorkCancellationTokenSource;
         static int index = 0;
         byte[] buffer = new byte[100];
         public static AutoProcess Process { get; set; } = MainPageViewModel.mainPage.Process;
@@ -36,42 +37,53 @@ namespace _2023_12_11XiChun.ViewModel
             DisconnectCommand.DoCanExecute = new Func<object, bool>((obj) => { return CanDisConnect(); });
             DisconnectCommand.DoExecute = new Action<object>((obj) => { Disconnect(); });
             RunCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
-            RunCommand.DoExecute = new Action<object>((obj) =>
+            RunCommand.DoExecute = new Action<object>( (obj) =>
             {
                 HomePage homePage = obj as HomePage;
-                AxisMove(1, Process.MovePosition[index % Process.MoveCount].XPosition, Process.XVelocity);
-                AxisMove(2, Process.MovePosition[index % Process.MoveCount].YPosition, Process.YVelocity);
+                //await Task.Run(() => 
+                //{
+                //    AxisMove(1, Process.XVelocity, Process.MovePosition[index % Process.MoveCount].XPosition);
+                //    AxisMove(2, Process.YVelocity, Process.MovePosition[index % Process.MoveCount].YPosition);
+                //});
                 MySocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), homePage);
-                //WorkCancellationTokenSource = new CancellationTokenSource();
-                //Task task = new Task(() => { Work(WorkCancellationTokenSource.Token, obj); }, WorkCancellationTokenSource.Token, TaskCreationOptions.LongRunning);
-                //task.Start();
+
+                WorkCancellationTokenSource = new CancellationTokenSource();
+                Task task = new Task(() => { Work(WorkCancellationTokenSource.Token); }, WorkCancellationTokenSource.Token, TaskCreationOptions.LongRunning);
+                task.Start();
             });
             StopCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             StopCommand.DoExecute = new Action<object>((obj) =>
             {
-                //WorkCancellationTokenSource?.Cancel();
-                //WorkCancellationTokenSource?.Dispose();
+                WorkCancellationTokenSource?.Cancel();
+                WorkCancellationTokenSource?.Dispose();
             });
         }
 
-        private void Work(CancellationToken token, object obj)
+        private void Work(CancellationToken token)
         {
-            HomePage homePage = obj as HomePage;
-            Process.AllEntNameList = new string[Process.AllEntCount];
-            for (int i = 0; i < Process.AllEntCount; i++)
-            {
-                string str = ((i + 1) * 100).ToString();
-                JczLmc.SetEntityNameByIndex(i, str);
-                Process.AllEntNameList[i] = JczLmc.GetEntityNameByIndex(i);
-            }
+            //HomePage homePage = obj as HomePage;
+            //Process.AllEntNameList = new string[Process.AllEntCount];
+            //for (int i = 0; i < Process.AllEntCount; i++)
+            //{
+            //    string str = ((i + 1) * 100).ToString();
+            //    JczLmc.SetEntityNameByIndex(i, str);
+            //    Process.AllEntNameList[i] = JczLmc.GetEntityNameByIndex(i);
+            //}
             while (true)
             {
+                if(token.IsCancellationRequested) { break; } 
 
                 if (JczLmc.GetInPort(MainPageViewModel.mainPage.StartMarkPort) == false)
                 {
                     Thread.Sleep(100);
                     if (JczLmc.GetInPort(MainPageViewModel.mainPage.StartMarkPort) == true)
                     {
+                        JczLmc.SetOutPutPort(3,true);
+                        Task[] tasks= new Task[2];
+                        tasks[0] = Task.Run(() => { AxisMove(1, Process.XVelocity, Process.MovePosition[0].XPosition); });
+                        tasks[1] = Task.Run(() => { AxisMove(2, Process.YVelocity, Process.MovePosition[0].YPosition); });
+                        //AxisMove(1, Process.XVelocity, Process.MovePosition[0].XPosition);
+                        //AxisMove(2, Process.YVelocity, Process.MovePosition[0].YPosition);
                         //int i = Process.MoveCount;
                         //while (i-- > 0)
                         //{
@@ -96,11 +108,11 @@ namespace _2023_12_11XiChun.ViewModel
                         //    Thread.Sleep(MainPageViewModel.mainPage.MarkFinishedWidth);
                         //    JczLmc.SetOutPutPort(MainPageViewModel.mainPage.MarkFinishedPort, !MainPageViewModel.mainPage.MarkFinishedLevel);
                         //});
+                        Task.WaitAll(tasks);
+                        Thread.Sleep(100);
                         SendDataFuntion("T1");
                     }
                 }
-                if (token.IsCancellationRequested)
-                { break; }
             }
 
         }
@@ -209,24 +221,40 @@ namespace _2023_12_11XiChun.ViewModel
             int height = homePage.Dispatcher.Invoke(new Func<int>(() => { return (int)homePage.image.Height; }));
             Refresh(width, height, homePage);
             index++;
-            AxisMove(1, Process.MovePosition[index % Process.MoveCount].XPosition, Process.XVelocity);
-            AxisMove(2, Process.MovePosition[index % Process.MoveCount].YPosition, Process.YVelocity);
-            MySocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), homePage);
-            Thread.Sleep(Process.DelayTime);
             if (index % Process.MoveCount != 0)
             {
+                Task[] tasks = new Task[2];
+                tasks[0] = Task.Run(() => { AxisMove(1, Process.XVelocity, Process.MovePosition[index % Process.MoveCount].XPosition); });
+                tasks[1] = Task.Run(() => { AxisMove(2, Process.YVelocity, Process.MovePosition[index % Process.MoveCount].YPosition); });
+                //AxisMove(1, Process.XVelocity, -321.68);
+                //AxisMove(2, Process.YVelocity, -173.732);
+                Task.WaitAll(tasks);
+                //AxisMove(1, Process.XVelocity, Process.MovePosition[index % Process.MoveCount].XPosition);
+                //AxisMove(2, Process.YVelocity, Process.MovePosition[index % Process.MoveCount].YPosition);
+                MySocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), homePage);
+                Thread.Sleep(Process.DelayTime);
                 SendDataFuntion("T1");
             }
             else
             {
                 index = 0;
+                Task[] tasks = new Task[2];
+                tasks[0] = Task.Run(() => { AxisMove(1, Process.XVelocity, -321.68); });
+                tasks[1] = Task.Run(() => { AxisMove(2, Process.YVelocity, -173.732); });
+                //AxisMove(1, Process.XVelocity, -321.68);
+                //AxisMove(2, Process.YVelocity, -173.732);
+                Task.WaitAll(tasks);
+                MySocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), homePage);
+                Thread.Sleep(Process.DelayTime);
+                Task.Run(() =>
+                {
+                    JczLmc.SetOutPutPort(MainPageViewModel.mainPage.MarkFinishedPort, MainPageViewModel.mainPage.MarkFinishedLevel);
+                    JczLmc.SetOutPutPort(3,false);
+                    Thread.Sleep(MainPageViewModel.mainPage.MarkFinishedWidth);
+                    JczLmc.SetOutPutPort(MainPageViewModel.mainPage.MarkFinishedPort, !MainPageViewModel.mainPage.MarkFinishedLevel);
+                });
             }
-            Task.Run(() =>
-            {
-                JczLmc.SetOutPutPort(MainPageViewModel.mainPage.MarkFinishedPort, MainPageViewModel.mainPage.MarkFinishedLevel);
-                Thread.Sleep(MainPageViewModel.mainPage.MarkFinishedWidth);
-                JczLmc.SetOutPutPort(MainPageViewModel.mainPage.MarkFinishedPort, !MainPageViewModel.mainPage.MarkFinishedLevel);
-            });
+
         }
 
         private bool CanConnect()

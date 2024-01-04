@@ -70,6 +70,9 @@
                 <Border Grid.Row="2" Width="150" Margin="50,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" BorderBrush="Black" BorderThickness="1" CornerRadius="20">
                     <Button Content="开始运行" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Transparent"  Command="{Binding RunCommand}" CommandParameter="{Binding ElementName=homepage}" BorderThickness="0"/>
                 </Border>
+                <Border Grid.Row="2" Width="150" Margin="250,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" BorderBrush="Black" BorderThickness="1" CornerRadius="20">
+                    <Button Content="停止运行" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Background="Transparent"  Command="{Binding StopCommand}" CommandParameter="{Binding ElementName=homepage}" BorderThickness="0"/>
+                </Border>
             </Grid>
  
 

@@ -150,3 +150,4 @@ C:\Users\ywh\Desktop\XiChun\2023-12-11XiChun\obj\Debug\2023-12-11XiChun.csproj.C
 C:\Users\ywh\Desktop\XiChun\2023-12-11XiChun\obj\Debug\2023-12-11XiChun.exe
 C:\Users\ywh\Desktop\XiChun\2023-12-11XiChun\obj\Debug\2023-12-11XiChun.pdb
 C:\Users\ywh\Desktop\Code\2023-12-11XiChun\obj\Debug\Control\MyComBox.baml
+C:\Users\ywh\Desktop\XiChun\2023-12-11XiChun\obj\Debug\Control\MyComBox.baml
