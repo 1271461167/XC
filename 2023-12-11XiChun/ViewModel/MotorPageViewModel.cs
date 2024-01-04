@@ -508,35 +508,35 @@ namespace _2023_12_11XiChun.ViewModel
             Parameter.YMotor.ONL = ((YAxisState & 0x040) != 0) ? true : false;
             Parameter.YMotor.RunOver = ((YAxisState & 0x0800) != 0) ? true : false;
 
-            sRtn = gts.mc.GT_GetEncPos(1, out dRealPos, 1, out clk);
+            sRtn = gts.mc.GT_GetPrfPos(1, out dRealPos, 1, out clk);
             if (sRtn != 0)
             {
                 MotorModel.Message = "GetRealPos1 Fail:" + sRtn.ToString();
                 return;
             }
-            Parameter.XMotor.RealPosition = dRealPos / Parameter.XMotor.Pulse;
-            sRtn = gts.mc.GT_GetEncVel(1, out dRealVel, 1, out clk);
+            Parameter.XMotor.RealPosition = dRealPos / (double)Parameter.XMotor.Pulse;
+            sRtn = gts.mc.GT_GetPrfVel(1, out dRealVel, 1, out clk);
             if (sRtn != 0)
             {
                 MotorModel.Message = "GetRealV1 Fail:" + sRtn.ToString();
                 return;
             }
-            Parameter.XMotor.RealVelocity = dRealVel * 1000 / Parameter.XMotor.Pulse;
+            Parameter.XMotor.RealVelocity = dRealVel * 1000.0 / (double)Parameter.XMotor.Pulse;
 
-            sRtn = gts.mc.GT_GetEncPos(2, out dRealPos, 1, out clk);
+            sRtn = gts.mc.GT_GetPrfPos(2, out dRealPos, 1, out clk);
             if (sRtn != 0)
             {
                 MotorModel.Message = "GetRealPos2 Fail:" + sRtn.ToString();
                 return;
             }
-            Parameter.YMotor.RealPosition = dRealPos / Parameter.YMotor.Pulse;
-            sRtn = gts.mc.GT_GetEncVel(2, out dRealVel, 1, out clk);
+            Parameter.YMotor.RealPosition = dRealPos / (double)Parameter.YMotor.Pulse;
+            sRtn = gts.mc.GT_GetPrfVel(2, out dRealVel, 1, out clk);
             if (sRtn != 0)
             {
                 MotorModel.Message = "GetRealV2 Fail:" + sRtn.ToString();
                 return;
             }
-            Parameter.YMotor.RealVelocity = dRealVel * 1000 / Parameter.XMotor.Pulse;
+            Parameter.YMotor.RealVelocity = dRealVel * 1000.0 / (double)Parameter.XMotor.Pulse;
         }
 
         private void XJogNDown()
