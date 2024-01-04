@@ -16,6 +16,7 @@ namespace _2023_12_11XiChun.ViewModel
     {
         public static CancellationTokenSource WorkCancellationTokenSource;
         static int index = 0;
+        public static bool isRun=false;
         byte[] buffer = new byte[100];
         public static AutoProcess Process { get; set; } = MainPageViewModel.mainPage.Process;
         public string IP { get; set; } = "127.0.0.1";
@@ -36,7 +37,7 @@ namespace _2023_12_11XiChun.ViewModel
             ConnectCommand.DoExecute = new Action<object>((obj) => { Connect(); });
             DisconnectCommand.DoCanExecute = new Func<object, bool>((obj) => { return CanDisConnect(); });
             DisconnectCommand.DoExecute = new Action<object>((obj) => { Disconnect(); });
-            RunCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            RunCommand.DoCanExecute = new Func<object, bool>((obj) => { return CanRun(); });
             RunCommand.DoExecute = new Action<object>( (obj) =>
             {
                 HomePage homePage = obj as HomePage;
@@ -46,17 +47,38 @@ namespace _2023_12_11XiChun.ViewModel
                 //    AxisMove(2, Process.YVelocity, Process.MovePosition[index % Process.MoveCount].YPosition);
                 //});
                 MySocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), homePage);
-
+                isRun = !isRun;
                 WorkCancellationTokenSource = new CancellationTokenSource();
                 Task task = new Task(() => { Work(WorkCancellationTokenSource.Token); }, WorkCancellationTokenSource.Token, TaskCreationOptions.LongRunning);
                 task.Start();
             });
-            StopCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            StopCommand.DoCanExecute = new Func<object, bool>((obj) => { return CanStop(); });
             StopCommand.DoExecute = new Action<object>((obj) =>
             {
+                isRun = !isRun;
                 WorkCancellationTokenSource?.Cancel();
                 WorkCancellationTokenSource?.Dispose();
             });
+        }
+
+        private bool CanStop()
+        {
+            if (!isRun)
+            {
+                return false;
+            }
+            else
+            { return true; }
+        }
+
+        private bool CanRun()
+        {
+            if(!isRun)
+            {
+                return true;
+            }
+            else
+            { return false; }
         }
 
         private void Work(CancellationToken token)
