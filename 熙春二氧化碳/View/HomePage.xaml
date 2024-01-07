@@ -1,0 +1,90 @@
+﻿<Page x:Class="_2023_12_11XiChun.View.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:_2023_12_11XiChun.View"
+      xmlns:controls="clr-namespace:_2023_12_11XiChun.Control"
+      mc:Ignorable="d" 
+      d:DesignHeight="864" d:DesignWidth="1382"
+      x:Name="homepage"
+      Title="HomePage">
+    <Page.Resources>
+        <ControlTemplate x:Key="FilletTextBox" TargetType="TextBox">
+            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5">
+                <TextBox BorderThickness="0" Background="Transparent" VerticalAlignment="Center" HorizontalContentAlignment="Left" Text="{TemplateBinding Text}"/>
+            </Border>
+        </ControlTemplate>
+    </Page.Resources>
+    <Border Background="White" CornerRadius="0,10,10,0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="IP" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Label Grid.Row="1" Content="Port" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1"  FontSize="20" Text="{Binding IP}" Template="{StaticResource FilletTextBox}" VerticalAlignment="Center" HorizontalContentAlignment="Left"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Left" VerticalAlignment="Center" FontSize="20" Text="{Binding Port}" Template="{StaticResource FilletTextBox}"/>
+                        <controls:IconButton Grid.Column="1" Grid.Row="3" Content="连接" FontSize="20" Style="{StaticResource IconTextButton}" HorizontalContentAlignment="Center" IconData="&#xe61e;" IconSize="30" Command="{Binding ConnectCommand}" CommandParameter="{Binding ElementName=homepage}" BorderThickness="1" BorderBrush="Black" VerticalAlignment="Center"/>
+                        <controls:IconButton Grid.Column="1" Grid.Row="4" Content="断开连接" FontSize="20" Style="{StaticResource IconTextButton}" HorizontalContentAlignment="Center" IconData="&#xe65e;" IconSize="30" Command="{Binding DisconnectCommand}" BorderThickness="1" BorderBrush="Black" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Text="{Binding homemodel.ErrMessage}"/>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="622"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Border Width="622" Height="100" VerticalAlignment="Top" Margin="50,10,0,0" CornerRadius="20" BorderThickness="1" BorderBrush="Black">
+                    <TextBlock />
+                </Border>
+                <Border Height="622" Width="622" Grid.Row="1" BorderThickness="1" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="20" Margin="50,0,0,0">
+                    <Image x:Name="image" Height="602" Width="602"  Source="{Binding homemodel.MyImage}" Margin="10,10,10,10"/>
+                </Border>
+                <Border Grid.Row="2" Width="100" Margin="50,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" BorderBrush="Black" BorderThickness="1" CornerRadius="20">
+                    <Button Content="视觉流程开启" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15" Background="Transparent"  Command="{Binding RunCommand}" CommandParameter="{Binding ElementName=homepage}" BorderThickness="0"/>
+                </Border>
+                <Border Grid.Row="2" Width="100" Margin="200,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" BorderBrush="Black" BorderThickness="1" CornerRadius="20">
+                    <Button Content="关闭视觉流程" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15" Background="Transparent"  Command="{Binding StopCommand}" CommandParameter="{Binding ElementName=homepage}" BorderThickness="0"/>
+                </Border>
+                <Border Grid.Row="2" Width="100" Margin="350,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" BorderBrush="Black" BorderThickness="1" CornerRadius="20">
+                    <Button Content="盲切开始" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15" Background="Transparent"  Command="{Binding BlindCommand}" CommandParameter="{Binding ElementName=homepage}" BorderThickness="0"/>
+                </Border>
+                <Border Grid.Row="2" Width="100" Margin="500,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" BorderBrush="Black" BorderThickness="1" CornerRadius="20">
+                    <Button Content="盲切关闭" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15" Background="Transparent"  Command="{Binding StopBlindCommand}" CommandParameter="{Binding ElementName=homepage}" BorderThickness="0"/>
+                </Border>
+            </Grid>
+ 
+
+
+
+        </Grid>
+    </Border>
+ 
+</Page>
