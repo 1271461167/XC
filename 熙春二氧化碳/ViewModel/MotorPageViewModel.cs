@@ -163,7 +163,7 @@ namespace _2023_12_11XiChun.ViewModel
             {
                 do
                 {
-                    // 读取2轴的状态
+                    // 读取1轴的状态
                     sRtn = gts.mc.GT_GetHomeStatus(1, out homeStatus);
                     if (sRtn != 0)
                     {
