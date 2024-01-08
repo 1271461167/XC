@@ -154,7 +154,7 @@ namespace _2023_12_11XiChun.ViewModel
             home.velLow = 0.5;
             home.acc = 0.1;
             home.dec = 0.1;
-            home.searchHomeDistance = 150000;
+            home.searchHomeDistance = 200000;
             home.searchIndexDistance = 15000;
             home.escapeStep = 1000;
             sRtn = gts.mc.GT_GoHome(1, ref home);
@@ -163,7 +163,7 @@ namespace _2023_12_11XiChun.ViewModel
             {
                 do
                 {
-                    // 读取2轴的状态
+                    // 读取1轴的状态
                     sRtn = gts.mc.GT_GetHomeStatus(1, out homeStatus);
                     if (sRtn != 0)
                     {
