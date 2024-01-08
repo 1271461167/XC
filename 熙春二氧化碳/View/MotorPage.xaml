@@ -1,0 +1,160 @@
+﻿<Page x:Class="_2023_12_11XiChun.View.MotorPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:behaviour="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:local="clr-namespace:_2023_12_11XiChun.View"
+      xmlns:controls="clr-namespace:_2023_12_11XiChun.Control"
+      xmlns:converter="clr-namespace:_2023_12_11XiChun.Converter"
+      mc:Ignorable="d" 
+      d:DesignHeight="864" d:DesignWidth="1382"
+      x:Name="motor"
+      Title="MotorPage">
+    <Page.Resources>
+        <converter:BoolToStringConverter x:Key="BoolToString"/>
+    </Page.Resources>
+    <Border>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" CornerRadius="20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.ColumnSpan="2" Content="上层伺服" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding MotorModel.Message}"/>
+                    <Button x:Name="xlimit" Grid.Row="0" Grid.Column="5" Content="限位" FontSize="20" Background="Transparent" BorderThickness="0" Command="{Binding XLimitCommand}" CommandParameter="{Binding ElementName=xlimit}"/>
+                    <controls:LED Grid.Column="0" Grid.Row="2" IsTrue="{Binding Parameter.XMotor.Enable}" Height="40" Style="{StaticResource myLED}"/>
+                    <Button x:Name="xenable" Grid.Column="0" Grid.Row="3"  FontSize="20" Content="{Binding Parameter.XMotor.Enable,Converter={StaticResource BoolToString}}" Background="Transparent" BorderThickness="0" Command="{Binding XEnableCommand}" CommandParameter="{Binding ElementName=xenable}"/>
+                    <controls:LED Grid.Column="0" Grid.Row="4" IsTrue="{Binding Parameter.XMotor.Alarm}" Height="40" Style="{StaticResource myLED}"/>
+                    <Button Grid.Column="0" Grid.Row="5"  FontSize="20" Content="清报警" Background="Transparent" BorderThickness="0" Command="{Binding XClrAlarmCommand}"/>
+                    <Label Grid.Column="1" Grid.Row="2" Content="实际值" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                    <Label Grid.Column="1" Grid.Row="3" Content="设定值" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                    <Label Grid.Column="2" Grid.Row="1" Content="位置（mm）" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+                    <Label Grid.Column="4" Grid.Row="1" Content="速度(mm/s)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBlock Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Text="{Binding Parameter.XMotor.RealPosition}"/>
+                    <TextBlock Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Text="{Binding Parameter.XMotor.RealVelocity}"/>
+                    <TextBox  Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="20" Text="{Binding Parameter.XMotor.RefPosition}" Background="Transparent" BorderThickness="0"/>
+                    <TextBox  Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="20" Text="{Binding Parameter.XMotor.RefVelocity}" Background="Transparent" BorderThickness="0"/>
+                    <controls:LED Grid.Column="5" Grid.Row="4" IsTrue="{Binding Parameter.XMotor.ONL}" Height="40" Style="{StaticResource myLED}"/>
+                    <controls:LED Grid.Column="1" Grid.Row="5" IsTrue="{Binding Parameter.XMotor.Run}" Height="40" Style="{StaticResource myLED}"/>
+                    <Button Grid.Column="2" Grid.Row="5"  FontSize="20" Content="运行" Background="Transparent" BorderThickness="0" Command="{Binding XAutoCommand}"/>
+                    <Button Grid.Column="2" Grid.Row="4"  FontSize="20" Content="JOG-" Background="Transparent" BorderThickness="0">
+                        <behaviour:Interaction.Triggers>
+                            <behaviour:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <behaviour:InvokeCommandAction Command="{Binding XJogNDownCommand}"/>
+                            </behaviour:EventTrigger>
+                            <behaviour:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                <behaviour:InvokeCommandAction Command="{Binding XJogNUpCommand}"/>
+                            </behaviour:EventTrigger>
+                        </behaviour:Interaction.Triggers>
+                    </Button>
+                    <Button x:Name="xmodebutton" Grid.Column="3" Grid.Row="4"  FontSize="20" Content="{Binding Parameter.XMotor.AxisMode}" Background="Transparent" BorderThickness="0" Command="{Binding XModeCommand}"/>
+                    <Button Grid.Column="3" Grid.Row="5"  FontSize="20" Content="停止" Background="Transparent" BorderThickness="0" Command="{Binding XAutoStopCommand}"/>
+                    <Button Grid.Column="4" Grid.Row="4"  FontSize="20" Content="JOG+" Background="Transparent" BorderThickness="0">
+                        <behaviour:Interaction.Triggers>
+                            <behaviour:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <behaviour:InvokeCommandAction Command="{Binding XJogPDownCommand}"/>
+                            </behaviour:EventTrigger>
+                            <behaviour:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                <behaviour:InvokeCommandAction Command="{Binding XJogPUpCommand}"/>
+                            </behaviour:EventTrigger>
+                        </behaviour:Interaction.Triggers>
+                    </Button>
+
+                    <Button Grid.Column="4" Grid.Row="5"  FontSize="20" Content="回原点" Background="Transparent" BorderThickness="0" Command="{Binding XAutoGoHomeCommand}"/>
+                    <controls:LED Grid.Column="1" Grid.Row="4" IsTrue="{Binding Parameter.XMotor.OPL}" Height="40" Style="{StaticResource myLED}"/>
+                    <controls:LED Grid.Column="5" Grid.Row="5" IsTrue="{Binding Parameter.XMotor.HomeOver}" Height="40" Style="{StaticResource myLED}"/>
+
+                </Grid>
+            </Border>
+            <Border Background="White" Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1" CornerRadius="20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.ColumnSpan="2" Content="下层伺服" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                    <Button x:Name="ylimit" Grid.Row="0" Grid.Column="5" Content="限位" FontSize="20" Background="Transparent" BorderThickness="0" Command="{Binding YLimitCommand}" CommandParameter="{Binding ElementName=ylimit}"/>
+                    <controls:LED Grid.Column="0" Grid.Row="2" Height="40" Style="{StaticResource myLED}" IsTrue="{Binding Parameter.YMotor.Enable}"/>
+                    <Button x:Name="yenable" Grid.Column="0" Grid.Row="3"  FontSize="20" Content="{Binding Parameter.YMotor.Enable,Converter={StaticResource BoolToString}}" Background="Transparent" BorderThickness="0" Command="{Binding YEnableCommand}" CommandParameter="{Binding ElementName=yenable}"/>
+                    <controls:LED Grid.Column="0" Grid.Row="4" Height="40" Style="{StaticResource myLED}" IsTrue="{Binding Parameter.YMotor.Alarm}"/>
+                    <Button Grid.Column="0" Grid.Row="5"  FontSize="20" Content="清报警" Background="Transparent" BorderThickness="0" Command="{Binding YClrAlarmCommand}"/>
+                    <Label Grid.Column="1" Grid.Row="2" Content="实际值" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                    <Label Grid.Column="1" Grid.Row="3" Content="设定值" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                    <Label Grid.Column="2" Grid.Row="1" Content="位置（mm）" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+                    <Label Grid.Column="4" Grid.Row="1" Content="速度(mm/s)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBlock Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Text="{Binding Parameter.YMotor.RealPosition}"/>
+                    <TextBlock Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Text="{Binding Parameter.YMotor.RealVelocity}"/>
+                    <TextBox Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="20" Text="{Binding Parameter.YMotor.RefPosition}" Background="Transparent" BorderThickness="0"/>
+                    <TextBox Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="20" Text="{Binding Parameter.YMotor.RefVelocity}" Background="Transparent" BorderThickness="0"/>
+                    <controls:LED Grid.Column="5" Grid.Row="4"  Height="40" Style="{StaticResource myLED}" IsTrue="{Binding Parameter.YMotor.ONL}"/>
+                    <controls:LED Grid.Column="1" Grid.Row="5"  Height="40" Style="{StaticResource myLED}" IsTrue="{Binding Parameter.YMotor.Run}"/>
+                    <Button Grid.Column="2" Grid.Row="5"  FontSize="20" Content="运行" Background="Transparent" BorderThickness="0" Command="{Binding YAutoCommand}"/>
+                    <Button Grid.Column="2" Grid.Row="4"  FontSize="20" Content="JOG-" Background="Transparent" BorderThickness="0">
+                        <behaviour:Interaction.Triggers>
+                            <behaviour:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <behaviour:InvokeCommandAction Command="{Binding YJogNDownCommand}"/>
+                            </behaviour:EventTrigger>
+                            <behaviour:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                <behaviour:InvokeCommandAction Command="{Binding YJogNUpCommand}"/>
+                            </behaviour:EventTrigger>
+                        </behaviour:Interaction.Triggers>
+                    </Button>
+                    <Button x:Name="ymodebutton" Grid.Column="3" Grid.Row="4"  FontSize="20" Content="{Binding Parameter.YMotor.AxisMode}" Background="Transparent" BorderThickness="0" Command="{Binding YModeCommand}"/>
+                    <Button Grid.Column="3" Grid.Row="5"  FontSize="20" Content="停止" Background="Transparent" BorderThickness="0" Command="{Binding YAutoStopCommand}"/>
+                    <Button Grid.Column="4" Grid.Row="4"  FontSize="20" Content="JOG+" Background="Transparent" BorderThickness="0">
+                        <behaviour:Interaction.Triggers>
+                            <behaviour:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <behaviour:InvokeCommandAction Command="{Binding YJogPDownCommand}"/>
+                            </behaviour:EventTrigger>
+                            <behaviour:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                <behaviour:InvokeCommandAction Command="{Binding YJogPUpCommand}"/>
+                            </behaviour:EventTrigger>
+                        </behaviour:Interaction.Triggers>
+                    </Button>
+                    <Button Grid.Column="4" Grid.Row="5"  FontSize="20" Content="回原点" Background="Transparent" BorderThickness="0" Command="{Binding YAutoGoHomeCommand}"/>
+                    <controls:LED Grid.Column="1" Grid.Row="4"  Height="40" Style="{StaticResource myLED}" IsTrue="{Binding Parameter.YMotor.OPL}"/>
+                    <controls:LED Grid.Column="5" Grid.Row="5" Height="40" Style="{StaticResource myLED}" IsTrue="{Binding Parameter.YMotor.HomeOver}"/>
+
+                </Grid>
+            </Border>
+            <Border Grid.Column="0" Grid.Row="1" BorderBrush="Black" BorderThickness="1" CornerRadius="20" Background="White"/>
+            <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1" CornerRadius="20" Background="White"/>
+        </Grid>
+    </Border>
+    
+</Page>
