@@ -12,7 +12,7 @@ namespace _2023_12_11XiChun.Settings {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.8.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.7.0.0")]
     internal sealed partial class MyApp : global::System.Configuration.ApplicationSettingsBase {
         
         private static MyApp defaultInstance = ((MyApp)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new MyApp())));
@@ -602,12 +602,24 @@ namespace _2023_12_11XiChun.Settings {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double 设置 {
+        public double WaitX {
             get {
-                return ((double)(this["设置"]));
+                return ((double)(this["WaitX"]));
             }
             set {
-                this["设置"] = value;
+                this["WaitX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double WaitY {
+            get {
+                return ((double)(this["WaitY"]));
+            }
+            set {
+                this["WaitY"] = value;
             }
         }
     }

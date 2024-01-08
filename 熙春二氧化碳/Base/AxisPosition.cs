@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace _2023_12_11XiChun.Base
 {
-    public class AxisPosition
+    public class AxisPosition:NotifyBase
     {
 		private double x_position;
 
 		public double XPosition
 		{
 			get { return x_position; }
-			set { x_position = value; }
+			set { x_position = value;this.DoNotify(); }
 		}
 		private double y_position;
 
 		public double YPosition
 		{
 			get { return y_position; }
-			set { y_position = value; }
+			set { y_position = value; this.DoNotify(); }
 		}
 		private int id;
 

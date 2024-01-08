@@ -91,5 +91,6 @@ namespace _2023_12_11XiChun.Base
             get { return rec; }
             set { rec = value; }
         }
+
     }
 }

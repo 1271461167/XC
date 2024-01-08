@@ -53,6 +53,14 @@ namespace _2023_12_11XiChun.Model
             get { return bprocess ; }
             set { bprocess  = value; }
         }
+        private AxisPosition waitposition =new AxisPosition {XPosition=MyApp.Default.WaitX,YPosition=MyApp.Default.WaitY };
+
+        public AxisPosition WaitPosition
+        {
+            get { return waitposition; }
+            set { waitposition = value; }
+        }
+
 
         public void Save()
         {
@@ -63,7 +71,7 @@ namespace _2023_12_11XiChun.Model
                 MyApp.Default.DelayTime1 = Process[0].DelayTime;
                 MyApp.Default.ObjCount1 =  Process[0].AllEntCount;
                 MyApp.Default.MoveCount1 = Process[0].MoveCount;
-
+                
                 MyApp.Default.Xposition1_1 = Process[0].MovePosition[0].XPosition;
                 MyApp.Default.Yposition1_1 = Process[0].MovePosition[0].YPosition;
                 MyApp.Default.Xposition1_2 = Process[0].MovePosition[1].XPosition;
