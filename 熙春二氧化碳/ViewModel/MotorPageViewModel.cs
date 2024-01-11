@@ -107,9 +107,10 @@ namespace _2023_12_11XiChun.ViewModel
 
         private async void YGoHome()
         {
+            if (!Parameter.YMotor.Enable) { return; }
             Parameter.YMotor.AxisMode = Motor.Mode.Home;
-            home.mode = gts.mc.HOME_MODE_HOME_INDEX;
-            home.moveDir = 1;
+            home.mode = gts.mc.HOME_MODE_HOME;
+            home.moveDir = -1;
             home.indexDir = 1;
             home.edge = 0;
             home.velHigh = 2.5;
@@ -136,6 +137,7 @@ namespace _2023_12_11XiChun.ViewModel
             });
             await Task.Delay(200);
             sRtn = gts.mc.GT_ZeroPos(2, 1);
+            Parameter.YMotor.HomeOver = true;
             if (sRtn != 0)
             {
                 MotorModel.Message = "SetZero2 Fail:" + sRtn.ToString();
@@ -145,9 +147,10 @@ namespace _2023_12_11XiChun.ViewModel
 
         private async void XGoHome()
         {
+            if (!Parameter.XMotor.Enable) { return; }
             Parameter.XMotor.AxisMode = Motor.Mode.Home;
-            home.mode = gts.mc.HOME_MODE_HOME_INDEX;
-            home.moveDir = 1;
+            home.mode = gts.mc.HOME_MODE_HOME;
+            home.moveDir = -1;
             home.indexDir = 1;
             home.edge = 0;
             home.velHigh = 2.5;
@@ -174,6 +177,7 @@ namespace _2023_12_11XiChun.ViewModel
             });
             await Task.Delay(200);
             sRtn = gts.mc.GT_ZeroPos(1, 1);
+            Parameter.XMotor.HomeOver = true;
             if (sRtn != 0)
             {
                 MotorModel.Message = "SetZero1 Fail:" + sRtn.ToString();
@@ -183,6 +187,7 @@ namespace _2023_12_11XiChun.ViewModel
 
         private void YJogPUp()
         {
+            if (!Parameter.YMotor.Enable) { return; }
             sRtn = gts.mc.GT_Stop(1 << 1, 0);
             if (sRtn != 0)
             {
@@ -193,6 +198,7 @@ namespace _2023_12_11XiChun.ViewModel
 
         private void YJogPDown()
         {
+            if (!Parameter.YMotor.Enable) { return; }
             double vel = Parameter.YMotor.RefVelocity * Parameter.XMotor.Pulse / 1000;
             jog.acc = 0.1;
             jog.dec = 0.1;
@@ -203,7 +209,7 @@ namespace _2023_12_11XiChun.ViewModel
                 MotorModel.Message = "SetJogPrm2 Fail:" + sRtn.ToString();
                 return;
             }
-            sRtn = gts.mc.GT_SetVel(2, -vel);//设置目标速度
+            sRtn = gts.mc.GT_SetVel(2, vel);//设置目标速度
             if (sRtn != 0)
             {
                 MotorModel.Message = "SetVel2 Fail:" + sRtn.ToString();
@@ -219,6 +225,7 @@ namespace _2023_12_11XiChun.ViewModel
 
         private void YAutoRun()
         {
+            if (!Parameter.YMotor.Enable) { return; }
             double vel = Parameter.YMotor.RefVelocity * Parameter.YMotor.Pulse / 1000;
             int pos = int.Parse((Parameter.YMotor.RefPosition * Parameter.YMotor.Pulse).ToString());
             trap.acc = 0.5;
@@ -277,6 +284,7 @@ namespace _2023_12_11XiChun.ViewModel
 
         private void YJogNUp()
         {
+            if (!Parameter.YMotor.Enable) { return; }
             sRtn = gts.mc.GT_Stop(1 << 1, 0);
             if (sRtn != 0)
             {
@@ -287,6 +295,7 @@ namespace _2023_12_11XiChun.ViewModel
 
         private void YJogNDown()
         {
+            if (!Parameter.YMotor.Enable) { return; }
             double vel = Parameter.YMotor.RefVelocity * Parameter.YMotor.Pulse / 1000;
             jog.acc = 0.1;
             jog.dec = 0.1;
@@ -297,7 +306,7 @@ namespace _2023_12_11XiChun.ViewModel
                 MotorModel.Message = "SetJogPrm2 Fail:" + sRtn.ToString();
                 return;
             }
-            sRtn = gts.mc.GT_SetVel(2, vel);//设置目标速度
+            sRtn = gts.mc.GT_SetVel(2, -vel);//设置目标速度
             if (sRtn != 0)
             {
                 MotorModel.Message = "SetVel2 Fail:" + sRtn.ToString();
@@ -339,7 +348,7 @@ namespace _2023_12_11XiChun.ViewModel
             }
         }
 
-        private async void YEnable(object obj)
+        private  void YEnable(object obj)
         {
             Button button = obj as Button;
             if (!Parameter.YMotor.Enable)
@@ -349,11 +358,6 @@ namespace _2023_12_11XiChun.ViewModel
                 {
                     MotorModel.Message = "Enable2 Fail:" + sRtn.ToString();
                     return;
-                }
-                await Task.Delay(300);
-                if (Parameter.YMotor.Enable)
-                {
-                    button.Content = "断使能";
                 }
                 //Parameter.XMotor.Enable = true;
             }
@@ -365,17 +369,13 @@ namespace _2023_12_11XiChun.ViewModel
                     MotorModel.Message = "DisEnable2 Fail:" + sRtn.ToString();
                     return;
                 }
-                await Task.Delay(300);
-                if (!Parameter.YMotor.Enable)
-                {
-                    button.Content = "使能";
-                }
                 //Parameter.XMotor.Enable = false;
             }
         }
 
         private void XJogPUp()
         {
+            if (!Parameter.XMotor.Enable) { return; }
             sRtn = gts.mc.GT_Stop(1, 0);
             if (sRtn != 0)
             {
@@ -386,6 +386,7 @@ namespace _2023_12_11XiChun.ViewModel
 
         private void XJogPDown()
         {
+            if (!Parameter.XMotor.Enable) { return; }
             double vel = Parameter.XMotor.RefVelocity * Parameter.YMotor.Pulse / 1000;
             jog.acc = 0.1;
             jog.dec = 0.1;
@@ -396,7 +397,7 @@ namespace _2023_12_11XiChun.ViewModel
                 MotorModel.Message = "SetJogPrm Fail:" + sRtn.ToString();
                 return;
             }
-            sRtn = gts.mc.GT_SetVel(1, -vel);//设置目标速度
+            sRtn = gts.mc.GT_SetVel(1, vel);//设置目标速度
             if (sRtn != 0)
             {
                 MotorModel.Message = "SetVel Fail:" + sRtn.ToString();
@@ -412,6 +413,7 @@ namespace _2023_12_11XiChun.ViewModel
 
         private void XAutoRun()
         {
+            if (!Parameter.XMotor.Enable) { return; }
             double vel = Parameter.XMotor.RefVelocity * Parameter.XMotor.Pulse / 1000;
             int pos = int.Parse((Parameter.XMotor.RefPosition * Parameter.XMotor.Pulse).ToString());
             trap.acc = 0.5;
@@ -504,7 +506,7 @@ namespace _2023_12_11XiChun.ViewModel
                 MotorModel.Message = "GetRealPos1 Fail:" + sRtn.ToString();
                 return;
             }
-            Parameter.XMotor.RealPosition = dRealPos / (double)Parameter.XMotor.Pulse;
+            Parameter.XMotor.RealPosition = Math.Round(dRealPos / (double)Parameter.XMotor.Pulse,3);
             sRtn = gts.mc.GT_GetPrfVel(1, out dRealVel, 1, out clk);
             if (sRtn != 0)
             {
@@ -519,7 +521,7 @@ namespace _2023_12_11XiChun.ViewModel
                 MotorModel.Message = "GetRealPos2 Fail:" + sRtn.ToString();
                 return;
             }
-            Parameter.YMotor.RealPosition = dRealPos / (double)Parameter.YMotor.Pulse;
+            Parameter.YMotor.RealPosition = Math.Round(dRealPos / (double)Parameter.XMotor.Pulse, 3);
             sRtn = gts.mc.GT_GetPrfVel(2, out dRealVel, 1, out clk);
             if (sRtn != 0)
             {
@@ -531,6 +533,7 @@ namespace _2023_12_11XiChun.ViewModel
 
         private void XJogNDown()
         {
+            if (!Parameter.XMotor.Enable) { return; }
             double vel = Parameter.XMotor.RefVelocity * Parameter.XMotor.Pulse / 1000;
             jog.acc = 0.1;
             jog.dec = 0.1;
@@ -541,7 +544,7 @@ namespace _2023_12_11XiChun.ViewModel
                 MotorModel.Message = "SetJogPrm Fail:" + sRtn.ToString();
                 return;
             }
-            sRtn = gts.mc.GT_SetVel(1, vel);//设置目标速度
+            sRtn = gts.mc.GT_SetVel(1, -vel);//设置目标速度
             if (sRtn != 0)
             {
                 MotorModel.Message = "SetVel Fail:" + sRtn.ToString();
@@ -557,6 +560,7 @@ namespace _2023_12_11XiChun.ViewModel
 
         private void XJogNUp()
         {
+            if (!Parameter.XMotor.Enable) { return; }
             sRtn = gts.mc.GT_Stop(1, 0);
             if (sRtn != 0)
             {
@@ -588,7 +592,7 @@ namespace _2023_12_11XiChun.ViewModel
 
         }
 
-        private async void XEnable(object obj)
+        private void XEnable(object obj)
         {
             Button button = obj as Button;
             if (!Parameter.XMotor.Enable)
@@ -598,11 +602,6 @@ namespace _2023_12_11XiChun.ViewModel
                 {
                     MotorModel.Message = "Enable Fail:" + sRtn.ToString();
                     return;
-                }
-                await Task.Delay(300);
-                if (Parameter.XMotor.Enable)
-                {
-                    button.Content = "断使能";
                 }
                 //Parameter.XMotor.Enable = true;
             }
@@ -614,11 +613,6 @@ namespace _2023_12_11XiChun.ViewModel
                     MotorModel.Message = "DisEnable Fail:" + sRtn.ToString();
                     return;
                 }
-                await Task.Delay(300);
-                if (!Parameter.XMotor.Enable)
-                {
-                    button.Content = "使能";
-                }
                 //Parameter.XMotor.Enable = false;
             }
         }
@@ -628,7 +622,7 @@ namespace _2023_12_11XiChun.ViewModel
         /// </summary>
         private void InitCard()
         {
-            ushort sValue;
+            
             sRtn = gts.mc.GT_Open(0, 1);//打开运动控制卡
             if (sRtn != 0)
             {
@@ -649,13 +643,6 @@ namespace _2023_12_11XiChun.ViewModel
                 return;
             }
 
-            sValue = 0x03;
-            sRtn = gts.mc.GT_EncSns(sValue);
-            if (sRtn != 0)
-            {
-                MotorModel.Message = "GT_EncSns Fail:" + sRtn.ToString();
-                return;
-            }//设置编码器方向
 
             sRtn = gts.mc.GT_ClrSts(1, 4);//清除各轴报警和限位
             if (sRtn != 0)
@@ -681,26 +668,20 @@ namespace _2023_12_11XiChun.ViewModel
             //        gts.mc.GT_GetSts(1, out YAxisState, 1, out clk);
             //    } while (((XAxisState & 0x400) !=0)||((YAxisState& 0x400)!=0));// 等待XY轴规划停止
             //});         
-            sRtn = gts.mc.GT_ZeroPos(1, 2);
+            sRtn = gts.mc.GT_PrfJog(1);
             if (sRtn != 0)
             {
-                MotorModel.Message = "ZeroPos Fail:" + sRtn.ToString();
+                MotorModel.Message = "PrfJog1 Fail:" + sRtn.ToString();
                 return;
             }
-            sRtn = gts.mc.GT_PrfTrap(1);
+            sRtn = gts.mc.GT_PrfJog(2);
             if (sRtn != 0)
             {
-                MotorModel.Message = "PrfTrap1 Fail:" + sRtn.ToString();
+                MotorModel.Message = "PrfJog2 Fail:" + sRtn.ToString();
                 return;
             }
-            sRtn = gts.mc.GT_PrfTrap(2);//设置为点位模式
-            if (sRtn != 0)
-            {
-                MotorModel.Message = "PrfTrap2 Fail:" + sRtn.ToString();
-                return;
-            }
-            Parameter.XMotor.AxisMode = Motor.Mode.AUTO;
-            Parameter.YMotor.AxisMode = Motor.Mode.AUTO;
+            Parameter.XMotor.AxisMode = Motor.Mode.JOG;
+            Parameter.YMotor.AxisMode = Motor.Mode.JOG;
         }
 
     }

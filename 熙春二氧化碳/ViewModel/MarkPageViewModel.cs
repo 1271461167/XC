@@ -249,7 +249,7 @@ namespace _2023_12_11XiChun.ViewModel
 
         private void Init()
         {
-            int nErr = JczLmc.Initialize(Application.StartupPath, true);
+            int nErr = JczLmc.Initialize(Application.StartupPath, false);
             if (nErr == 0)
             {
                 markPageModel.Message = "初始化成功";

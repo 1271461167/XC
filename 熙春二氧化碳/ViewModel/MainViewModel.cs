@@ -23,6 +23,12 @@ namespace _2023_12_11XiChun.ViewModel
             this.CloseWindowCommand.DoExecute = new Action<object>((obj) =>
             {
                 MainWindow main = obj as MainWindow;
+                MarkPageViewModel._timer?.Stop();
+                MarkPageViewModel._timer?.Dispose();
+                MotorPageViewModel._timer?.Stop();
+                MotorPageViewModel._timer?.Dispose();
+                JczLmc.Close();
+                gts.mc.GT_Close();
                 main.Close();
             });
             this.ChangePageCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });

@@ -311,3 +311,99 @@ C:\Users\ywh\Desktop\XiChun\熙春二氧化碳\obj\Debug\2023-12-11XiChun.csproj
 C:\Users\ywh\Desktop\XiChun\熙春二氧化碳\obj\Debug\2023-12-11XiChun.csproj.CopyComplete
 C:\Users\ywh\Desktop\XiChun\熙春二氧化碳\obj\Debug\2023-12-11XiChun.exe
 C:\Users\ywh\Desktop\XiChun\熙春二氧化碳\obj\Debug\2023-12-11XiChun.pdb
+E:\熙春\熙春二氧化碳\bin\Debug\2023-12-11XiChun.exe.config
+E:\熙春\熙春二氧化碳\bin\Debug\2023-12-11XiChun.exe
+E:\熙春\熙春二氧化碳\bin\Debug\2023-12-11XiChun.pdb
+E:\熙春\熙春二氧化碳\bin\Debug\Microsoft.Xaml.Behaviors.dll
+E:\熙春\熙春二氧化碳\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+E:\熙春\熙春二氧化碳\bin\Debug\Microsoft.Xaml.Behaviors.xml
+E:\熙春\熙春二氧化碳\obj\Debug\2023-12-11XiChun.csproj.AssemblyReference.cache
+E:\熙春\熙春二氧化碳\obj\Debug\Control\MyComBox.baml
+E:\熙春\熙春二氧化碳\obj\Debug\View\HomePage.g.cs
+E:\熙春\熙春二氧化碳\obj\Debug\View\MainPage.g.cs
+E:\熙春\熙春二氧化碳\obj\Debug\View\MainWindow.g.cs
+E:\熙春\熙春二氧化碳\obj\Debug\View\MarkPage.g.cs
+E:\熙春\熙春二氧化碳\obj\Debug\View\MotorPage.g.cs
+E:\熙春\熙春二氧化碳\obj\Debug\App.g.cs
+E:\熙春\熙春二氧化碳\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\熙春\熙春二氧化碳\obj\Debug\2023-12-11XiChun_MarkupCompile.cache
+E:\熙春\熙春二氧化碳\obj\Debug\2023-12-11XiChun_MarkupCompile.lref
+E:\熙春\熙春二氧化碳\obj\Debug\App.baml
+E:\熙春\熙春二氧化碳\obj\Debug\Control\IconButton.baml
+E:\熙春\熙春二氧化碳\obj\Debug\Control\LED.baml
+E:\熙春\熙春二氧化碳\obj\Debug\View\HomePage.baml
+E:\熙春\熙春二氧化碳\obj\Debug\View\MainPage.baml
+E:\熙春\熙春二氧化碳\obj\Debug\View\MainWindow.baml
+E:\熙春\熙春二氧化碳\obj\Debug\View\MarkPage.baml
+E:\熙春\熙春二氧化碳\obj\Debug\View\MotorPage.baml
+E:\熙春\熙春二氧化碳\obj\Debug\2023-12-11XiChun.g.resources
+E:\熙春\熙春二氧化碳\obj\Debug\_2023_12_11XiChun.Properties.Resources.resources
+E:\熙春\熙春二氧化碳\obj\Debug\2023-12-11XiChun.csproj.GenerateResource.cache
+E:\熙春\熙春二氧化碳\obj\Debug\2023-12-11XiChun.csproj.CoreCompileInputs.cache
+E:\熙春\熙春二氧化碳\obj\Debug\2023-12-11XiChun.csproj.CopyComplete
+E:\熙春\熙春二氧化碳\obj\Debug\2023-12-11XiChun.exe
+E:\熙春\熙春二氧化碳\obj\Debug\2023-12-11XiChun.pdb
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\bin\Debug\2023-12-11XiChun.exe.config
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\bin\Debug\2023-12-11XiChun.exe
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\bin\Debug\2023-12-11XiChun.pdb
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\bin\Debug\Microsoft.Xaml.Behaviors.xml
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.csproj.AssemblyReference.cache
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\Control\MyComBox.baml
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\View\HomePage.g.cs
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\View\MainPage.g.cs
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\View\MainWindow.g.cs
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\View\MarkPage.g.cs
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\View\MotorPage.g.cs
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\App.g.cs
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun_MarkupCompile.cache
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun_MarkupCompile.lref
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\App.baml
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\Control\IconButton.baml
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\Control\LED.baml
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\View\HomePage.baml
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\View\MainPage.baml
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\View\MainWindow.baml
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\View\MarkPage.baml
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\View\MotorPage.baml
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.g.resources
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\_2023_12_11XiChun.Properties.Resources.resources
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.csproj.GenerateResource.cache
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.csproj.CoreCompileInputs.cache
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.csproj.CopyComplete
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.exe
+C:\Users\ywh\Desktop\熙春文件\熙春\熙春\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.pdb
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\bin\Debug\2023-12-11XiChun.exe.config
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\bin\Debug\2023-12-11XiChun.exe
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\bin\Debug\2023-12-11XiChun.pdb
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\bin\Debug\Microsoft.Xaml.Behaviors.xml
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.csproj.AssemblyReference.cache
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\Control\MyComBox.baml
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\View\HomePage.g.cs
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\View\MainPage.g.cs
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\View\MainWindow.g.cs
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\View\MarkPage.g.cs
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\View\MotorPage.g.cs
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\App.g.cs
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun_MarkupCompile.cache
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun_MarkupCompile.lref
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\App.baml
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\Control\IconButton.baml
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\Control\LED.baml
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\View\HomePage.baml
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\View\MainPage.baml
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\View\MainWindow.baml
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\View\MarkPage.baml
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\View\MotorPage.baml
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.g.resources
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\_2023_12_11XiChun.Properties.Resources.resources
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.csproj.GenerateResource.cache
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.csproj.CoreCompileInputs.cache
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.csproj.CopyComplete
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.exe
+C:\Users\77928\Desktop\熙春二氧化碳 - 副本\熙春二氧化碳 - 副本\obj\Debug\2023-12-11XiChun.pdb
