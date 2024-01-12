@@ -275,7 +275,28 @@
                         </TextBox.Resources>
                     </TextBox>
                     <Label Grid.Row="7" Grid.Column="2" Content="pulse/mm" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
-                    <Grid Grid.Row="8" Grid.Column="0" Grid.RowSpan="5" Grid.ColumnSpan="3">
+                    <Border Grid.Row="8" Grid.ColumnSpan="3">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="等待位" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                            <Label Grid.Column="1" Content="XPosition" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                            <Label Grid.Column="2" Content="YPosition" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+
+                            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Text="{Binding Parameter.WaitPosition.XPosition}" BorderThickness="0" Background="Transparent"/>
+                            <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Text="{Binding Parameter.WaitPosition.YPosition}" BorderThickness="0" Background="Transparent"/>
+                            <Button Grid.Row="1" Grid.Column="3" Content="移动" Width ="80" FontSize="14" Command="{Binding MoveToWaitCommand}"/>
+                        </Grid>
+                    </Border>
+                    <Grid Grid.Row="9" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="3">
                         <DataGrid ItemsSource="{Binding mainPage.Process.MovePosition}" AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" GridLinesVisibility="None" SelectionUnit="Cell">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="工位" Binding="{Binding ID}" Width="*" />

@@ -16,6 +16,7 @@ namespace _2023_12_11XiChun.ViewModel
         public CommandBase CancelSaveCommand { get; set; } = new CommandBase();
         public CommandBase SelectChangedCommand { get; set; } = new CommandBase();
         public CommandBase MoveCommand { get; set; } = new CommandBase();
+        public CommandBase MoveToWaitCommand { get; set; }= new CommandBase();
         public MainPageViewModel()
         {
             NowPage now = NowPage.GetInstance();
@@ -28,6 +29,32 @@ namespace _2023_12_11XiChun.ViewModel
             SelectChangedCommand.DoExecute = new Action<object>((obj) => { SelectChanged(obj); });
             MoveCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             MoveCommand.DoExecute = new Action<object>((obj) => { Move(obj); });
+            MoveToWaitCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            MoveToWaitCommand.DoExecute = new Action<object>((obj) => { MoveToWait(); });
+        }
+
+        private void MoveToWait()
+        {
+            gts.mc.TTrapPrm trap;
+            gts.mc.GT_PrfTrap(1);
+            gts.mc.GT_PrfTrap(2);//设置为点位模式
+            Parameter.XMotor.AxisMode = Motor.Mode.AUTO;
+            Parameter.YMotor.AxisMode = Motor.Mode.AUTO;
+            double vel = 10.0 * Parameter.YMotor.Pulse / 1000;
+            int xpos = int.Parse((Parameter.WaitPosition.XPosition * Parameter.YMotor.Pulse).ToString());
+            int ypos = int.Parse((Parameter.WaitPosition.YPosition * Parameter.XMotor.Pulse).ToString());
+            trap.acc = 0.5;
+            trap.dec = 0.5;
+            trap.smoothTime = 25;
+            trap.velStart = 0;
+            gts.mc.GT_SetTrapPrm(2, ref trap);//设置x点位运动参数
+            gts.mc.GT_SetVel(2, vel);//设置x目标速度
+            gts.mc.GT_SetPos(2, ypos);//设置x目标位置
+            gts.mc.GT_SetTrapPrm(1, ref trap);//设置y点位运动参数
+            gts.mc.GT_SetVel(1, vel);//设置y目标速度
+            gts.mc.GT_SetPos(1, xpos);//设置y目标位置
+            gts.mc.GT_Update(1);//更新x轴运动
+            gts.mc.GT_Update(1 << 1);//更新y轴运动
         }
 
         private void Move(object obj)
@@ -77,6 +104,8 @@ namespace _2023_12_11XiChun.ViewModel
         private void CancelSaveSettings()
         {
             Parameter.CancelSave();
+            Parameter.WaitPosition.XPosition = MyApp.Default.WaitX;
+            Parameter.WaitPosition.YPosition = MyApp.Default.WaitY;
             mainPage.StartMarkPort = MyApp.Default.StartMark;
             mainPage.MarkFinishedPort = MyApp.Default.MarkFinished;
             mainPage.MarkingPort = MyApp.Default.Marking;
@@ -121,6 +150,8 @@ namespace _2023_12_11XiChun.ViewModel
             MyApp.Default.MarkingLevel = mainPage.MarkingLevel;
             MyApp.Default.MarkFinishedWidth = mainPage.MarkFinishedWidth;
             MyApp.Default.NGWidth = mainPage.NGWidth;
+            MyApp.Default.WaitX = Parameter.WaitPosition.XPosition;
+            MyApp.Default.WaitY = Parameter.WaitPosition.YPosition;
             //MyApp.Default.MoveCount=Parameter.Process1.MoveCount;
             MyApp.Default.Save();
         }

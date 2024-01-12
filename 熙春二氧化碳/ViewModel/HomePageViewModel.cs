@@ -114,7 +114,7 @@ namespace _2023_12_11XiChun.ViewModel
                 if (JczLmc.GetInPort(MainPageViewModel.mainPage.StartMarkPort) == false)
                 {
                     Thread.Sleep(100);
-                    if (JczLmc.GetInPort(MainPageViewModel.mainPage.StartMarkPort) == false)
+                    if (JczLmc.GetInPort(MainPageViewModel.mainPage.StartMarkPort) == true)
                     {
                         Task[] tasks = new Task[2];
                         for (int i = 0; i < Process.MoveCount; i++)
@@ -134,8 +134,9 @@ namespace _2023_12_11XiChun.ViewModel
                             Thread.Sleep(100);
                             JczLmc.Mark(false);
                         }
-
-
+                        tasks[0] = Task.Run(() => { AxisMove(1, Process.XVelocity, Parameter.WaitPosition.XPosition); });
+                        tasks[1] = Task.Run(() => { AxisMove(2, Process.YVelocity, Parameter.WaitPosition.YPosition); });
+                        Task.WaitAll(tasks);
                     }
                 }
             }
@@ -307,8 +308,8 @@ namespace _2023_12_11XiChun.ViewModel
             {
                 Autoindex = 0;
                 Task[] tasks = new Task[2];
-                tasks[0] = Task.Run(() => { AxisMove(1, Process.XVelocity, -321.68); });
-                tasks[1] = Task.Run(() => { AxisMove(2, Process.YVelocity, -173.732); });
+                tasks[0] = Task.Run(() => { AxisMove(1, Process.XVelocity, Parameter.WaitPosition.XPosition); });
+                tasks[1] = Task.Run(() => { AxisMove(2, Process.YVelocity, Parameter.WaitPosition.YPosition); });
                 Task.WaitAll(tasks);
                 MySocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), homePage);
                 Thread.Sleep(Process.DelayTime);
