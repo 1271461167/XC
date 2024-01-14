@@ -145,6 +145,7 @@ namespace _2023_12_11XiChun.ViewModel
                             Thread.Sleep(100);
                             JczLmc.Mark(false);
                         }
+
                         tasks[0] = Task.Run(() => { AxisMove(1, Process.XVelocity, Parameter.WaitPosition.XPosition); });
                         tasks[1] = Task.Run(() => { AxisMove(2, Process.YVelocity, Parameter.WaitPosition.YPosition); });
                         Task.WaitAll(tasks);
@@ -457,6 +458,14 @@ namespace _2023_12_11XiChun.ViewModel
                 gts.mc.GT_GetSts(axis, out AxisState, 1, out clk);
 
             } while ((AxisState & 0x400) != 0);
+            if(axis==1)
+            {
+                while (!Parameter.XMotor.RunOver) { }
+            }
+            if (axis == 2)
+            {
+                while (!Parameter.YMotor.RunOver) { }
+            }
         }
     }
 }

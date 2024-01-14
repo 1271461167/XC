@@ -23,13 +23,14 @@
                     <ColumnDefinition Width="9*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
+                    <Button Content="初始化" Height="45" FontSize="20" Command="{Binding InitCommand}"  Margin="0,10" Background="Transparent"/>
                     <Button Content="加载模板" Height="45" FontSize="20" Command="{Binding LoadCommand}" CommandParameter="{Binding ElementName=image}" Margin="0,10" Background="Transparent"/>
                     <Button Content="加载盲切模板" Height="45" FontSize="20" Command="{Binding BlindLoadCommand}" Margin="0,10" Background="Transparent"/>
                     <Button Content="刷新预览" Height="45" FontSize="20" Command="{Binding RefreshCommand}" CommandParameter="{Binding ElementName=image}" Margin="0,10" Background="Transparent"/>
                     <Button Content="打标" Height="45" FontSize="20" Command="{Binding MarkCommand}" Margin="0,10" Background="Transparent"/>
-                    <Button Content="开启红光" Height="45" FontSize="20" Command="{Binding RedMarkCommand}" Margin="0,10" Background="Transparent"/>
-                    <Button Content="关闭红光" Height="45" FontSize="20" Command="{Binding CloseRedMarkCommand}" Margin="0,10" Background="Transparent"/>
                     <Button Content="关闭板卡" Height="45" FontSize="20" Command="{Binding CloseCardCommand}" Margin="0,10" Background="Transparent"/>
+                    <Button Content="打开标准软件" Height="45" FontSize="20" Command="{Binding OpenCommand}"  Margin="0,10" Background="Transparent"/>
+                    
                 </StackPanel>
                 <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>

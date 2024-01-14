@@ -135,7 +135,11 @@ namespace _2023_12_11XiChun.ViewModel
                     }
                 } while (homeStatus.run != 0);// 等待XY轴规划停止
             });
-            await Task.Delay(200);
+            await Task.Run(() => 
+            {
+                while (!Parameter.YMotor.RunOver)
+                { }
+            });
             sRtn = gts.mc.GT_ZeroPos(2, 1);
             Parameter.YMotor.HomeOver = true;
             if (sRtn != 0)
@@ -175,7 +179,11 @@ namespace _2023_12_11XiChun.ViewModel
                     }
                 } while (homeStatus.run != 0);// 等待XY轴规划停止
             });
-            await Task.Delay(200);
+            await Task.Run(() =>
+            {
+                while (!Parameter.XMotor.RunOver)
+                { }
+            });
             sRtn = gts.mc.GT_ZeroPos(1, 1);
             Parameter.XMotor.HomeOver = true;
             if (sRtn != 0)
@@ -259,10 +267,10 @@ namespace _2023_12_11XiChun.ViewModel
         }
 
         private void YModeChange()
-        {            
+        {
             if (Parameter.YMotor.AxisMode == Motor.Mode.AUTO)
             {
-                Parameter.YMotor.AxisMode = Motor.Mode.JOG;                
+                Parameter.YMotor.AxisMode = Motor.Mode.JOG;
                 sRtn = gts.mc.GT_PrfJog(2);//设置为jog模式
                 if (sRtn != 0)
                 {
@@ -272,7 +280,7 @@ namespace _2023_12_11XiChun.ViewModel
             }
             else
             {
-                Parameter.YMotor.AxisMode = Motor.Mode.AUTO;               
+                Parameter.YMotor.AxisMode = Motor.Mode.AUTO;
                 sRtn = gts.mc.GT_PrfTrap(2);
                 if (sRtn != 0)
                 {
@@ -348,7 +356,7 @@ namespace _2023_12_11XiChun.ViewModel
             }
         }
 
-        private  void YEnable(object obj)
+        private void YEnable(object obj)
         {
             Button button = obj as Button;
             if (!Parameter.YMotor.Enable)
@@ -451,7 +459,7 @@ namespace _2023_12_11XiChun.ViewModel
             if (Parameter.XMotor.AxisMode == Motor.Mode.AUTO)
             {
                 Parameter.XMotor.AxisMode = Motor.Mode.JOG;
-                
+
                 sRtn = gts.mc.GT_PrfJog(1);//设置为jog模式
                 if (sRtn != 0)
                 {
@@ -461,7 +469,7 @@ namespace _2023_12_11XiChun.ViewModel
             }
             else
             {
-                Parameter.XMotor.AxisMode = Motor.Mode.AUTO;              
+                Parameter.XMotor.AxisMode = Motor.Mode.AUTO;
                 sRtn = gts.mc.GT_PrfTrap(1);
                 if (sRtn != 0)
                 {
@@ -506,7 +514,7 @@ namespace _2023_12_11XiChun.ViewModel
                 MotorModel.Message = "GetRealPos1 Fail:" + sRtn.ToString();
                 return;
             }
-            Parameter.XMotor.RealPosition = Math.Round(dRealPos / (double)Parameter.XMotor.Pulse,3);
+            Parameter.XMotor.RealPosition = Math.Round(dRealPos / (double)Parameter.XMotor.Pulse, 3);
             sRtn = gts.mc.GT_GetPrfVel(1, out dRealVel, 1, out clk);
             if (sRtn != 0)
             {
@@ -622,7 +630,7 @@ namespace _2023_12_11XiChun.ViewModel
         /// </summary>
         private void InitCard()
         {
-            
+
             sRtn = gts.mc.GT_Open(0, 1);//打开运动控制卡
             if (sRtn != 0)
             {
@@ -651,6 +659,9 @@ namespace _2023_12_11XiChun.ViewModel
                 return;
             }
 
+            sRtn = gts.mc.GT_SetAxisBand(1, 50, 400);//设置误差带
+
+            sRtn = gts.mc.GT_SetAxisBand(2, 50, 400);
             //sRtn = gts.mc.GT_HomeInit();			        // 初始化自动回原点功能
             //sRtn = gts.mc.GT_AxisOn(1);					    // 使能轴1
             //sRtn = gts.mc.GT_AxisOn(2);					    // 使能轴2			
