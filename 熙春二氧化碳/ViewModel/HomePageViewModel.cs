@@ -57,7 +57,12 @@ namespace _2023_12_11XiChun.ViewModel
                     return;
                 }
                 isAuto =true;
-                isAutoRun = true;
+                //将电机设置为点动模式
+                gts.mc.GT_PrfTrap(1);
+                gts.mc.GT_PrfTrap(2);
+                Parameter.XMotor.AxisMode = Motor.Mode.AUTO;
+                Parameter.YMotor.AxisMode = Motor.Mode.AUTO;
+
                 WorkCancellationTokenSource = new CancellationTokenSource();
                 Task task = new Task(() => { Work(WorkCancellationTokenSource.Token); }, WorkCancellationTokenSource.Token, TaskCreationOptions.LongRunning);
                 task.Start();
@@ -75,6 +80,12 @@ namespace _2023_12_11XiChun.ViewModel
             {
                 isAuto = false;
                 isBlindRun = true;
+                //将电机设置为点动模式
+                gts.mc.GT_PrfTrap(1);
+                gts.mc.GT_PrfTrap(2);
+                Parameter.XMotor.AxisMode = Motor.Mode.AUTO;
+                Parameter.YMotor.AxisMode = Motor.Mode.AUTO;
+
                 HomePage homePage = obj as HomePage;
                 BlindWorkCancellationTokenSource = new CancellationTokenSource();
                 Task task = new Task(() => { BlindWork(BlindWorkCancellationTokenSource.Token); }, BlindWorkCancellationTokenSource.Token, TaskCreationOptions.LongRunning);
@@ -137,6 +148,13 @@ namespace _2023_12_11XiChun.ViewModel
                         tasks[0] = Task.Run(() => { AxisMove(1, Process.XVelocity, Parameter.WaitPosition.XPosition); });
                         tasks[1] = Task.Run(() => { AxisMove(2, Process.YVelocity, Parameter.WaitPosition.YPosition); });
                         Task.WaitAll(tasks);
+                        Task.Run(() =>
+                        {
+                            JczLmc.SetOutPutPort(MainPageViewModel.mainPage.MarkFinishedPort, MainPageViewModel.mainPage.MarkFinishedLevel);
+                            //JczLmc.SetOutPutPort(3,false);
+                            Thread.Sleep(MainPageViewModel.mainPage.MarkFinishedWidth);
+                            JczLmc.SetOutPutPort(MainPageViewModel.mainPage.MarkFinishedPort, !MainPageViewModel.mainPage.MarkFinishedLevel);
+                        });
                     }
                 }
             }
@@ -316,7 +334,7 @@ namespace _2023_12_11XiChun.ViewModel
                 Task.Run(() =>
                 {
                     JczLmc.SetOutPutPort(MainPageViewModel.mainPage.MarkFinishedPort, MainPageViewModel.mainPage.MarkFinishedLevel);
-                    JczLmc.SetOutPutPort(3,false);
+                    //JczLmc.SetOutPutPort(3,false);
                     Thread.Sleep(MainPageViewModel.mainPage.MarkFinishedWidth);
                     JczLmc.SetOutPutPort(MainPageViewModel.mainPage.MarkFinishedPort, !MainPageViewModel.mainPage.MarkFinishedLevel);
                 });
@@ -418,6 +436,8 @@ namespace _2023_12_11XiChun.ViewModel
         /// <param name="position">位置 单位mm</param>
         private void AxisMove(short axis, double velocity, double position)
         {
+            if (!Parameter.XMotor.Enable) { return; }
+            if (!Parameter.YMotor.Enable) { return; }
             gts.mc.TTrapPrm trap;
             int AxisState;
             uint clk;

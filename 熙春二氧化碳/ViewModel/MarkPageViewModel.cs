@@ -232,24 +232,11 @@ namespace _2023_12_11XiChun.ViewModel
                 Bitmap bitmap = new Bitmap(JczLmc.GetCurPreviewImage((int)image.Width, (int)image.Height));
                 markPageModel.MyImage = BitMapToImageSource.Bitmap2Imagesource(bitmap);
             }
-            string strpath = dlg.SafeFileName;
-            if(strpath=="001.ezd")
-            {
-                ch(0);
-            }
-            else if(strpath=="002.ezd")
-            {
-                ch(1);
-            }
-            else if(strpath == "003.ezd")
-            {
-                ch(2);
-            }
         }
 
         private void Init()
         {
-            int nErr = JczLmc.Initialize(Application.StartupPath, true);
+            int nErr = JczLmc.Initialize(Application.StartupPath, false);
             if (nErr == 0)
             {
                 markPageModel.Message = "初始化成功";

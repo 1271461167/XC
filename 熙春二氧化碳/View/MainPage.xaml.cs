@@ -26,11 +26,6 @@ namespace _2023_12_11XiChun.View
         {
             InitializeComponent();
             this.DataContext = new MainPageViewModel();
-            MarkPageViewModel.ch += ChangeIndex;
-        }
-        public void ChangeIndex(int index)
-        {
-            this.IDCombox.SelectedIndex = index;
         }
     }
 }

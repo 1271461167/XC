@@ -59,6 +59,8 @@ namespace _2023_12_11XiChun.ViewModel
 
         private void Move(object obj)
         {
+            if (!Parameter.XMotor.Enable) {  return; }
+            if (!Parameter.YMotor.Enable) { return; }
             gts.mc.TTrapPrm trap;
             gts.mc.GT_PrfTrap(1);
             gts.mc.GT_PrfTrap(2);//设置为点位模式
