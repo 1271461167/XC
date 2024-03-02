@@ -14,26 +14,24 @@ namespace _2023_12_11XiChun.ViewModel
 {
     public delegate void Change(int a);
     public class MarkPageViewModel : CommandBase
-    {
-        
-        public static Change ch;
-
+    {       
         public static Dictionary<string,AutoProcess> keys = new Dictionary<string,AutoProcess>();
         private static bool IsInit = false;
         public static System.Timers.Timer _timer = null;
         public static AutoProcess Process { get; set; } = new AutoProcess();
         public ObservableCollection<bool> bools { get; set; } = new ObservableCollection<bool>();
         public ParameterModel Parameter { get; set; } = ParameterModel.GetParameter();
-        private static CancellationTokenSource RedMarkCancellationTokenSource = null;
         public CommandBase LoadCommand { get; set; } = new CommandBase();
         public CommandBase RefreshCommand { get; set; } = new CommandBase();
         public CommandBase MarkCommand { get; set; } = new CommandBase();
-        public CommandBase RedMarkCommand { get; set; } = new CommandBase();
-        public CommandBase CloseRedMarkCommand { get; set; } = new CommandBase();
         public CommandBase CloseCardCommand { get; set; } = new CommandBase();
         public CommandBase SetPortCommand { get; set; } = new CommandBase();
         public CommandBase BlindLoadCommand { get; set; }= new CommandBase();
         public static MarkPageModel markPageModel { get; set; } = new MarkPageModel();
+
+        public  CommandBase OpenCommand { get; set; }=new CommandBase();
+        public CommandBase InitCommand { get; set; } = new CommandBase();
+
         public MarkPageViewModel()
         {
             if (_timer == null)
@@ -55,19 +53,31 @@ namespace _2023_12_11XiChun.ViewModel
             RefreshCommand.DoExecute = new Action<object>((obj) => { Refresh(obj); });
             MarkCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             MarkCommand.DoExecute = new Action<object>((obj) => { Mark(); });
-            RedMarkCommand.DoCanExecute = new Func<object, bool>((obj) => { return RedEnable(); });
-            RedMarkCommand.DoExecute = new Action<object>((obj) =>
-            {
-                RedMarkCancellationTokenSource = new CancellationTokenSource();
-                Task task = new Task(() => { RedMarkFunction(RedMarkCancellationTokenSource.Token); }, RedMarkCancellationTokenSource.Token, TaskCreationOptions.LongRunning);
-                task.Start();
-            });
-            CloseRedMarkCommand.DoCanExecute = new Func<object, bool>((obj) => { return CloseRedEnable(); });
-            CloseRedMarkCommand.DoExecute = new Action<object>((obj) => { CloseRedMarkFunction(); });
             CloseCardCommand.DoCanExecute = new Func<object, bool>((obj) => { return CanClose(); });
             CloseCardCommand.DoExecute = new Action<object>((obj) => { CloseCard(); });
             BlindLoadCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             BlindLoadCommand.DoExecute = new Action<object>((obj) => { BlindLoad(); });
+            OpenCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            OpenCommand.DoExecute = new Action<object>((obj) => { Open(); });
+            InitCommand.DoCanExecute = new Func<object, bool>((obj) => { return CanInit(); });
+            InitCommand.DoExecute = new Action<object>((obj) => { Init(); });
+        }
+
+        private bool CanInit()
+        {
+            if (IsInit != true)
+            {
+                return true;
+            }
+            else { return false; }
+        }
+
+        private void Open()
+        {
+            CloseCard();
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            process.StartInfo.FileName = "EzCad2.exe";
+            process.Start();           
         }
 
         private void BlindLoad()
@@ -149,38 +159,8 @@ namespace _2023_12_11XiChun.ViewModel
             {
                 markPageModel.Message = "关闭板卡失败";
             }
+            markPageModel.Message = "板卡关闭";
             IsInit = false;
-        }
-
-        private bool CloseRedEnable()
-        {
-            if (RedMarkCancellationTokenSource == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        private bool RedEnable()
-        {
-            if (RedMarkCancellationTokenSource == null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private void CloseRedMarkFunction()
-        {
-            RedMarkCancellationTokenSource?.Cancel();
-            RedMarkCancellationTokenSource = null;
-            markPageModel.Message = "红光关闭";
         }
 
         private void RedMarkFunction(CancellationToken token)
