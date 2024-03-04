@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Motor_Test.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace Motor_Test.View
         public MotorPage()
         {
             InitializeComponent();
+            this.DataContext = new MotorPageViewModel();
         }
+
     }
 }
