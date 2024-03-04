@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\MotorPositionArray.cs" />
+    <Compile Include="Common\Position.cs" />
     <Compile Include="Control\myLED.cs" />
     <Compile Include="View\MotorPage.xaml.cs">
       <DependentUpon>MotorPage.xaml</DependentUpon>
