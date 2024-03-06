@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\CommandAndNotifyBase.cs" />
     <Compile Include="Common\Position.cs" />
     <Compile Include="Control\myLED.cs" />
     <Compile Include="Model\MotorArrayModel.cs" />

@@ -271,8 +271,8 @@
                 </Border.Effect>
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -289,16 +289,16 @@
                                 <Label Content="列数:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="行间距:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="列间距:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="起始X:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="起始Y:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="起始点:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                
                             </StackPanel>
                             <StackPanel Grid.Column="1">
-                                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding arrayModel.Row}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding arrayModel.Column}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding arrayModel.RowSpacing}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding arrayModel.ColumnSpacing}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding arrayModel.StartPoint}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                
                             </StackPanel>
                         </Grid>
                         <Grid Grid.Row="1">
@@ -310,13 +310,13 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <Button  Content="第一象限阵列" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="3"/>
-                            <Button Grid.Column="0" Grid.Row="1" Content="第二象限阵列" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="3"/>
-                            <Button Grid.Column="1" Grid.Row="0" Content="第三象限阵列" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="3"/>
-                            <Button Grid.Column="1" Grid.Row="1" Content="第四象限阵列" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="3"/>
+                            <Button  Content="第一象限阵列" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="3" Command="{Binding arrayModel.FirstArrayCommand}"/>
+                            <Button Grid.Column="0" Grid.Row="1" Content="第二象限阵列" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="3" Command="{Binding arrayModel.SecondArrayCommand}"/>
+                            <Button Grid.Column="1" Grid.Row="0" Content="第三象限阵列" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="3" Command="{Binding arrayModel.ThirdArrayCommand}"/>
+                            <Button Grid.Column="1" Grid.Row="1" Content="第四象限阵列" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="3" Command="{Binding arrayModel.FourthArrayCommand}"/>
                         </Grid>
                     </Grid>
-                    <ListBox x:Name="listbox" Grid.Column="1" ItemsSource="{Binding Points}" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <ListBox x:Name="listbox" Grid.Column="1" ItemsSource="{Binding arrayModel.Points}" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel/>
@@ -324,15 +324,18 @@
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="{x:Type pos:Position}">
-                                <ListBox ItemsSource="{Binding RowPoints}" BorderThickness="0" Width="200">
+                                <ListBox ItemsSource="{Binding RowPoints}" BorderThickness="0">
                                     <ListBox.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <VirtualizingStackPanel Orientation="Horizontal"/>
+                                            <UniformGrid Columns="{Binding Path=DataContext.arrayModel.Column,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
                                         </ItemsPanelTemplate>
                                     </ListBox.ItemsPanel>
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox/>
+                                            <StackPanel Width="70" Orientation="Horizontal">
+                                                <TextBlock Width="50" Text="{Binding}"/>
+                                                <CheckBox Width="20"/>
+                                            </StackPanel>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>

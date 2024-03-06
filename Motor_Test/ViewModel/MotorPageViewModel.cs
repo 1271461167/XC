@@ -1,24 +1,23 @@
 ﻿using Motor_Test.Common;
+using Motor_Test.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace Motor_Test.ViewModel
 {
-    public class MotorPageViewModel
+    public class MotorPageViewModel:CommandBase
     {
-        public ObservableCollection<Position> Points { get; set; } = new ObservableCollection<Position>();
-
+        public MotorArrayModel arrayModel { get; set; }= new MotorArrayModel();
         public MotorPageViewModel()
         {
-            Points.Add(new Position {RowPoints=new ObservableCollection<Point> { new Point(0, 0),new Point(1,0),new Point(2,2) } });
-            Points.Add(new Position { RowPoints = new ObservableCollection<Point> { new Point(0, 0), new Point(1, 0) } });
-            Points.Add(new Position { RowPoints = new ObservableCollection<Point> { new Point(0, 0), new Point(1, 0) } });
-            Points.Add(new Position { RowPoints = new ObservableCollection<Point> { new Point(0, 0), new Point(1, 0) } });
+
         }
+
     }
 }

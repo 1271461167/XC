@@ -10,7 +10,7 @@ namespace Motor_Test.Common
 {
     public class Position
     {
-        public ObservableCollection<Point> RowPoints { get; set; }
+        public ObservableCollection<Point> RowPoints { get; set; }=new ObservableCollection<Point>();
 
     }
 }
