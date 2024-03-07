@@ -14,6 +14,7 @@ namespace Motor_Test.ViewModel
     public class MotorPageViewModel:CommandBase
     {
         public MotorArrayModel arrayModel { get; set; }= new MotorArrayModel();
+        public JogMotorModel jogMotorModel { get; set; } = new JogMotorModel();
         public MotorPageViewModel()
         {
 

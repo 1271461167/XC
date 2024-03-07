@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Xaml.Behaviors.Wpf.1.1.77\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -55,9 +58,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\ArrayMotor\MyPoint.cs" />
     <Compile Include="Common\CommandAndNotifyBase.cs" />
-    <Compile Include="Common\Position.cs" />
+    <Compile Include="Common\ArrayMotor\RowPoint.cs" />
+    <Compile Include="Common\Motor\MotorRun.cs" />
     <Compile Include="Control\myLED.cs" />
+    <Compile Include="Model\JogMotorModel.cs" />
     <Compile Include="Model\MotorArrayModel.cs" />
     <Compile Include="ViewModel\MotorPageViewModel.cs" />
     <Compile Include="View\MotorPage.xaml.cs">
@@ -121,6 +127,7 @@
     <Resource Include="Assets\Fonts\iconfont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

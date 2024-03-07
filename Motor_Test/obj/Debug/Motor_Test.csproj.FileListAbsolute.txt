@@ -67,3 +67,7 @@ C:\Users\ywh\Desktop\Code\Motor_Test\obj\Debug\Motor_Test.csproj.GenerateResourc
 C:\Users\ywh\Desktop\Code\Motor_Test\obj\Debug\Motor_Test.csproj.CoreCompileInputs.cache
 C:\Users\ywh\Desktop\Code\Motor_Test\obj\Debug\Motor_Test.exe
 C:\Users\ywh\Desktop\Code\Motor_Test\obj\Debug\Motor_Test.pdb
+C:\Users\ywh\Desktop\XiChun\Motor_Test\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\ywh\Desktop\XiChun\Motor_Test\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\ywh\Desktop\XiChun\Motor_Test\bin\Debug\Microsoft.Xaml.Behaviors.xml
+C:\Users\ywh\Desktop\XiChun\Motor_Test\obj\Debug\Motor_Test.csproj.CopyComplete

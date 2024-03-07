@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:pos="clr-namespace:Motor_Test.Common"
+             xmlns:pos="clr-namespace:Motor_Test.Common.ArrayMotor"
+             xmlns:behaviour="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:Motor_Test.View"
              mc:Ignorable="d" 
              xmlns:controls="clr-namespace:Motor_Test.Control"
@@ -40,8 +41,6 @@
                 <ScrollViewer x:Name="ContentHost" VerticalAlignment="Center" Content="{TemplateBinding Text}"/>
             </Border>
         </ControlTemplate>
-
-        
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -196,16 +195,17 @@
                                 <Label Content="速度(脉冲/ms)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="加速度(脉冲/ms^2)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="减速度(脉冲/ms^2)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="脉冲当量(脉冲/mm)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">
-                                <ComboBox Foreground="#AAA" Style="{StaticResource cmbstyle}" Width="100" Height="20" Margin="0,2.5,0,2.5">
+                                <ComboBox SelectedIndex="{Binding jogMotorModel.Axis}" Foreground="#AAA" Style="{StaticResource cmbstyle}" Width="100" Height="20" Margin="0,2.5,0,2.5">
                                     <ComboBoxItem Foreground="#AAA">0</ComboBoxItem>
                                     <ComboBoxItem Foreground="#AAA">1</ComboBoxItem>
                                 </ComboBox>
-                                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-
+                                <TextBox Text="{Binding jogMotorModel.Vel}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding jogMotorModel.Acc}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding jogMotorModel.Dec}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding jogMotorModel.Pul}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                             </StackPanel>
                         </Grid>
                         <Grid Grid.Row="1">
@@ -264,7 +264,7 @@
                     </Grid>
                 </Border>
             </Grid>
- 
+
             <Border Grid.Row="1" CornerRadius="5" Background="White" Margin="10">
                 <Border.Effect>
                     <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
@@ -290,7 +290,7 @@
                                 <Label Content="行间距:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="列间距:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="起始点:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                
+
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <TextBox Text="{Binding arrayModel.Row}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
@@ -298,7 +298,7 @@
                                 <TextBox Text="{Binding arrayModel.RowSpacing}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                                 <TextBox Text="{Binding arrayModel.ColumnSpacing}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                                 <TextBox Text="{Binding arrayModel.StartPoint}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                
+
                             </StackPanel>
                         </Grid>
                         <Grid Grid.Row="1">
@@ -316,32 +316,55 @@
                             <Button Grid.Column="1" Grid.Row="1" Content="第四象限阵列" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="3" Command="{Binding arrayModel.FourthArrayCommand}"/>
                         </Grid>
                     </Grid>
-                    <ListBox x:Name="listbox" Grid.Column="1" ItemsSource="{Binding arrayModel.Points}" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel/>
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate DataType="{x:Type pos:Position}">
-                                <ListBox ItemsSource="{Binding RowPoints}" BorderThickness="0">
-                                    <ListBox.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <UniformGrid Columns="{Binding Path=DataContext.arrayModel.Column,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
-                                        </ItemsPanelTemplate>
-                                    </ListBox.ItemsPanel>
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Width="70" Orientation="Horizontal">
-                                                <TextBlock Width="50" Text="{Binding}"/>
-                                                <CheckBox Width="20"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button  Margin="10" Content="开始阵列运动" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Command="{Binding arrayModel.ArrayRunCommand}"/>
+                            <Button  Margin="10" Content="全选" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Grid.Column="1" Command="{Binding arrayModel.CheckAllCommand}"/>
+                            <Button  Margin="10" Content="清空选择" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Grid.Column="2" Command="{Binding arrayModel.CheckNonCommand}"/>
+                        </Grid>
+                        <ListBox x:Name="listbox" Grid.Row="1" ItemsSource="{Binding arrayModel.Points}" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="{x:Type pos:MyPoint}">
+                                    <ListBox ItemsSource="{Binding RowPoints}" BorderThickness="0">
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <UniformGrid Columns="{Binding Path=DataContext.arrayModel.Column,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Width="70" Orientation="Horizontal">
+                                                    <TextBlock Width="50" Text="{Binding Point}"/>
+                                                    <CheckBox Width="20" IsChecked="{Binding IsChecked}">
+                                                        <behaviour:Interaction.Triggers>
+                                                            <behaviour:EventTrigger EventName="Checked">
+                                                                <behaviour:InvokeCommandAction Command="{Binding Path=DataContext.arrayModel.ArrayRunCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                                            </behaviour:EventTrigger>
+                                                        </behaviour:Interaction.Triggers>
+                                                    </CheckBox>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+
                 </Grid>
             </Border>
         </Grid>
