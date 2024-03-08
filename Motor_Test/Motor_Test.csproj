@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -61,6 +62,10 @@
     <Compile Include="Common\ArrayMotor\MyPoint.cs" />
     <Compile Include="Common\CommandAndNotifyBase.cs" />
     <Compile Include="Common\ArrayMotor\RowPoint.cs" />
+    <Compile Include="Common\GTS\mc.cs" />
+    <Compile Include="Common\JCZ\JczIni.cs" />
+    <Compile Include="Common\JCZ\JczLmc.cs" />
+    <Compile Include="Common\GTS\GTSIni.cs" />
     <Compile Include="Common\Motor\MotorRun.cs" />
     <Compile Include="Control\myLED.cs" />
     <Compile Include="Model\JogMotorModel.cs" />

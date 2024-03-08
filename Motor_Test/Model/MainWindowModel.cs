@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Motor_Test.Model
 {
-    public class MainWindowModel:NotifyBase
+    public class MainWindowModel:CommandAndNotifyBase
     {
         private FrameworkElement _mainContent;
 

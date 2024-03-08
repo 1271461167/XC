@@ -70,8 +70,8 @@
                         <Border BorderThickness="0,0,0,1" BorderBrush="#ddd" Margin="10"/>
                         <Label Content="轴号：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA"/>
                         <ComboBox Foreground="#AAA" Style="{StaticResource cmbstyle}" Width="150" Height="20">
-                            <ComboBoxItem Foreground="#AAA">0</ComboBoxItem>
                             <ComboBoxItem Foreground="#AAA">1</ComboBoxItem>
+                            <ComboBoxItem Foreground="#AAA">2</ComboBoxItem>
                         </ComboBox>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
@@ -199,8 +199,8 @@
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <ComboBox SelectedIndex="{Binding jogMotorModel.Axis}" Foreground="#AAA" Style="{StaticResource cmbstyle}" Width="100" Height="20" Margin="0,2.5,0,2.5">
-                                    <ComboBoxItem Foreground="#AAA">0</ComboBoxItem>
                                     <ComboBoxItem Foreground="#AAA">1</ComboBoxItem>
+                                    <ComboBoxItem Foreground="#AAA">2</ComboBoxItem>
                                 </ComboBox>
                                 <TextBox Text="{Binding jogMotorModel.Vel}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                                 <TextBox Text="{Binding jogMotorModel.Acc}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
@@ -213,7 +213,16 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Width="80"  Content="正向" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="10"/>
+                            <Button Grid.Column="0" Width="80"  Content="正向" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="10">
+                                <behaviour:Interaction.Triggers>
+                                    <behaviour:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                        <behaviour:InvokeCommandAction Command="{Binding jogMotorModel.JogPDownCommand}"/>
+                                    </behaviour:EventTrigger>
+                                    <behaviour:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                        <behaviour:InvokeCommandAction Command="{Binding jogMotorModel.JogPUpCommand}"/>
+                                    </behaviour:EventTrigger>
+                                </behaviour:Interaction.Triggers>
+                            </Button>
                             <Button Grid.Column="1" Width="80"  Content="负向" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="10"/>
                         </Grid>
                     </Grid>
@@ -246,8 +255,8 @@
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <ComboBox Foreground="#AAA" Style="{StaticResource cmbstyle}" Width="100" Height="20" Margin="0,2.5,0,2.5">
-                                    <ComboBoxItem Foreground="#AAA">0</ComboBoxItem>
                                     <ComboBoxItem Foreground="#AAA">1</ComboBoxItem>
+                                    <ComboBoxItem Foreground="#AAA">2</ComboBoxItem>
                                 </ComboBox>
                                 <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                                 <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
