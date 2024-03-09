@@ -16,10 +16,16 @@ namespace Motor_Test.Model
             JogPDownCommand.DoExecute = new Action<object>((obj) => { JogPDown(); });
             JogPUpCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             JogPUpCommand.DoExecute = new Action<object>((obj) => { JogPUp(); });
+            JogNUpCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            JogNUpCommand.DoExecute = new Action<object>((obj) => { JogNUp(); });
+            JogNDownCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            JogNDownCommand.DoExecute = new Action<object>((obj) => { JogNDown(); });
         }
         #region Command
         public CommandAndNotifyBase JogPDownCommand { get; set; } = new CommandAndNotifyBase();
         public CommandAndNotifyBase JogPUpCommand { get; set; } = new CommandAndNotifyBase();
+        public CommandAndNotifyBase JogNDownCommand { get; set; } = new CommandAndNotifyBase();
+        public CommandAndNotifyBase JogNUpCommand { get; set; } = new CommandAndNotifyBase();
         #endregion
         #region 方法
         private void JogPUp()
@@ -33,6 +39,16 @@ namespace Motor_Test.Model
             MotorRun.Jog(short.Parse((Axis + 1).ToString()), Vel_Tem, Acc, Dec);
         }
 
+        private void JogNUp()
+        {
+            MotorRun.SmoothStop(short.Parse((Axis + 1).ToString()));
+        }
+
+        private void JogNDown()
+        {
+            double Vel_Tem = Vel * Pul / 1000.0;
+            MotorRun.Jog(short.Parse((Axis + 1).ToString()), -Vel_Tem, Acc, Dec);
+        }
         #endregion
         #region 字段
         private short axis;//轴号

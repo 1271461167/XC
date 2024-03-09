@@ -25,7 +25,7 @@ namespace Motor_Test.ViewModel
 
         private void InitCard()
         {
-
+            GTSIni.InitCard("GTS800.cfg");
         }
 
         private void DoNavChanged(object obj)

@@ -223,7 +223,16 @@
                                     </behaviour:EventTrigger>
                                 </behaviour:Interaction.Triggers>
                             </Button>
-                            <Button Grid.Column="1" Width="80"  Content="负向" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="10"/>
+                            <Button Grid.Column="1" Width="80"  Content="负向" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="10">
+                                <behaviour:Interaction.Triggers>
+                                    <behaviour:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                        <behaviour:InvokeCommandAction Command="{Binding jogMotorModel.JogNDownCommand}"/>
+                                    </behaviour:EventTrigger>
+                                    <behaviour:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                        <behaviour:InvokeCommandAction Command="{Binding jogMotorModel.JogNUpCommand}"/>
+                                    </behaviour:EventTrigger>
+                                </behaviour:Interaction.Triggers>
+                            </Button>
                         </Grid>
                     </Grid>
                 </Border>
