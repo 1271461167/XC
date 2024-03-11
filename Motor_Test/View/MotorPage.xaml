@@ -69,7 +69,7 @@
                         </Grid.RowDefinitions>
                         <Border BorderThickness="0,0,0,1" BorderBrush="#ddd" Margin="10"/>
                         <Label Content="轴号：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA"/>
-                        <ComboBox Foreground="#AAA" Style="{StaticResource cmbstyle}" Width="150" Height="20">
+                        <ComboBox SelectedIndex="{Binding stsModel.Axis}" Foreground="#AAA" Style="{StaticResource cmbstyle}" Width="150" Height="20">
                             <ComboBoxItem Foreground="#AAA">1</ComboBoxItem>
                             <ComboBoxItem Foreground="#AAA">2</ComboBoxItem>
                         </ComboBox>
@@ -79,7 +79,7 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Border BorderThickness="0,0,1,0" BorderBrush="#ddd" Margin="0,10"/>
-                            <StackPanel>
+                            <StackPanel >
                                 <Label Content="实际位置（脉冲）" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="实际位置（mm）" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="规划位置（脉冲）" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
@@ -89,13 +89,13 @@
                                 <Label Content="加速度(脉冲/ms^2)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="运动模式" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                             </StackPanel>
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA"/>
-                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA"/>
-                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA"/>
-                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA"/>
-                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA"/>
-                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA"/>
+                            <StackPanel Grid.Column="1" Margin="10,0">
+                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="{Binding stsModel.EncPos}"/>
+                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="0"/>
+                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="{Binding stsModel.PrfPos}"/>
+                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="0"/>
+                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="{Binding stsModel.EncVel}"/>
+                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="{Binding stsModel.PrfPos}"/>
                                 <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA"/>
                                 <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA"/>
                             </StackPanel>
@@ -138,9 +138,9 @@
                         <Label Content="负向限位：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Grid.Row="1"/>
                         <Label Content="正向限位：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Grid.Row="2"/>
                         <Label Content="运动出错：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Grid.Row="3"/>
-                        <controls:myLED Grid.Column="1" IsTrue="False" Height="20" Style="{StaticResource myLED}" Grid.Row="0"/>
-                        <controls:myLED Grid.Column="1" IsTrue="False" Height="20" Style="{StaticResource myLED}" Grid.Row="1"/>
-                        <controls:myLED Grid.Column="1" IsTrue="False" Height="20" Style="{StaticResource myLED}" Grid.Row="2"/>
+                        <controls:myLED Grid.Column="1" IsTrue="{Binding stsModel.Alarm}" Height="20" Style="{StaticResource myLED}" Grid.Row="0"/>
+                        <controls:myLED Grid.Column="1" IsTrue="{Binding stsModel.ONL}" Height="20" Style="{StaticResource myLED}" Grid.Row="1"/>
+                        <controls:myLED Grid.Column="1" IsTrue="{Binding stsModel.OPL}" Height="20" Style="{StaticResource myLED}" Grid.Row="2"/>
                         <controls:myLED Grid.Column="1" IsTrue="False" Height="20" Style="{StaticResource myLED}" Grid.Row="3"/>
                     </Grid>
                     <Grid Grid.Column="1" Margin="10">
@@ -158,8 +158,8 @@
                         <Label Content="运动状态：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Grid.Row="1"/>
                         <Label Content="回零状态：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Grid.Row="2"/>
                         <Label Content="IO停止：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Grid.Row="3"/>
-                        <controls:myLED Grid.Column="1" IsTrue="False" Height="20" Style="{StaticResource myLED}" Grid.Row="0"/>
-                        <controls:myLED Grid.Column="1" IsTrue="False" Height="20" Style="{StaticResource myLED}" Grid.Row="1"/>
+                        <controls:myLED Grid.Column="1" IsTrue="{Binding stsModel.Enable}" Height="20" Style="{StaticResource myLED}" Grid.Row="0"/>
+                        <controls:myLED Grid.Column="1" IsTrue="{Binding stsModel.Runover}" Height="20" Style="{StaticResource myLED}" Grid.Row="1"/>
                         <controls:myLED Grid.Column="1" IsTrue="False" Height="20" Style="{StaticResource myLED}" Grid.Row="2"/>
                         <controls:myLED Grid.Column="1" IsTrue="False" Height="20" Style="{StaticResource myLED}" Grid.Row="3"/>
                     </Grid>

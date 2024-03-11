@@ -15,7 +15,7 @@ namespace Motor_Test.ViewModel
     {
         public MotorArrayModel arrayModel { get; set; }= new MotorArrayModel();
         public JogMotorModel jogMotorModel { get; set; } = new JogMotorModel();
-        public MotorStsModel stsModel { get; set; }=new MotorStsModel();
+        public MotorStsModel stsModel { get; set; }=MotorStsModel.GetInstance();
         public MotorPageViewModel()
         {
 
