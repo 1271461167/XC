@@ -1,5 +1,6 @@
 ﻿using Motor_Test.Common;
 using Motor_Test.Common.Motor;
+using Motor_Test.Global;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,19 +21,25 @@ namespace Motor_Test.Model
             JogNUpCommand.DoExecute = new Action<object>((obj) => { JogNUp(); });
             JogNDownCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             JogNDownCommand.DoExecute = new Action<object>((obj) => { JogNDown(); });
+            SelectChangedCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            SelectChangedCommand.DoExecute = new Action<object>((obj) => { SelectChanged(); });
         }
         #region Command
         public CommandAndNotifyBase JogPDownCommand { get; set; } = new CommandAndNotifyBase();
         public CommandAndNotifyBase JogPUpCommand { get; set; } = new CommandAndNotifyBase();
         public CommandAndNotifyBase JogNDownCommand { get; set; } = new CommandAndNotifyBase();
         public CommandAndNotifyBase JogNUpCommand { get; set; } = new CommandAndNotifyBase();
+        public CommandAndNotifyBase SelectChangedCommand { get; set; }= new CommandAndNotifyBase();
         #endregion
         #region 方法
         private void JogPUp()
         {
             MotorRun.SmoothStop(short.Parse((Axis+1).ToString()));
         }
-
+        private void SelectChanged()
+        {
+            this.Pul = MotorSettings.Motor_Setting[this.Axis].Puls;
+        }
         private void JogPDown()
         {
             double Vel_Tem = Vel * Pul / 1000.0;

@@ -54,7 +54,6 @@ namespace Motor_Test.Common.Motor
             CommandHandler(mc.GT_Reset());
             CommandHandler(mc.GT_LoadConfig(str));
             CommandHandler(mc.GT_ClrSts(1,4));
-
         }
     }
 }

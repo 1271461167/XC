@@ -53,10 +53,44 @@
             </Border.Effect>
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Grid Margin="10,5">
+                <Border BorderThickness="0,0,0,1" BorderBrush="#ddd" Margin="10"/>
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <Label Content="轴号：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA"/>
+                            <Label Content="脉冲当量：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                            <Label Content="误差带：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                            <Label Content="误差延时：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <ComboBox SelectedIndex="{Binding settingsModel.Axis}" Foreground="#AAA" Style="{StaticResource cmbstyle}" Width="100" Height="20" HorizontalAlignment="Left" Margin="0,2.5,0,2.5">
+                                <behaviour:Interaction.Triggers>
+                                    <behaviour:EventTrigger EventName="SelectionChanged">
+                                        <behaviour:InvokeCommandAction Command="{Binding settingsModel.SelectChangedCommand}"/>
+                                    </behaviour:EventTrigger>
+                                </behaviour:Interaction.Triggers>
+                                <ComboBoxItem Foreground="#AAA">1</ComboBoxItem>
+                                <ComboBoxItem Foreground="#AAA">2</ComboBoxItem>
+                            </ComboBox>
+                            <TextBox Width="100" Text="{Binding settingsModel.Pul}"  Style="{DynamicResource TextBoxStyle1}" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Margin="0,2.5,0,2.5"/>
+                            <TextBox Width="100" Text="{Binding settingsModel.Band}" Style="{DynamicResource TextBoxStyle1}" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Margin="0,2.5,0,2.5"/>
+                            <TextBox Width="100" Text="{Binding settingsModel.Time}" Style="{DynamicResource TextBoxStyle1}" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Margin="0,2.5,0,2.5"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <Grid Margin="10,5" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition/>
@@ -70,15 +104,20 @@
                         <Border BorderThickness="0,0,0,1" BorderBrush="#ddd" Margin="10"/>
                         <Label Content="轴号：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA"/>
                         <ComboBox SelectedIndex="{Binding stsModel.Axis}" Foreground="#AAA" Style="{StaticResource cmbstyle}" Width="150" Height="20">
+                            <behaviour:Interaction.Triggers>
+                                <behaviour:EventTrigger EventName="SelectionChanged">
+                                    <behaviour:InvokeCommandAction Command="{Binding stsModel.SelectChangedCommand}"/>
+                                </behaviour:EventTrigger>
+                            </behaviour:Interaction.Triggers>
                             <ComboBoxItem Foreground="#AAA">1</ComboBoxItem>
                             <ComboBoxItem Foreground="#AAA">2</ComboBoxItem>
                         </ComboBox>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Border BorderThickness="0,0,1,0" BorderBrush="#ddd" Margin="0,10"/>
+                            
                             <StackPanel >
                                 <Label Content="实际位置（脉冲）" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="实际位置（mm）" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
@@ -89,11 +128,11 @@
                                 <Label Content="加速度(脉冲/ms^2)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="运动模式" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                             </StackPanel>
-                            <StackPanel Grid.Column="1" Margin="10,0">
+                            <StackPanel Grid.Column="1" Margin="10,5">
                                 <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="{Binding stsModel.EncPos}"/>
-                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="0"/>
+                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="{Binding stsModel.Enc_mm}"/>
                                 <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="{Binding stsModel.PrfPos}"/>
-                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="0"/>
+                                <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="{Binding stsModel.Vel_mm}"/>
                                 <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="{Binding stsModel.EncVel}"/>
                                 <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Text="{Binding stsModel.PrfPos}"/>
                                 <TextBlock Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA"/>
@@ -116,8 +155,8 @@
                         <Button Height="45" Margin="5,5" Content="初始化" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Grid.Row="4"/>
                     </Grid>
                 </Grid>
-                <Border BorderThickness="0,1,0,0" BorderBrush="#ddd" Margin="10,0" Grid.Row="1"/>
-                <Grid Grid.Row="1">
+                <Border BorderThickness="0,1,0,0" BorderBrush="#ddd" Margin="10,0" Grid.Row="2"/>
+                <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -195,17 +234,22 @@
                                 <Label Content="速度(脉冲/ms)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="加速度(脉冲/ms^2)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="减速度(脉冲/ms^2)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="脉冲当量(脉冲/mm)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <ComboBox SelectedIndex="{Binding jogMotorModel.Axis}" Foreground="#AAA" Style="{StaticResource cmbstyle}" Width="100" Height="20" Margin="0,2.5,0,2.5">
+                                    <behaviour:Interaction.Triggers>
+                                        <behaviour:EventTrigger EventName="SelectionChanged">
+                                            <behaviour:InvokeCommandAction Command="{Binding jogMotorModel.SelectChangedCommand}"/>
+                                        </behaviour:EventTrigger>
+                                    </behaviour:Interaction.Triggers>
                                     <ComboBoxItem Foreground="#AAA">1</ComboBoxItem>
                                     <ComboBoxItem Foreground="#AAA">2</ComboBoxItem>
                                 </ComboBox>
                                 <TextBox Text="{Binding jogMotorModel.Vel}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                                 <TextBox Text="{Binding jogMotorModel.Acc}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                                 <TextBox Text="{Binding jogMotorModel.Dec}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Text="{Binding jogMotorModel.Pul}" Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                
                             </StackPanel>
                         </Grid>
                         <Grid Grid.Row="1">
@@ -253,24 +297,17 @@
                             <StackPanel>
                                 <Label Content="轴号：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="速度(脉冲/ms)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="脉冲当量(脉冲/mm)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                
                                 <Label Content="加速度(脉冲/ms^2)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="减速度(脉冲/ms^2)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="平滑时间(mm)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="循环次数" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="到位延时(ms)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="误差带(脉冲)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="误差带延时(ms)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <ComboBox Foreground="#AAA" Style="{StaticResource cmbstyle}" Width="100" Height="20" Margin="0,2.5,0,2.5">
                                     <ComboBoxItem Foreground="#AAA">1</ComboBoxItem>
                                     <ComboBoxItem Foreground="#AAA">2</ComboBoxItem>
                                 </ComboBox>
-                                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                                 <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                                 <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                                 <TextBox Style="{DynamicResource TextBoxStyle1}" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>

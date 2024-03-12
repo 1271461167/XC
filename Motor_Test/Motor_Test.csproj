@@ -62,14 +62,18 @@
     <Compile Include="Common\ArrayMotor\MyPoint.cs" />
     <Compile Include="Common\CommandAndNotifyBase.cs" />
     <Compile Include="Common\ArrayMotor\RowPoint.cs" />
+    <Compile Include="Common\CreateIni.cs" />
     <Compile Include="Common\GTS\mc.cs" />
     <Compile Include="Common\JCZ\JczIni.cs" />
     <Compile Include="Common\JCZ\JczLmc.cs" />
     <Compile Include="Common\GTS\GTSIni.cs" />
     <Compile Include="Common\Motor\MotorRun.cs" />
+    <Compile Include="Common\Motor\MotorSet.cs" />
     <Compile Include="Control\myLED.cs" />
+    <Compile Include="Global\MotorSettings.cs" />
     <Compile Include="Model\JogMotorModel.cs" />
     <Compile Include="Model\MotorArrayModel.cs" />
+    <Compile Include="Model\MotorSettingsModel.cs" />
     <Compile Include="Model\MotorStsModel.cs" />
     <Compile Include="ViewModel\MotorPageViewModel.cs" />
     <Compile Include="View\MotorPage.xaml.cs">
@@ -99,8 +103,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\CommandBase.cs" />
-    <Compile Include="Common\NotifyBase.cs" />
     <Compile Include="Model\MainWindowModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">

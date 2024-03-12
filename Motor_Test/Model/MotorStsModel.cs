@@ -1,5 +1,6 @@
 ﻿using Motor_Test.Common;
 using Motor_Test.Common.GTS;
+using Motor_Test.Global;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -14,17 +15,26 @@ namespace Motor_Test.Model
     public class MotorStsModel:CommandAndNotifyBase
     {
         public CancellationTokenSource CancellationTokenSource { get; set; }
+        public CommandAndNotifyBase SelectChangedCommand { get; set; }= new CommandAndNotifyBase();
         private  MotorStsModel() 
         {
             this.CancellationTokenSource = new CancellationTokenSource();
             Task.Run(() => { GetSts(CancellationTokenSource.Token); }, CancellationTokenSource.Token);
+            SelectChangedCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            SelectChangedCommand.DoExecute = new Action<object>((obj) => { SelectChangedFunction(); });
         }
+
+        private void SelectChangedFunction()
+        {
+            this.Pul = MotorSettings.Motor_Setting[this.Axis].Puls;
+        }
+
         private static MotorStsModel instance = null;
         public static MotorStsModel GetInstance()
         {
             if(instance==null)
             {
-                instance = new MotorStsModel();
+                instance = new MotorStsModel { Pul = MotorSettings.Motor_Setting[0].Puls };
             }
             return instance;
         }
@@ -105,6 +115,28 @@ namespace Motor_Test.Model
             set { encVel = value;this.DoNotify(); }
         }
 
+        private int pul;
+
+        public int Pul
+        {
+            get { return pul; }
+            set { pul = value; }
+        }
+        private double enc_mm;
+
+        public double Enc_mm
+        {
+            get { return enc_mm; }
+            set { enc_mm = value;this.DoNotify(); }
+        }
+        private double vel_mm;
+
+        public double Vel_mm
+        {
+            get { return vel_mm; }
+            set { vel_mm = value;this.DoNotify(); }
+        }
+
 
         private void GetSts(CancellationToken token)
         {
@@ -123,12 +155,14 @@ namespace Motor_Test.Model
                 this.RunOver = ((AxisState & 0x0800) != 0) ? true : false;
                 mc.GT_GetEncPos(short.Parse((Axis + 1).ToString()), out encPos, 1, out clk);
                 this.EncPos = encPos;
+                this.Enc_mm = Math.Round(encPos / (double)this.Pul, 3);
                 mc.GT_GetPrfPos(short.Parse((Axis + 1).ToString()), out dRealPos, 1, out clk);
                 this.PrfPos = dRealPos;
                 mc.GT_GetPrfVel(short.Parse((Axis + 1).ToString()), out dRealVel, 1, out clk);
                 this.PrfVel = dRealVel;
                 mc.GT_GetEncVel(short.Parse((Axis + 1).ToString()), out encVel, 1, out clk);
                 this.EncVel = encVel;
+                this.Vel_mm = Math.Round(encVel * 1000.0 / (double)this.Pul,3);
             }
         }
         public void Stop()
