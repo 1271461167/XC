@@ -19,5 +19,11 @@ namespace Motor_Test.Common
         {
             WritePrivateProfileString(section, key, defaultvalue, rootpath);
         }
+        public static string ReadIni(string section, string key, string defaultvalue)
+        {
+            StringBuilder stringBuilder = new StringBuilder(256);
+            GetPrivateProfileString(section, key, defaultvalue, stringBuilder, stringBuilder.Capacity, rootpath);
+            return stringBuilder.ToString();
+        }
     }
 }

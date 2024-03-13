@@ -65,14 +65,14 @@ namespace Motor_Test.Model
         }
 
         private void SelectChangedFunction()
-        {
+        {          
             int band, time;
-            mc.GT_GetAxisBand(short.Parse((this.Axis + 1).ToString()), out band, out time);
-            this.Band = band;
-            this.Time = time;
-            MotorSettings.Motor_Setting[this.Axis].Band = band;
-            MotorSettings.Motor_Setting[this.Axis].Time = time;
             MotorSettings.Motor_Setting[this.Axis].Axis = this.Axis;
+            this.Band = MotorSettings.Motor_Setting[this.Axis].Band;
+            this.Time = MotorSettings.Motor_Setting[this.Axis].Time;
+            mc.GT_GetAxisBand(short.Parse((this.Axis + 1).ToString()), out band, out time);
+            this.Band= band;
+            this.Time= time;           
             this.Pul = MotorSettings.Motor_Setting[this.Axis].Puls;
         }
     }

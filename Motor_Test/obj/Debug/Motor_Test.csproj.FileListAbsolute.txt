@@ -71,3 +71,5 @@ C:\Users\ywh\Desktop\XiChun\Motor_Test\bin\Debug\Microsoft.Xaml.Behaviors.dll
 C:\Users\ywh\Desktop\XiChun\Motor_Test\bin\Debug\Microsoft.Xaml.Behaviors.pdb
 C:\Users\ywh\Desktop\XiChun\Motor_Test\bin\Debug\Microsoft.Xaml.Behaviors.xml
 C:\Users\ywh\Desktop\XiChun\Motor_Test\obj\Debug\Motor_Test.csproj.CopyComplete
+C:\Users\ywh\Desktop\XiChun\Motor_Test\obj\Debug\View\MarkPage.g.cs
+C:\Users\ywh\Desktop\XiChun\Motor_Test\obj\Debug\View\MarkPage.baml

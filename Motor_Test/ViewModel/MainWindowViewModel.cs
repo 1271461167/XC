@@ -1,5 +1,6 @@
 ﻿using Motor_Test.Common;
 using Motor_Test.Common.GTS;
+using Motor_Test.Common.JCZ;
 using Motor_Test.Common.Motor;
 using Motor_Test.Model;
 using System;
@@ -26,6 +27,7 @@ namespace Motor_Test.ViewModel
         private void InitCard()
         {
             GTSIni.InitCard("GTS800.cfg");
+            JczIni.InitCard();
         }
 
         private void DoNavChanged(object obj)

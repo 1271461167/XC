@@ -26,7 +26,7 @@
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <RadioButton Content="首页" Style="{StaticResource NavRadioButton}" IsChecked="True" />
                     <RadioButton Content="电机" Style="{StaticResource NavRadioButton}" Command="{Binding NavChangedCommand}" CommandParameter="MotorPage"/>
-                    <RadioButton Content="内容" Style="{StaticResource NavRadioButton}" />
+                    <RadioButton Content="标刻" Style="{StaticResource NavRadioButton}" Command="{Binding NavChangedCommand}" CommandParameter="MarkPage"/>
                     <RadioButton Content="首页" Style="{StaticResource NavRadioButton}"/>
                 </StackPanel>
                 <ContentControl Grid.Row="3" Content="{Binding ViewModel.MainContent}"/>

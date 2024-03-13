@@ -25,6 +25,7 @@ namespace Motor_Test.ViewModel
             settingsModel.Band = MotorSettings.Motor_Setting[0].Band;
             settingsModel.Time = MotorSettings.Motor_Setting[0].Time;
             
+            
         }
 
     }
