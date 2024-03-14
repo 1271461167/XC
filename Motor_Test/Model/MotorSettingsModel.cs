@@ -27,6 +27,8 @@ namespace Motor_Test.Model
             get { return pul; }
             set
             {
+                if (value == pul)
+                    return;
                 pul = value;
                 MotorSettings.Motor_Setting[this.Axis].Puls = pul;
                 this.DoNotify();
@@ -39,9 +41,13 @@ namespace Motor_Test.Model
             get { return band; }
             set
             {
-                band = value;
-                MotorSettings.Motor_Setting[this.Axis].Band = band;
-                mc.GT_SetAxisBand(short.Parse((this.Axis + 1).ToString()), band, this.Time);
+                if (band == value)
+                    return;               
+                GtsHandler.CommandHandler(mc.GT_SetAxisBand(short.Parse((this.Axis + 1).ToString()), band, this.Time));
+                int b, t;
+                GtsHandler.CommandHandler(mc.GT_GetAxisBand(short.Parse((this.Axis + 1).ToString()),out b,out t));
+                MotorSettings.Motor_Setting[this.Axis].Band = b;
+                band = b;
                 this.DoNotify();
             }
         }
@@ -52,9 +58,13 @@ namespace Motor_Test.Model
             get { return time; }
             set
             {
-                time = value;
-                MotorSettings.Motor_Setting[this.Axis].Time = time;
-                mc.GT_SetAxisBand(short.Parse((this.Axis + 1).ToString()), this.Band, time);
+                if (time == value)
+                    return;
+                GtsHandler.CommandHandler(mc.GT_SetAxisBand(short.Parse((this.Axis + 1).ToString()), this.Band, time));
+                int b, t;
+                GtsHandler.CommandHandler(mc.GT_GetAxisBand(short.Parse((this.Axis + 1).ToString()), out b, out t));
+                MotorSettings.Motor_Setting[this.Axis].Time = t;
+                time = t;
                 this.DoNotify();
             }
         }
@@ -66,13 +76,9 @@ namespace Motor_Test.Model
 
         private void SelectChangedFunction()
         {          
-            int band, time;
             MotorSettings.Motor_Setting[this.Axis].Axis = this.Axis;
             this.Band = MotorSettings.Motor_Setting[this.Axis].Band;
-            this.Time = MotorSettings.Motor_Setting[this.Axis].Time;
-            mc.GT_GetAxisBand(short.Parse((this.Axis + 1).ToString()), out band, out time);
-            this.Band= band;
-            this.Time= time;           
+            this.Time = MotorSettings.Motor_Setting[this.Axis].Time;          
             this.Pul = MotorSettings.Motor_Setting[this.Axis].Puls;
         }
     }

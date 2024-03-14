@@ -24,8 +24,7 @@ namespace Motor_Test.ViewModel
             settingsModel.Pul = MotorSettings.Motor_Setting[0].Puls;
             settingsModel.Band = MotorSettings.Motor_Setting[0].Band;
             settingsModel.Time = MotorSettings.Motor_Setting[0].Time;
-            
-            
+                       
         }
 
     }

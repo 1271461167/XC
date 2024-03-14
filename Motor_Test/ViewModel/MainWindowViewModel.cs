@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Motor_Test.ViewModel
 {
@@ -17,10 +18,28 @@ namespace Motor_Test.ViewModel
     {
         public static MainWindowModel ViewModel { get; set; } = new MainWindowModel();
         public CommandAndNotifyBase NavChangedCommand { get; set; } = new CommandAndNotifyBase();
+        public CommandAndNotifyBase WindowLoadedCommand { get; set; }= new CommandAndNotifyBase();
+        public CommandAndNotifyBase ClearLogCommand { get; set; }=new CommandAndNotifyBase();
         public MainWindowViewModel()
         {
             NavChangedCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             NavChangedCommand.DoExecute = new Action<object>((obj) => { DoNavChanged(obj); });
+            WindowLoadedCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            WindowLoadedCommand.DoExecute = new Action<object>((obj) => { WindowLoaded(obj); });
+            ClearLogCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            ClearLogCommand.DoExecute = new Action<object>((obj) => { ClearLog(); });
+        }
+
+        private void ClearLog()
+        {
+            Log.Clear();
+        }
+
+        private void WindowLoaded(object obj)
+        {
+            RichTextBox richTextBox = (RichTextBox)obj;
+            Log.SetTextControl(richTextBox);
+            Log.Suc("软件打开成功");
             InitCard();
         }
 

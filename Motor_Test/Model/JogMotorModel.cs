@@ -43,6 +43,8 @@ namespace Motor_Test.Model
         private void JogPDown()
         {
             double Vel_Tem = Vel * Pul / 1000.0;
+            double Acc = Vel_Tem / AccTime;
+            double Dec = Vel_Tem / DecTime;
             MotorRun.Jog(short.Parse((Axis + 1).ToString()), Vel_Tem, Acc, Dec);
         }
 
@@ -54,14 +56,16 @@ namespace Motor_Test.Model
         private void JogNDown()
         {
             double Vel_Tem = Vel * Pul / 1000.0;
+            double Acc = Vel_Tem / AccTime;
+            double Dec = Vel_Tem / DecTime;
             MotorRun.Jog(short.Parse((Axis + 1).ToString()), -Vel_Tem, Acc, Dec);
         }
         #endregion
         #region 字段
         private short axis;//轴号
         private double vel;//速度 单位 pul/ms
-        private double acc;//加速度 单位 pul/ms^2
-        private double dec;//减速度 单位 pul/ms^2
+        private double acc;//加速度时间 单位 ms
+        private double dec;//减速度时间 单位 ms
         private int pul;//脉冲当量 单位 pul/mm
         #endregion
         #region 属性
@@ -84,7 +88,7 @@ namespace Motor_Test.Model
         /// <summary>
         /// 加速度 单位 pul/ms^2
         /// </summary>
-		public double Acc
+		public double AccTime
 		{
 			get { return acc; }
 			set { acc = value;this.DoNotify(); }
@@ -92,7 +96,7 @@ namespace Motor_Test.Model
         /// <summary>
         /// 减速度 单位 pul/ms^2
         /// </summary>
-        public double Dec
+        public double DecTime
 		{
 			get { return dec; }
 			set { dec = value;this.DoNotify(); }

@@ -63,10 +63,13 @@
     <Compile Include="Common\CommandAndNotifyBase.cs" />
     <Compile Include="Common\ArrayMotor\RowPoint.cs" />
     <Compile Include="Common\CreateIni.cs" />
+    <Compile Include="Common\GTS\GtsHandler.cs" />
     <Compile Include="Common\GTS\mc.cs" />
+    <Compile Include="Common\JCZ\JczHandler.cs" />
     <Compile Include="Common\JCZ\JczIni.cs" />
     <Compile Include="Common\JCZ\JczLmc.cs" />
     <Compile Include="Common\GTS\GTSIni.cs" />
+    <Compile Include="Common\Log\Log.cs" />
     <Compile Include="Common\Motor\MotorRun.cs" />
     <Compile Include="Common\Motor\MotorSet.cs" />
     <Compile Include="Control\myLED.cs" />

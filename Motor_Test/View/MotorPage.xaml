@@ -152,7 +152,7 @@
                         <Button Height="45" Margin="5,5" Content="伺服使能" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Grid.Row="1"/>
                         <Button Height="45" Margin="5,5" Content="位置清零" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Grid.Row="2"/>
                         <Button Height="45" Margin="5,5" Content="伺服停止" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Grid.Row="3"/>
-                        <Button Height="45" Margin="5,5" Content="初始化" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Grid.Row="4"/>
+                        <Button Height="45" Margin="5,5" Content="回原点" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Grid.Row="4"/>
                     </Grid>
                 </Grid>
                 <Border BorderThickness="0,1,0,0" BorderBrush="#ddd" Margin="10,0" Grid.Row="2"/>
@@ -231,9 +231,9 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel>
                                 <Label Content="轴号：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="速度(脉冲/ms)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="加速度(脉冲/ms^2)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="减速度(脉冲/ms^2)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="速度(mm/s)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="加速时间(ms)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="减速时间(ms)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 
                             </StackPanel>
                             <StackPanel Grid.Column="1">
@@ -247,8 +247,8 @@
                                     <ComboBoxItem Foreground="#AAA">2</ComboBoxItem>
                                 </ComboBox>
                                 <TextBox Text="{Binding jogMotorModel.Vel}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Text="{Binding jogMotorModel.Acc}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Text="{Binding jogMotorModel.Dec}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding jogMotorModel.AccTime}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding jogMotorModel.DecTime}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                                 
                             </StackPanel>
                         </Grid>
@@ -296,12 +296,11 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel>
                                 <Label Content="轴号：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="速度(脉冲/ms)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                
-                                <Label Content="加速度(脉冲/ms^2)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="减速度(脉冲/ms^2)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="平滑时间(mm)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="循环次数" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="速度(mm/s)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="加速时间(ms)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="减速时间(ms)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="平滑时间(ms)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="设定位置(mm)" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <ComboBox Foreground="#AAA" Style="{StaticResource cmbstyle}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="20" Margin="0,2.5,0,2.5">
@@ -419,7 +418,6 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </Grid>
-
                 </Grid>
             </Border>
         </Grid>

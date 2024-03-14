@@ -11,7 +11,7 @@ namespace Motor_Test.Common.JCZ
     {
         public static void InitCard()
         {
-            JczLmc.Initialize(Environment.CurrentDirectory, false);
+           JczHandler.CommandHandler(JczLmc.Initialize(Environment.CurrentDirectory, false));
         }
     }
 }
