@@ -16,12 +16,20 @@ namespace Motor_Test.Model
     {
         public CancellationTokenSource CancellationTokenSource { get; set; }
         public CommandAndNotifyBase SelectChangedCommand { get; set; }= new CommandAndNotifyBase();
+        public CommandAndNotifyBase ClrStsCommand { get; set; } = new CommandAndNotifyBase();
         private  MotorStsModel() 
         {
             this.CancellationTokenSource = new CancellationTokenSource();
             Task.Run(() => { GetSts(CancellationTokenSource.Token); }, CancellationTokenSource.Token);
             SelectChangedCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             SelectChangedCommand.DoExecute = new Action<object>((obj) => { SelectChangedFunction(); });
+            ClrStsCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            ClrStsCommand.DoExecute = new Action<object>((obj) => { ClrSts(); });
+        }
+
+        private void ClrSts()
+        {
+            mc.GT_ClrSts(short.Parse((Axis + 1).ToString()),1);
         }
 
         private void SelectChangedFunction()

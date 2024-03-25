@@ -148,7 +148,7 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Button Height="45" Margin="5,5" Content="清除状态" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White"/>
+                        <Button Height="45" Margin="5,5" Content="清除状态" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Command="{Binding stsModel.ClrStsCommand}"/>
                         <Button Height="45" Margin="5,5" Content="伺服使能" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Grid.Row="1"/>
                         <Button Height="45" Margin="5,5" Content="位置清零" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Grid.Row="2"/>
                         <Button Height="45" Margin="5,5" Content="伺服停止" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Grid.Row="3"/>
