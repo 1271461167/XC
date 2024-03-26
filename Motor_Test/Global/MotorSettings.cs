@@ -10,7 +10,7 @@ using System.Windows.Media.Media3D;
 
 namespace Motor_Test.Global
 {
-    public class MotorSettings
+    public static class MotorSettings
     {
         static MotorSettings()
         {
@@ -19,8 +19,7 @@ namespace Motor_Test.Global
                 Motor_Setting[i].Puls = int.Parse(CreateIni.ReadIni("Axis"+i.ToString(), "Puls", ""));
                 Motor_Setting[i].Band = int.Parse(CreateIni.ReadIni("Axis"+i.ToString(), "Band", ""));
                 Motor_Setting[i].Time = int.Parse(CreateIni.ReadIni("Axis"+i.ToString(), "Time", ""));
-            }
-            
+            }           
         }
         public static MotorSet[] Motor_Setting { get; set; } = new MotorSet[] { new MotorSet (), new MotorSet () };
     }

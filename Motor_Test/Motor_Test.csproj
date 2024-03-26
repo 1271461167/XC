@@ -73,11 +73,13 @@
     <Compile Include="Common\Motor\MotorRun.cs" />
     <Compile Include="Common\Motor\MotorSet.cs" />
     <Compile Include="Control\myLED.cs" />
+    <Compile Include="Converter\AxisModeConverter.cs" />
     <Compile Include="Global\MotorSettings.cs" />
     <Compile Include="Model\JogMotorModel.cs" />
     <Compile Include="Model\MotorArrayModel.cs" />
     <Compile Include="Model\MotorSettingsModel.cs" />
     <Compile Include="Model\MotorStsModel.cs" />
+    <Compile Include="Model\PrfMotorModel.cs" />
     <Compile Include="ViewModel\MotorPageViewModel.cs" />
     <Compile Include="View\MarkPage.xaml.cs">
       <DependentUpon>MarkPage.xaml</DependentUpon>
@@ -154,9 +156,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converter\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Assets\Images\Dunkin-Logo.png" />
   </ItemGroup>

@@ -17,7 +17,8 @@ namespace Motor_Test.ViewModel
         public MotorArrayModel arrayModel { get; set; }= new MotorArrayModel();
         public JogMotorModel jogMotorModel { get; set; } = new JogMotorModel {Pul= MotorSettings.Motor_Setting[0].Puls };
         public MotorStsModel stsModel { get; set; }=MotorStsModel.GetInstance();
-        public MotorSettingsModel settingsModel { get; set; }=new MotorSettingsModel();
+        public MotorSettingsModel settingsModel { get; set; }=new MotorSettingsModel { Pul = MotorSettings.Motor_Setting[0].Puls };
+        public PrfMotorModel prfMotorModel { get; set; }=new PrfMotorModel();
         public MotorPageViewModel()
         {
             settingsModel.Axis = 0;

@@ -8,11 +8,10 @@ namespace Motor_Test.Common
 {
     public static class Log
     {
-        private const int MaxCount = 1000;
+        private const int MaxCount = 500;
         private static int Count = 0;
         private static RichTextBox textControl;
         private static InlineCollection inlines;
-
         //设置主控件
         public static void SetTextControl(RichTextBox _textBox)
         {

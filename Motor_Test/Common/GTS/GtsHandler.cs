@@ -2,12 +2,12 @@
 {
     public static class GtsHandler
     {
-        public static void CommandHandler(short nRts)
+        public static int CommandHandler(short nRts)
         {
             switch (nRts)
             {
                 case 0:
-                    break;
+                    return 0;
                 case 1:
                     Log.Error("GooGol:  "+"指令执行错误");
                     break;
@@ -36,9 +36,8 @@
                 default:                   
                     Log.Error("GooGol:  " + "未知错误");
                     break;
-
             }
-
+            return -1;
         }
     }
 }
