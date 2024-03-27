@@ -79,7 +79,6 @@
     <Compile Include="Model\MotorSettingsModel.cs" />
     <Compile Include="Model\MotorStsModel.cs" />
     <Compile Include="Model\PrfMotorModel.cs" />
-    <Compile Include="MotorRun.cs" />
     <Compile Include="ViewModel\MotorPageViewModel.cs" />
     <Compile Include="View\MarkPage.xaml.cs">
       <DependentUpon>MarkPage.xaml</DependentUpon>

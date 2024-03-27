@@ -15,6 +15,8 @@ namespace Motor_Test.Common.GTS
 
         private GTS() { }
         private static GTS gTS = null;
+
+
         public static GTS GetGTS() 
         {
             if(gTS==null)

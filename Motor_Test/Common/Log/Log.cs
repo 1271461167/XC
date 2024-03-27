@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Documents;
 using System;
+using System.Windows.Threading;
 
 namespace Motor_Test.Common
 {
@@ -55,22 +56,41 @@ namespace Motor_Test.Common
 
         private static void AppendText(Brush color, string format, params object[] args)
         {
-            textControl.BeginChange();
-            StringBuilder builder = new StringBuilder();
-            builder.Append("[");
-            Count++;
-            builder.Append(DateTime.Now);
-            builder.Append("] : ");
-            builder.Append(string.Format(format, (object[])args));
-            builder.Append("\n");
-            string str = builder.ToString();
-            inlines.Add(new Run(str) { Foreground = color });
-            if (inlines.Count > MaxCount)
+            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() =>
             {
-                inlines.Remove(inlines.FirstInline);
-            }
-            textControl.ScrollToEnd();
-            textControl.EndChange();
+                textControl.BeginChange();
+                StringBuilder builder = new StringBuilder();
+                builder.Append("[");
+                Count++;
+                builder.Append(DateTime.Now);
+                builder.Append("] : ");
+                builder.Append(string.Format(format, (object[])args));
+                builder.Append("\n");
+                string str = builder.ToString();
+                inlines.Add(new Run(str) { Foreground = color });
+                if (inlines.Count > MaxCount)
+                {
+                    inlines.Remove(inlines.FirstInline);
+                }
+                textControl.ScrollToEnd();
+                textControl.EndChange();
+            }));
+            //textControl.BeginChange();
+            //StringBuilder builder = new StringBuilder();
+            //builder.Append("[");
+            //Count++;
+            //builder.Append(DateTime.Now);
+            //builder.Append("] : ");
+            //builder.Append(string.Format(format, (object[])args));
+            //builder.Append("\n");
+            //string str = builder.ToString();
+            //inlines.Add(new Run(str) { Foreground = color });
+            //if (inlines.Count > MaxCount)
+            //{
+            //    inlines.Remove(inlines.FirstInline);
+            //}
+            //textControl.ScrollToEnd();
+            //textControl.EndChange();
         }
     }
 }
