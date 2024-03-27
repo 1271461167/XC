@@ -45,7 +45,7 @@ namespace Motor_Test.ViewModel
 
         private void InitCard()
         {
-            GTSIni.InitCard("GTS800.cfg");
+            //GTSIni.InitCard("GTS800.cfg");
             JczIni.InitCard();
         }
 

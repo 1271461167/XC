@@ -17,12 +17,12 @@ namespace Motor_Test.Common.Motor
         /// <param name="dec">减速度 单位pul/ms^2</param>
         public static void Jog(short axis, double vel, double acc, double dec)
         {
-            GtsHandler.CommandHandler(mc.GT_PrfJog(axis));
-            jogPrm.acc = acc;
-            jogPrm.dec = dec;
-            GtsHandler.CommandHandler(mc.GT_SetJogPrm(axis, ref jogPrm));
-            GtsHandler.CommandHandler(mc.GT_SetVel(axis, vel));
-            GtsHandler.CommandHandler(mc.GT_Update(1 << (axis - 1)));
+            //GtsHandler.CommandHandler(mc.GT_PrfJog(axis));
+            //jogPrm.acc = acc;
+            //jogPrm.dec = dec;
+            //GtsHandler.CommandHandler(mc.GT_SetJogPrm(axis, ref jogPrm));
+            //GtsHandler.CommandHandler(mc.GT_SetVel(axis, vel));
+            //GtsHandler.CommandHandler(mc.GT_Update(1 << (axis - 1)));
 
         }
         /// <summary>
@@ -31,7 +31,7 @@ namespace Motor_Test.Common.Motor
         /// <param name="axis">轴号</param>
         public static void SmoothStop(short axis)
         {
-            GtsHandler.CommandHandler(mc.GT_Stop(1 << (axis - 1), 0));
+           // GtsHandler.CommandHandler(mc.GT_Stop(1 << (axis - 1), 0));
         }
         /// <summary>
         /// 急停
@@ -39,17 +39,17 @@ namespace Motor_Test.Common.Motor
         /// <param name="axis">轴号</param>
         public static void EmergencyStop(short axis)
         {
-            GtsHandler.CommandHandler(mc.GT_Stop(1 << (axis - 1), 1 << (axis - 1)));
+           // GtsHandler.CommandHandler(mc.GT_Stop(1 << (axis - 1), 1 << (axis - 1)));
         }
         public static void Trap(short axis, double vel, int pos, double acc, double dec, short smoothtime)
         {
-            GtsHandler.CommandHandler(mc.GT_PrfTrap(axis));
-            trapPrm.acc = acc;
-            trapPrm.dec = dec;
-            trapPrm.smoothTime = smoothtime;
-            GtsHandler.CommandHandler(mc.GT_SetTrapPrm(axis, ref trapPrm));
-            GtsHandler.CommandHandler(mc.GT_SetPos(axis, pos));
-            GtsHandler.CommandHandler(mc.GT_Update(1 << (axis - 1)));
+            //GtsHandler.CommandHandler(mc.GT_PrfTrap(axis));
+            //trapPrm.acc = acc;
+            //trapPrm.dec = dec;
+            //trapPrm.smoothTime = smoothtime;
+            //GtsHandler.CommandHandler(mc.GT_SetTrapPrm(axis, ref trapPrm));
+            //GtsHandler.CommandHandler(mc.GT_SetPos(axis, pos));
+            //GtsHandler.CommandHandler(mc.GT_Update(1 << (axis - 1)));
         }
         public static void SearchHome(short axis,mc.THomePrm home)
         {

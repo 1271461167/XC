@@ -318,7 +318,7 @@
                                 <TextBox Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1" Text="{Binding prfMotorModel.Count}"/>
                             </StackPanel>
                         </Grid>
-                        <Button Grid.Row="1" Grid.Column="0" Width="80"  Content="启动点位运动" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="10"/>
+                        <Button Grid.Row="1" Grid.Column="0" Width="80"  Content="启动点位运动" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White" Margin="10" Command="{Binding prfMotorModel.PrfCommand}"/>
                     </Grid>
                 </Border>
             </Grid>

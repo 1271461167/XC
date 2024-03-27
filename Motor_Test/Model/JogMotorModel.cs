@@ -1,4 +1,5 @@
 ﻿using Motor_Test.Common;
+using Motor_Test.Common.GTS;
 using Motor_Test.Common.Motor;
 using Motor_Test.Global;
 using System;
@@ -11,6 +12,7 @@ namespace Motor_Test.Model
 {
     public class JogMotorModel:CommandAndNotifyBase
     {
+        private IRunController RunController=GTS.GetGTS();
 		public JogMotorModel() 
 		{
             JogPDownCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
@@ -34,7 +36,7 @@ namespace Motor_Test.Model
         #region 方法
         private void JogPUp()
         {
-            MotorRun.SmoothStop(short.Parse((Axis+1).ToString()));
+            RunController.Stop(this.Axis);
         }
         private void SelectChanged()
         {
@@ -45,12 +47,12 @@ namespace Motor_Test.Model
             double Vel_Tem = Vel * Pul / 1000.0;
             double Acc = Vel_Tem / AccTime;
             double Dec = Vel_Tem / DecTime;
-            MotorRun.Jog(short.Parse((Axis + 1).ToString()), Vel_Tem, Acc, Dec);
+            RunController.Jog(short.Parse((Axis + 1).ToString()),Vel_Tem,Acc,Dec);
         }
 
         private void JogNUp()
         {
-            MotorRun.SmoothStop(short.Parse((Axis + 1).ToString()));
+            RunController.Stop(this.Axis);
         }
 
         private void JogNDown()
@@ -58,7 +60,7 @@ namespace Motor_Test.Model
             double Vel_Tem = Vel * Pul / 1000.0;
             double Acc = Vel_Tem / AccTime;
             double Dec = Vel_Tem / DecTime;
-            MotorRun.Jog(short.Parse((Axis + 1).ToString()), -Vel_Tem, Acc, Dec);
+            RunController.Jog(short.Parse((Axis + 1).ToString()), -Vel_Tem, Acc, Dec);
         }
         #endregion
         #region 字段

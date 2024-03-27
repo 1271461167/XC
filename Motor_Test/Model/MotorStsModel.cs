@@ -20,6 +20,7 @@ namespace Motor_Test.Model
         public CommandAndNotifyBase EnableCommand { get; set; } = new CommandAndNotifyBase();
         public CommandAndNotifyBase ZeroPosCommand { get; set; } = new CommandAndNotifyBase();
         public CommandAndNotifyBase StopAxisCommand { get; set; } = new CommandAndNotifyBase();
+        public CommandAndNotifyBase HomeCommand { get; set; }= new CommandAndNotifyBase();
         private MotorStsModel()
         {
             this.CancellationTokenSource = new CancellationTokenSource();
@@ -34,36 +35,44 @@ namespace Motor_Test.Model
             ZeroPosCommand.DoExecute = new Action<object>((obj) => { ZeroPos(); });
             StopAxisCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             StopAxisCommand.DoExecute = new Action<object>((obj) => { StopAxis(); });
+            HomeCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            HomeCommand.DoExecute = new Action<object>((obj) => { GoHome(); });
+        }
+
+        private void GoHome()
+        {
+            ZeroPos();
+
         }
 
         private void StopAxis()
         {
-            if (GtsHandler.CommandHandler(mc.GT_Stop(0X03, 0)) == 0)
-            {
-                Log.Suc("电机已停止");
-            }
+            //if (GtsHandler.CommandHandler(mc.GT_Stop(0X03, 0)) == 0)
+            //{
+            //    Log.Suc("电机已停止");
+            //}
 
         }
 
         private void ZeroPos()
         {
-            if (GtsHandler.CommandHandler(mc.GT_ZeroPos(short.Parse((Axis + 1).ToString()), 1)) == 0)
-            {
-                Log.Suc("电机位置已清零");
-            }
+            //if (GtsHandler.CommandHandler(mc.GT_ZeroPos(short.Parse((Axis + 1).ToString()), 1)) == 0)
+            //{
+            //    Log.Suc("电机位置已清零");
+            //}
         }
 
         private void Enabled()
         {
-            if (GtsHandler.CommandHandler(mc.GT_AxisOn(short.Parse((Axis + 1).ToString()))) == 0)
-            {
-                Log.Suc((this.Axis + 1).ToString() + "轴已使能");
-            }
+            //if (GtsHandler.CommandHandler(mc.GT_AxisOn(short.Parse((Axis + 1).ToString()))) == 0)
+            //{
+            //    Log.Suc((this.Axis + 1).ToString() + "轴已使能");
+            //}
         }
 
         private void ClrSts()
         {
-            GtsHandler.CommandHandler(mc.GT_ClrSts(short.Parse((Axis + 1).ToString()), 1));
+        //    GtsHandler.CommandHandler(mc.GT_ClrSts(short.Parse((Axis + 1).ToString()), 1));
         }
 
         private void SelectChangedFunction()

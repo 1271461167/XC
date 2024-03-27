@@ -11,6 +11,14 @@ namespace Motor_Test.Model
 {
     public class PrfMotorModel : CommandAndNotifyBase
     {
+        private GTS gTS=GTS.GetGTS();
+        public CommandAndNotifyBase PrfCommand { get; set; } = new CommandAndNotifyBase();
+        public PrfMotorModel()
+        {
+            PrfCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            PrfCommand.DoExecute = new Action<object>((obj) => { PrfRun(); });
+        }
+
         #region 字段
         private short axis;             //轴号
         private double vel;             //速度 单位 pul/ms
@@ -70,13 +78,45 @@ namespace Motor_Test.Model
             double Acc = Vel_Tem / AccTime;
             double Dec = Vel_Tem / DecTime;
             int Pos_Tem = (int)(Position * Pul);
-            MotorRun.Trap(short.Parse((Axis + 1).ToString()), Vel_Tem,Pos_Tem,Acc,Dec,Smoothtime);
+            gTS.Trap(short.Parse((Axis + 1).ToString()), Pos_Tem, Vel_Tem, Acc, Dec, Smoothtime);
         }
 
-        private void RoundTrap()
+        private async void RoundTrap()
         {
-            double enc_pos;
-            mc.GT_GetEncPos();
+            int AxisState;
+            for (int i = 0; i < this.Count; i++)
+            {
+                double Vel_Tem = Vel * Pul / 1000.0;
+                double Acc = Vel_Tem / AccTime;
+                double Dec = Vel_Tem / DecTime;
+                int Pos_Tem = (int)(Position * Pul);
+                gTS.Trap(short.Parse((Axis + 1).ToString()), Pos_Tem, Vel_Tem, Acc, Dec, Smoothtime);
+                await Task.Run(async () =>
+                {
+                    do
+                    {
+                        gTS.GetSts(short.Parse((Axis + 1).ToString()), out AxisState);
+                    } while ((AxisState & 0x800) != 0);
+                    await Task.Delay(1000);
+                });
+                gTS.Trap(short.Parse((Axis + 1).ToString()), 0, Vel_Tem, Acc, Dec, Smoothtime);
+                await Task.Run(async () =>
+                {
+                    do
+                    {
+                        gTS.GetSts(short.Parse((Axis + 1).ToString()), out AxisState);
+                    } while ((AxisState & 0x800) != 0);
+                    await Task.Delay(1000);
+                });
+            }
+        }
+        private void PrfRun()
+        {
+            if(this.Count==0)
+            {
+                TrapRun();
+            }
+            RoundTrap();
         }
         #endregion
     }

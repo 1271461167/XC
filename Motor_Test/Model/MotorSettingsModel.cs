@@ -43,9 +43,9 @@ namespace Motor_Test.Model
             {
                 if (band == value)
                     return;               
-                GtsHandler.CommandHandler(mc.GT_SetAxisBand(short.Parse((this.Axis + 1).ToString()), band, this.Time));
+                mc.GT_SetAxisBand(short.Parse((this.Axis + 1).ToString()), band, this.Time);
                 int b, t;
-                GtsHandler.CommandHandler(mc.GT_GetAxisBand(short.Parse((this.Axis + 1).ToString()),out b,out t));
+                mc.GT_GetAxisBand(short.Parse((this.Axis + 1).ToString()), out b, out t);
                 MotorSettings.Motor_Setting[this.Axis].Band = b;
                 band = b;
                 this.DoNotify();
@@ -60,9 +60,9 @@ namespace Motor_Test.Model
             {
                 if (time == value)
                     return;
-                GtsHandler.CommandHandler(mc.GT_SetAxisBand(short.Parse((this.Axis + 1).ToString()), this.Band, time));
+                mc.GT_SetAxisBand(short.Parse((this.Axis + 1).ToString()), this.Band, time);
                 int b, t;
-                GtsHandler.CommandHandler(mc.GT_GetAxisBand(short.Parse((this.Axis + 1).ToString()), out b, out t));
+                mc.GT_GetAxisBand(short.Parse((this.Axis + 1).ToString()), out b, out t);
                 MotorSettings.Motor_Setting[this.Axis].Time = t;
                 time = t;
                 this.DoNotify();
