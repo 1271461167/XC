@@ -1,26 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Motor_Test.Common.GTS
 {
     public class GTS : IRunController
     {
-        private  mc.TJogPrm jogPrm = new mc.TJogPrm();
-        private  mc.TTrapPrm trapPrm = new mc.TTrapPrm();
-        private  mc.THomePrm homePrm = new mc.THomePrm();
+        private static readonly object _lock = new object();
+        private mc.TJogPrm jogPrm = new mc.TJogPrm();
+        private mc.TTrapPrm trapPrm = new mc.TTrapPrm();
+        private mc.THomePrm homePrm = new mc.THomePrm();
+        private mc.THomeStatus homeStatus = new mc.THomeStatus();
 
         private GTS() { }
         private static GTS gTS = null;
 
 
-        public static GTS GetGTS() 
+        public static GTS GetGTS()
         {
-            if(gTS==null)
-                gTS = new GTS();
+            if (gTS == null)
+            {
+                lock (_lock)
+                {
+                    if (gTS == null)
+                        gTS = new GTS();
+                }
+            }
             return gTS;
         }
         public void Command(short s)
@@ -31,9 +41,39 @@ namespace Motor_Test.Common.GTS
             }
         }
 
-        public void Home()
+        public async void Home(short axis, HomePrm home)
         {
-            throw new NotImplementedException();
+            ZeroPos(axis);
+            homePrm.mode = (short)home.Mode;
+            homePrm.moveDir = (short)home.MoveDir;
+            homePrm.indexDir = (short)home.IndexDir;
+            homePrm.edge= (short)home.Edge;
+            homePrm.velHigh = (short)home.VelHigh;
+            homePrm.velLow = (short)home.VelLow;
+            homePrm.acc= (short)home.Acc;
+            homePrm.dec= (short)home.Dec;
+            homePrm.searchHomeDistance = (short)home.SearchHomeDistance;
+            homePrm.searchIndexDistance = (short)home.SearchIndexDistance;
+            homePrm.escapeStep= (short)home.EscapeStep;
+            try
+            {
+                Command(mc.GT_GoHome(axis, ref homePrm));
+                await Task.Run(() => 
+                {
+                    do
+                    {
+                        Command(mc.GT_GetHomeStatus(axis, out homeStatus));
+                    }while (homeStatus.run!=0);
+                    Thread.Sleep(200);
+                    ZeroPos(axis);
+                    Thread.Sleep(100);
+                    Command(mc.GT_SynchAxisPos(1<<(axis - 1)));
+                });                
+            }
+            catch(Exception e)
+            {
+                Log.Error(e.Message);
+            }
         }
 
         public void Init()
@@ -52,7 +92,7 @@ namespace Motor_Test.Common.GTS
                 Command(mc.GT_SetVel(axis, vel));
                 Command(mc.GT_Update(1 << (axis - 1)));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Log.Error(e.Message);
             }
@@ -92,7 +132,7 @@ namespace Motor_Test.Common.GTS
         {
             try
             {
-                Command(mc.GT_Stop(1<<(axis-1),0));
+                Command(mc.GT_Stop(1 << (axis - 1), 0));
             }
             catch (Exception e)
             {
@@ -100,7 +140,7 @@ namespace Motor_Test.Common.GTS
             }
         }
 
-        public void Trap(short axis, int pos, double vel, double acc, double dec,short smoothtime)
+        public void Trap(short axis,TrapPrm trap)
         {
             try
             {
@@ -109,6 +149,7 @@ namespace Motor_Test.Common.GTS
                 trapPrm.dec = dec;
                 trapPrm.smoothTime = smoothtime;
                 Command(mc.GT_SetTrapPrm(axis, ref trapPrm));
+                Command(mc.GT_SetVel(axis, vel));
                 Command(mc.GT_SetPos(axis, pos));
                 Command(mc.GT_Update(1 << (axis - 1)));
             }
@@ -129,6 +170,73 @@ namespace Motor_Test.Common.GTS
             catch (Exception e)
             {
                 AxisState = 0;
+                Log.Error(e.Message);
+            }
+        }
+
+        public void SetAxisBand(short axis, int band, int time)
+        {
+            try
+            {
+                Command(mc.GT_SetAxisBand(axis, band, time));
+            }
+            catch (Exception e)
+            {
+                Log.Error(e.Message);
+            }
+        }
+
+        public void GetAxisBand(short axis, out int band, out int time)
+        {
+            try
+            {
+                Command(mc.GT_GetAxisBand(axis, out band, out time));
+            }
+            catch (Exception e)
+            {
+                band = 0;
+                time = 0;
+                Log.Error(e.Message);
+            }
+        }
+
+        public void ZeroPos(short axis)
+        {
+            try
+            {
+                Command(mc.GT_ZeroPos(axis,1)); ;
+            }
+            catch (Exception e)
+            {               
+                Log.Error(e.Message);
+            }
+        }
+
+        public void Enable(short axis)
+        {
+            try
+            {
+                Command(mc.GT_AxisOn(axis)); ;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e.Message);
+            }
+        }
+
+        public void ClrSts(short axis, int count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnEnable(short axis)
+        {
+            try
+            {
+                Command(mc.GT_AxisOff(axis)); ;
+            }
+            catch (Exception e)
+            {
                 Log.Error(e.Message);
             }
         }

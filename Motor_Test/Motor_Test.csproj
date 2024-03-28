@@ -64,12 +64,17 @@
     <Compile Include="Common\ArrayMotor\RowPoint.cs" />
     <Compile Include="Common\CreateIni.cs" />
     <Compile Include="Common\GTS\GTS.cs" />
+    <Compile Include="Common\GTS\HomePrm.cs" />
+    <Compile Include="Common\GTS\JogPrm.cs" />
     <Compile Include="Common\GTS\mc.cs" />
+    <Compile Include="Common\GTS\TrapPrm.cs" />
+    <Compile Include="Common\IMarkController.cs" />
     <Compile Include="Common\IRunController.cs" />
     <Compile Include="Common\JCZ\JczHandler.cs" />
     <Compile Include="Common\JCZ\JczIni.cs" />
     <Compile Include="Common\JCZ\JczLmc.cs" />
     <Compile Include="Common\Log\Log.cs" />
+    <Compile Include="Converter\EnableConverter.cs" />
     <Compile Include="Global\MotorSet.cs" />
     <Compile Include="Control\myLED.cs" />
     <Compile Include="Converter\AxisModeConverter.cs" />
@@ -155,9 +160,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\Motor\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Assets\Images\Dunkin-Logo.png" />
   </ItemGroup>

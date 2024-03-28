@@ -11,7 +11,8 @@ namespace Motor_Test.Model
 {
     public class PrfMotorModel : CommandAndNotifyBase
     {
-        private GTS gTS=GTS.GetGTS();
+        private IRunController gTS = GTS.GetGTS();
+        private MotorStsModel mSts = MotorStsModel.GetInstance();
         public CommandAndNotifyBase PrfCommand { get; set; } = new CommandAndNotifyBase();
         public PrfMotorModel()
         {
@@ -83,7 +84,6 @@ namespace Motor_Test.Model
 
         private async void RoundTrap()
         {
-            int AxisState;
             for (int i = 0; i < this.Count; i++)
             {
                 double Vel_Tem = Vel * Pul / 1000.0;
@@ -93,26 +93,20 @@ namespace Motor_Test.Model
                 gTS.Trap(short.Parse((Axis + 1).ToString()), Pos_Tem, Vel_Tem, Acc, Dec, Smoothtime);
                 await Task.Run(async () =>
                 {
-                    do
-                    {
-                        gTS.GetSts(short.Parse((Axis + 1).ToString()), out AxisState);
-                    } while ((AxisState & 0x800) != 0);
+                    while (!mSts.RunOver) { }
                     await Task.Delay(1000);
                 });
                 gTS.Trap(short.Parse((Axis + 1).ToString()), 0, Vel_Tem, Acc, Dec, Smoothtime);
                 await Task.Run(async () =>
                 {
-                    do
-                    {
-                        gTS.GetSts(short.Parse((Axis + 1).ToString()), out AxisState);
-                    } while ((AxisState & 0x800) != 0);
+                    while (!mSts.RunOver) { }
                     await Task.Delay(1000);
                 });
             }
         }
         private void PrfRun()
         {
-            if(this.Count==0)
+            if (this.Count == 0)
             {
                 TrapRun();
             }

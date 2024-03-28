@@ -11,6 +11,7 @@ namespace Motor_Test.Model
 {
     public class MotorSettingsModel : CommandAndNotifyBase
     {
+        private IRunController runController = GTS.GetGTS();
         public CommandAndNotifyBase SelectChangedCommand { get; set; } = new CommandAndNotifyBase();
 
         private int axis;
@@ -42,10 +43,10 @@ namespace Motor_Test.Model
             set
             {
                 if (band == value)
-                    return;               
-                mc.GT_SetAxisBand(short.Parse((this.Axis + 1).ToString()), band, this.Time);
+                    return;
+                runController.SetAxisBand(short.Parse((this.Axis + 1).ToString()), band, this.Time);
                 int b, t;
-                mc.GT_GetAxisBand(short.Parse((this.Axis + 1).ToString()), out b, out t);
+                runController.GetAxisBand(short.Parse((this.Axis + 1).ToString()), out b, out t);
                 MotorSettings.Motor_Setting[this.Axis].Band = b;
                 band = b;
                 this.DoNotify();
@@ -60,9 +61,9 @@ namespace Motor_Test.Model
             {
                 if (time == value)
                     return;
-                mc.GT_SetAxisBand(short.Parse((this.Axis + 1).ToString()), this.Band, time);
+                runController.SetAxisBand(short.Parse((this.Axis + 1).ToString()), this.Band, time);
                 int b, t;
-                mc.GT_GetAxisBand(short.Parse((this.Axis + 1).ToString()), out b, out t);
+                runController.GetAxisBand(short.Parse((this.Axis + 1).ToString()), out b, out t);
                 MotorSettings.Motor_Setting[this.Axis].Time = t;
                 time = t;
                 this.DoNotify();

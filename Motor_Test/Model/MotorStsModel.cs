@@ -14,6 +14,8 @@ namespace Motor_Test.Model
 {
     public class MotorStsModel : CommandAndNotifyBase
     {
+        private IRunController _runController = GTS.GetGTS();
+        private static readonly object locker=new object();
         public CancellationTokenSource CancellationTokenSource { get; set; }
         public CommandAndNotifyBase SelectChangedCommand { get; set; } = new CommandAndNotifyBase();
         public CommandAndNotifyBase ClrStsCommand { get; set; } = new CommandAndNotifyBase();
@@ -41,38 +43,31 @@ namespace Motor_Test.Model
 
         private void GoHome()
         {
-            ZeroPos();
-
+            _runController.Home(new HomePrm() { Axis=this.Axis+1});
         }
 
         private void StopAxis()
         {
-            //if (GtsHandler.CommandHandler(mc.GT_Stop(0X03, 0)) == 0)
-            //{
-            //    Log.Suc("电机已停止");
-            //}
+            _runController.Stop(short.Parse((Axis + 1).ToString()));
 
         }
 
         private void ZeroPos()
         {
-            //if (GtsHandler.CommandHandler(mc.GT_ZeroPos(short.Parse((Axis + 1).ToString()), 1)) == 0)
-            //{
-            //    Log.Suc("电机位置已清零");
-            //}
+            _runController.ZeroPos(short.Parse((Axis + 1).ToString()));
         }
 
         private void Enabled()
         {
-            //if (GtsHandler.CommandHandler(mc.GT_AxisOn(short.Parse((Axis + 1).ToString()))) == 0)
-            //{
-            //    Log.Suc((this.Axis + 1).ToString() + "轴已使能");
-            //}
+            if (Enable == false)
+                _runController.Enable(short.Parse((Axis + 1).ToString()));
+            else
+                _runController.UnEnable(short.Parse((Axis + 1).ToString()));
         }
 
         private void ClrSts()
         {
-        //    GtsHandler.CommandHandler(mc.GT_ClrSts(short.Parse((Axis + 1).ToString()), 1));
+            _runController.ClrSts(short.Parse((Axis + 1).ToString()),1);
         }
 
         private void SelectChangedFunction()
@@ -85,7 +80,13 @@ namespace Motor_Test.Model
         {
             if (instance == null)
             {
-                instance = new MotorStsModel { Pul = MotorSettings.Motor_Setting[0].Puls };
+                lock(locker)
+                {
+                    if (instance == null)
+                    {
+                        instance = new MotorStsModel { Pul = MotorSettings.Motor_Setting[0].Puls };
+                    }
+                }
             }
             return instance;
         }
