@@ -43,7 +43,7 @@ namespace Motor_Test.Model
 
         private void GoHome()
         {
-            _runController.Home(new HomePrm() { Axis=this.Axis+1});
+            //_runController.Home(new HomePrm() { Axis=this.Axis+1});
         }
 
         private void StopAxis()

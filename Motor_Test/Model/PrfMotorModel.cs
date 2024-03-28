@@ -79,7 +79,7 @@ namespace Motor_Test.Model
             double Acc = Vel_Tem / AccTime;
             double Dec = Vel_Tem / DecTime;
             int Pos_Tem = (int)(Position * Pul);
-            gTS.Trap(short.Parse((Axis + 1).ToString()), Pos_Tem, Vel_Tem, Acc, Dec, Smoothtime);
+            //gTS.Trap(short.Parse((Axis + 1).ToString()), Pos_Tem, Vel_Tem, Acc, Dec, Smoothtime);
         }
 
         private async void RoundTrap()
@@ -90,13 +90,13 @@ namespace Motor_Test.Model
                 double Acc = Vel_Tem / AccTime;
                 double Dec = Vel_Tem / DecTime;
                 int Pos_Tem = (int)(Position * Pul);
-                gTS.Trap(short.Parse((Axis + 1).ToString()), Pos_Tem, Vel_Tem, Acc, Dec, Smoothtime);
+               // gTS.Trap(short.Parse((Axis + 1).ToString()), Pos_Tem, Vel_Tem, Acc, Dec, Smoothtime);
                 await Task.Run(async () =>
                 {
                     while (!mSts.RunOver) { }
                     await Task.Delay(1000);
                 });
-                gTS.Trap(short.Parse((Axis + 1).ToString()), 0, Vel_Tem, Acc, Dec, Smoothtime);
+                //gTS.Trap(short.Parse((Axis + 1).ToString()), 0, Vel_Tem, Acc, Dec, Smoothtime);
                 await Task.Run(async () =>
                 {
                     while (!mSts.RunOver) { }

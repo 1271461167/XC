@@ -249,9 +249,9 @@
                                     <ComboBoxItem Foreground="#AAA">1</ComboBoxItem>
                                     <ComboBoxItem Foreground="#AAA">2</ComboBoxItem>
                                 </ComboBox>
-                                <TextBox Text="{Binding jogMotorModel.Vel}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Text="{Binding jogMotorModel.AccTime}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Text="{Binding jogMotorModel.DecTime}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding jogMotorModel.Vel,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding jogMotorModel.AccTime,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding jogMotorModel.DecTime,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                                 
                             </StackPanel>
                         </Grid>

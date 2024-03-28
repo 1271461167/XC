@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mapster, Version=6.0.0.0, Culture=neutral, PublicKeyToken=2f39883af23c29a8, processorArchitecture=MSIL">
+      <HintPath>packages\Mapster.6.0.0\lib\net45\Mapster.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Xaml.Behaviors.Wpf.1.1.77\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
@@ -75,11 +78,12 @@
     <Compile Include="Common\JCZ\JczLmc.cs" />
     <Compile Include="Common\Log\Log.cs" />
     <Compile Include="Converter\EnableConverter.cs" />
+    <Compile Include="Dto\JogDto.cs" />
     <Compile Include="Global\MotorSet.cs" />
     <Compile Include="Control\myLED.cs" />
     <Compile Include="Converter\AxisModeConverter.cs" />
     <Compile Include="Global\MotorSettings.cs" />
-    <Compile Include="Model\JogMotorModel.cs" />
+    <Compile Include="Model\MotorModel.cs" />
     <Compile Include="Model\MotorArrayModel.cs" />
     <Compile Include="Model\MotorSettingsModel.cs" />
     <Compile Include="Model\MotorStsModel.cs" />

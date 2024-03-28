@@ -47,7 +47,7 @@ namespace Motor_Test.Model
             double Vel_Tem = Vel * Pul / 1000.0;
             double Acc = Vel_Tem / AccTime;
             double Dec = Vel_Tem / DecTime;
-            RunController.Jog(short.Parse((Axis + 1).ToString()),Vel_Tem,Acc,Dec);
+            //RunController.Jog(short.Parse((Axis + 1).ToString()),Vel_Tem,Acc,Dec);
         }
 
         private void JogNUp()
@@ -60,7 +60,7 @@ namespace Motor_Test.Model
             double Vel_Tem = Vel * Pul / 1000.0;
             double Acc = Vel_Tem / AccTime;
             double Dec = Vel_Tem / DecTime;
-            RunController.Jog(short.Parse((Axis + 1).ToString()), -Vel_Tem, Acc, Dec);
+            //RunController.Jog(short.Parse((Axis + 1).ToString()), -Vel_Tem, Acc, Dec);
         }
         #endregion
         #region 字段

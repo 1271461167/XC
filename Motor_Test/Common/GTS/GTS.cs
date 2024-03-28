@@ -81,15 +81,15 @@ namespace Motor_Test.Common.GTS
             throw new NotImplementedException();
         }
 
-        public void Jog(short axis, double vel, double acc, double dec)
+        public void Jog(short axis, JogPrm jog)
         {
             try
             {
                 Command(mc.GT_PrfJog(axis));
-                jogPrm.acc = acc;
-                jogPrm.dec = dec;
+                jogPrm.acc = jog.Acc;
+                jogPrm.dec = jog.Dec;
                 Command(mc.GT_SetJogPrm(axis, ref jogPrm));
-                Command(mc.GT_SetVel(axis, vel));
+                Command(mc.GT_SetVel(axis, jog.Vel));
                 Command(mc.GT_Update(1 << (axis - 1)));
             }
             catch (Exception e)
@@ -144,14 +144,14 @@ namespace Motor_Test.Common.GTS
         {
             try
             {
-                Command(mc.GT_PrfTrap(axis));
-                trapPrm.acc = acc;
-                trapPrm.dec = dec;
-                trapPrm.smoothTime = smoothtime;
-                Command(mc.GT_SetTrapPrm(axis, ref trapPrm));
-                Command(mc.GT_SetVel(axis, vel));
-                Command(mc.GT_SetPos(axis, pos));
-                Command(mc.GT_Update(1 << (axis - 1)));
+                //Command(mc.GT_PrfTrap(axis));
+                //trapPrm.acc = acc;
+                //trapPrm.dec = dec;
+                //trapPrm.smoothTime = smoothtime;
+                //Command(mc.GT_SetTrapPrm(axis, ref trapPrm));
+                //Command(mc.GT_SetVel(axis, vel));
+                //Command(mc.GT_SetPos(axis, pos));
+                //Command(mc.GT_Update(1 << (axis - 1)));
             }
             catch (Exception e)
             {
