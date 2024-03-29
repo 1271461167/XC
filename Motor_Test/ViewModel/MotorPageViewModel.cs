@@ -16,16 +16,13 @@ namespace Motor_Test.ViewModel
     public class MotorPageViewModel:CommandAndNotifyBase
     {
         public MotorArrayModel arrayModel { get; set; }= new MotorArrayModel();
-        public JogDto jogMotorModel { get; set; } = new JogDto(new MotorModel() { Pul= MotorSettings.Motor_Setting[0].Puls });
+        public JogDto jogMotorModel { get; set; } = new JogDto(new JogModel());
         public MotorStsModel stsModel { get; set; }=MotorStsModel.GetInstance();
-        public MotorSettingsModel settingsModel { get; set; }=new MotorSettingsModel { Pul = MotorSettings.Motor_Setting[0].Puls };
-        public PrfMotorModel prfMotorModel { get; set; }=new PrfMotorModel();
+        public BandSettingsDto settingsModel { get; set; }=new BandSettingsDto(new BandSettings());
+        public TrapDto prfMotorModel { get; set; }=new TrapDto(new TrapModel());
         public MotorPageViewModel()
         {
-            settingsModel.Axis = 0;
-            settingsModel.Pul = MotorSettings.Motor_Setting[0].Puls;
-            settingsModel.Band = MotorSettings.Motor_Setting[0].Band;
-            settingsModel.Time = MotorSettings.Motor_Setting[0].Time;
+
                        
         }
 

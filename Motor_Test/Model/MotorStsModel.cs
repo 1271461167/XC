@@ -27,6 +27,9 @@ namespace Motor_Test.Model
         {
             this.CancellationTokenSource = new CancellationTokenSource();
             Task.Run(() => { GetSts(CancellationTokenSource.Token); }, CancellationTokenSource.Token);
+
+            Pul = int.Parse(CreateIni.ReadIni("Axis" + Axis.ToString(), "Puls", ""));
+
             SelectChangedCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             SelectChangedCommand.DoExecute = new Action<object>((obj) => { SelectChangedFunction(); });
             ClrStsCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
@@ -43,7 +46,7 @@ namespace Motor_Test.Model
 
         private void GoHome()
         {
-            //_runController.Home(new HomePrm() { Axis=this.Axis+1});
+            _runController.Home(short.Parse((Axis + 1).ToString()), new HomeModel() { });
         }
 
         private void StopAxis()
@@ -72,7 +75,7 @@ namespace Motor_Test.Model
 
         private void SelectChangedFunction()
         {
-            this.Pul = MotorSettings.Motor_Setting[this.Axis].Puls;
+            Pul = int.Parse(CreateIni.ReadIni("Axis" + Axis.ToString(), "Puls", ""));
         }
 
         private static MotorStsModel instance = null;
@@ -84,7 +87,7 @@ namespace Motor_Test.Model
                 {
                     if (instance == null)
                     {
-                        instance = new MotorStsModel { Pul = MotorSettings.Motor_Setting[0].Puls };
+                        instance = new MotorStsModel();
                     }
                 }
             }
