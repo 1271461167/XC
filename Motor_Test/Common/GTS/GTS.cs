@@ -1,11 +1,5 @@
-﻿using Motor_Test.Global;
-using Motor_Test.Model;
+﻿using Motor_Test.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -228,7 +222,14 @@ namespace Motor_Test.Common.GTS
 
         public void ClrSts(short axis, int count)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Command(mc.GT_ClrSts(axis,(short)count));
+            }
+            catch(Exception e)
+            {
+                Log.Error(e.Message);
+            }
         }
 
         public void UnEnable(short axis)

@@ -2,9 +2,6 @@
 using Motor_Test.Common;
 using Motor_Test.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Mapster;
 using System.Windows.Controls;

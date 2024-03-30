@@ -350,15 +350,21 @@
                                 <Label Content="行间距:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="列间距:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="起始点:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-
+                                <Label Content="速度(P/ms):" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="加速度:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="减速度:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="平滑时间:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <TextBox Text="{Binding arrayModel.Row}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Text="{Binding arrayModel.Column}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Text="{Binding arrayModel.RowSpacing}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-                                <TextBox Text="{Binding arrayModel.ColumnSpacing}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding arrayModel.Col}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding arrayModel.RowSpace}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding arrayModel.ColSpace}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                                 <TextBox Text="{Binding arrayModel.StartPoint}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
-
+                                <TextBox Text="{Binding arrayModel.Vel}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding arrayModel.Acc}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding arrayModel.Dec}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
+                                <TextBox Text="{Binding arrayModel.SmoothTime}" Style="{DynamicResource TextBoxStyle1}"  Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,2.5,0,2.5" BorderBrush="#AAA" BorderThickness="1"/>
                             </StackPanel>
                         </Grid>
                         <Grid Grid.Row="1">
@@ -402,20 +408,14 @@
                                     <ListBox ItemsSource="{Binding RowPoints}" BorderThickness="0">
                                         <ListBox.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                                <UniformGrid Columns="{Binding Path=DataContext.arrayModel.Column,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
+                                                <UniformGrid Columns="{Binding Path=DataContext.arrayModel.Col,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
                                             </ItemsPanelTemplate>
                                         </ListBox.ItemsPanel>
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Width="70" Orientation="Horizontal">
                                                     <TextBlock Width="50" Text="{Binding Point}"/>
-                                                    <CheckBox Width="20" IsChecked="{Binding IsChecked}">
-                                                        <behaviour:Interaction.Triggers>
-                                                            <behaviour:EventTrigger EventName="Checked">
-                                                                <behaviour:InvokeCommandAction Command="{Binding Path=DataContext.arrayModel.ArrayRunCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" CommandParameter="{Binding}"/>
-                                                            </behaviour:EventTrigger>
-                                                        </behaviour:Interaction.Triggers>
-                                                    </CheckBox>
+                                                    <CheckBox Width="20" IsChecked="{Binding IsChecked}"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>

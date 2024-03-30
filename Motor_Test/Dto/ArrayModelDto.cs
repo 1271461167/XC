@@ -1,19 +1,19 @@
-﻿using Motor_Test.Common;
+﻿using Mapster;
+using Motor_Test.Common;
 using Motor_Test.Common.ArrayMotor;
 using Motor_Test.Common.GTS;
+using Motor_Test.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+using System.Drawing;
 using System.Threading.Tasks;
-using System.Windows;
 
-namespace Motor_Test.Model
+namespace Motor_Test.Dto
 {
-    public class MotorArrayModel : CommandAndNotifyBase
+    public class ArrayModelDto : CommandAndNotifyBase
     {
         private IRunController controller = GTS.GetGTS();
+        private readonly ArrayModel _model;
         public CommandAndNotifyBase FirstArrayCommand { get; set; } = new CommandAndNotifyBase();
         public CommandAndNotifyBase SecondArrayCommand { get; set; } = new CommandAndNotifyBase();
         public CommandAndNotifyBase ThirdArrayCommand { get; set; } = new CommandAndNotifyBase();
@@ -21,48 +21,12 @@ namespace Motor_Test.Model
         public CommandAndNotifyBase ArrayRunCommand { get; set; } = new CommandAndNotifyBase();
         public CommandAndNotifyBase CheckAllCommand { get; set; } = new CommandAndNotifyBase();
         public CommandAndNotifyBase CheckNonCommand { get; set; } = new CommandAndNotifyBase();
-
-        private int row;
-
-        public int Row
+        public ArrayModelDto(ArrayModel array)
         {
-            get { return row; }
-            set { row = value; this.DoNotify(); }
-        }
+            _model = array;
+            _model.Adapt(this);
+            this.Points = _model.PointList;
 
-        private int column;
-
-        public int Column
-        {
-            get { return column; }
-            set { column = value; this.DoNotify(); }
-        }
-
-        private double rowspacing;
-
-        public double RowSpacing
-        {
-            get { return rowspacing; }
-            set { rowspacing = value; this.DoNotify(); }
-        }
-
-        private double columnspacing;
-
-        public double ColumnSpacing
-        {
-            get { return columnspacing; }
-            set { columnspacing = value; this.DoNotify(); }
-        }
-        private Point startpoint;
-
-        public Point StartPoint
-        {
-            get { return startpoint; }
-            set { startpoint = value; this.DoNotify(); }
-        }
-        public ObservableCollection<RowPoint> Points { get; set; } = new ObservableCollection<RowPoint>();
-        public MotorArrayModel()
-        {
             FirstArrayCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             FirstArrayCommand.DoExecute = new Action<object>((obj) => { FirstArrayFunction(); });
             SecondArrayCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
@@ -78,6 +42,18 @@ namespace Motor_Test.Model
             CheckNonCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             CheckNonCommand.DoExecute = new Action<object>((obj) => { CheckNon(); });
         }
+        public int Row { get; set; }
+        public int Col { get; set; }
+        public double RowSpace { get; set; }
+        public double ColSpace { get; set; }
+        public Point StartPoint { get; set; } = new Point();
+        public double Vel { get; set; }
+        public double Acc { get; set; }
+        public double Dec { get; set; }
+        public short SmoothTime { get; set; }
+        public ObservableCollection<RowPoint> Points { get; set; }
+        public void ApplyChanges() => this.Adapt(this._model);
+        public void DiscardChanges() => _model.Adapt(this);
 
         private void CheckNon()
         {
@@ -103,13 +79,36 @@ namespace Motor_Test.Model
 
         private void ArrayRun(object obj)
         {
+            ApplyChanges();
             foreach (var item in this.Points)
             {
                 foreach (var i in item.RowPoints)
                 {
                     if (i.IsChecked == true)
                     {
-                        controller.Trap(1,new TrapModel() {});
+                        Task[] tasks = new Task[2];
+                        tasks[0] = Task.Run(() =>
+                        {
+                            controller.Trap(1, new TrapModel()
+                            {
+                                Acc = _model.Acc,
+                                Dec = _model.Dec,
+                                SmoothTime = _model.SmoothTime,
+                                Vel = _model.Vel,
+                                Position = i.Point.X,
+                            });
+                        });
+                        tasks[1] = Task.Run(() =>
+                        {
+                            controller.Trap(2, new TrapModel()
+                            {
+                                Acc = _model.Acc,
+                                Dec = _model.Dec,
+                                SmoothTime = _model.SmoothTime,
+                                Vel = _model.Vel,
+                                Position = i.Point.X,
+                            });
+                        });
                     }
                 }
             }
@@ -121,9 +120,9 @@ namespace Motor_Test.Model
             for (int i = 0; i < this.Row; i++)
             {
                 this.Points.Add(new RowPoint());
-                for (int j = 0; j < this.Column; j++)
+                for (int j = 0; j < this.Col; j++)
                 {
-                    this.Points[i].RowPoints.Add(new MyPoint(this.StartPoint.X + this.RowSpacing * j, this.StartPoint.Y - this.ColumnSpacing * i));
+                    this.Points[i].RowPoints.Add(new MyPoint(this.StartPoint.X + this.RowSpace * j, this.StartPoint.Y - this.ColSpace * i));
                 }
             }
         }
@@ -134,9 +133,9 @@ namespace Motor_Test.Model
             for (int i = 0; i < this.Row; i++)
             {
                 this.Points.Add(new RowPoint());
-                for (int j = this.Column - 1; j >= 0; j--)
+                for (int j = this.Col - 1; j >= 0; j--)
                 {
-                    this.Points[i].RowPoints.Add(new MyPoint(this.StartPoint.X - this.RowSpacing * j, this.StartPoint.Y - this.ColumnSpacing * i));
+                    this.Points[i].RowPoints.Add(new MyPoint(this.StartPoint.X - this.RowSpace * j, this.StartPoint.Y - this.ColSpace * i));
                 }
             }
         }
@@ -147,9 +146,9 @@ namespace Motor_Test.Model
             for (int i = this.Row - 1, index = 0; i >= 0; i--, index++)
             {
                 this.Points.Add(new RowPoint());
-                for (int j = this.Column - 1; j >= 0; j--)
+                for (int j = this.Col - 1; j >= 0; j--)
                 {
-                    this.Points[index].RowPoints.Add(new MyPoint(this.StartPoint.X - this.RowSpacing * j, this.StartPoint.Y + this.ColumnSpacing * i));
+                    this.Points[index].RowPoints.Add(new MyPoint(this.StartPoint.X - this.RowSpace * j, this.StartPoint.Y + this.ColSpace * i));
                 }
             }
         }
@@ -160,9 +159,9 @@ namespace Motor_Test.Model
             for (int i = this.Row - 1, index = 0; i >= 0; i--, index++)
             {
                 this.Points.Add(new RowPoint());
-                for (int j = 0; j < this.Column; j++)
+                for (int j = 0; j < this.Col; j++)
                 {
-                    this.Points[index].RowPoints.Add(new MyPoint(this.StartPoint.X + this.RowSpacing * j, this.StartPoint.Y + this.ColumnSpacing * i));
+                    this.Points[index].RowPoints.Add(new MyPoint(this.StartPoint.X + this.RowSpace * j, this.StartPoint.Y + this.ColSpace * i));
                 }
             }
         }

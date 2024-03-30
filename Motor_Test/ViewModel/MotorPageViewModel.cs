@@ -15,7 +15,7 @@ namespace Motor_Test.ViewModel
 {
     public class MotorPageViewModel:CommandAndNotifyBase
     {
-        public MotorArrayModel arrayModel { get; set; }= new MotorArrayModel();
+        public ArrayModelDto arrayModel { get; set; }= new ArrayModelDto(new ArrayModel());
         public JogDto jogMotorModel { get; set; } = new JogDto(new JogModel());
         public MotorStsModel stsModel { get; set; }=MotorStsModel.GetInstance();
         public BandSettingsDto settingsModel { get; set; }=new BandSettingsDto(new BandSettings());
