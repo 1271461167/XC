@@ -309,6 +309,11 @@
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <ComboBox SelectedIndex="{Binding prfMotorModel.Axis}" Foreground="#AAA" Style="{StaticResource cmbstyle}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="20" Margin="0,2.5,0,2.5">
+                                    <behaviour:Interaction.Triggers>
+                                        <behaviour:EventTrigger EventName="SelectionChanged">
+                                            <behaviour:InvokeCommandAction Command="{Binding prfMotorModel.SelectChangedCommand}"/>
+                                        </behaviour:EventTrigger>
+                                    </behaviour:Interaction.Triggers>
                                     <ComboBoxItem Foreground="#AAA">1</ComboBoxItem>
                                     <ComboBoxItem Foreground="#AAA">2</ComboBoxItem>
                                 </ComboBox>

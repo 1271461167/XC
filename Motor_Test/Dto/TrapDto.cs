@@ -14,6 +14,7 @@ namespace Motor_Test.Dto
         private IRunController gTS = GTS.GetGTS();
         private MotorStsModel mSts = MotorStsModel.GetInstance();
         public CommandAndNotifyBase PrfCommand { get; set; } = new CommandAndNotifyBase();
+        public CommandAndNotifyBase SelectChangedCommand { get; set; } = new CommandAndNotifyBase();
         public TrapDto(TrapModel model) 
         {
             _model = model;
@@ -21,7 +22,15 @@ namespace Motor_Test.Dto
             Pul = int.Parse(CreateIni.ReadIni("Axis" + Axis.ToString(), "Puls", ""));
             PrfCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             PrfCommand.DoExecute = new Action<object>((obj) => { PrfRun(obj); });
+            SelectChangedCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            SelectChangedCommand.DoExecute = new Action<object>((obj) => { SelectChanged(); });
         }
+
+        private void SelectChanged()
+        {
+            Pul = int.Parse(CreateIni.ReadIni("Axis" + Axis.ToString(), "Puls", ""));
+        }
+
         public short Axis { get; set; }
         public double Vel { get; set; }
         public double Acc { get; set; }

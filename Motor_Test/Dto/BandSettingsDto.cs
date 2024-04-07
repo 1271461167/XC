@@ -45,10 +45,10 @@ namespace Motor_Test.Dto
         {
             _model = band;
             _model.Adapt(this);
-            ReadFromIni();
-            Apply();
-            ReadFromCard();
-            Save();
+            //ReadFromIni();
+            //Apply();
+            //ReadFromCard();
+            //Save();
             ApplyCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             ApplyCommand.DoExecute = new Action<object>((obj) => { Apply(); });
             SaveCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });

@@ -42,6 +42,8 @@ namespace Motor_Test.Dto
             CheckNonCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             CheckNonCommand.DoExecute = new Action<object>((obj) => { CheckNon(); });
         }
+        public int Pul1 { get; set; }
+        public int Pul2 { get; set; }   
         public int Row { get; set; }
         public int Col { get; set; }
         public double RowSpace { get; set; }
@@ -95,7 +97,7 @@ namespace Motor_Test.Dto
                                 Dec = _model.Dec,
                                 SmoothTime = _model.SmoothTime,
                                 Vel = _model.Vel,
-                                Position = i.Point.X,
+                                //Position = i.Point.X,
                             });
                         });
                         tasks[1] = Task.Run(() =>
@@ -106,14 +108,14 @@ namespace Motor_Test.Dto
                                 Dec = _model.Dec,
                                 SmoothTime = _model.SmoothTime,
                                 Vel = _model.Vel,
-                                Position = i.Point.X,
+                                //Position = i.Point.X,
                             });
                         });
                     }
                 }
             }
         }
-
+        #region 四象限阵列
         private void FourthArrayFunction()
         {
             this.Points.Clear();
@@ -165,5 +167,6 @@ namespace Motor_Test.Dto
                 }
             }
         }
+        #endregion
     }
 }
