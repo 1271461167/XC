@@ -67,13 +67,13 @@ namespace Motor_Test.Dto
                 gTS.Trap(short.Parse((Axis + 1).ToString()), _model);
                 await Task.Run(async () =>
                 {
-                    while (mSts.RunOver) { }
+ //                   while (mSts.RunOver) { }
                     await Task.Delay(1000);
                 });
                 gTS.Trap(short.Parse((Axis + 1).ToString()), _model);
                 await Task.Run(async () =>
                 {
-                    while (mSts.RunOver) { }
+//                   while (mSts.RunOver) { }
                     await Task.Delay(1000);
                 });
             }
