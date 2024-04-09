@@ -82,11 +82,11 @@
     <Compile Include="Control\myLED.cs" />
     <Compile Include="Converter\AxisModeConverter.cs" />
     <Compile Include="Global\User.cs" />
+    <Compile Include="MapsterConfig\MappingConfig.cs" />
     <Compile Include="Model\ArrayModel.cs" />
     <Compile Include="Model\BandSettings.cs" />
     <Compile Include="Model\HomeModel.cs" />
     <Compile Include="Model\JogModel.cs" />
-    <Compile Include="Model\MotorArrayModel.cs" />
     <Compile Include="Model\MotorStsModel.cs" />
     <Compile Include="Model\TrapModel.cs" />
     <Compile Include="ViewModel\MotorPageViewModel.cs" />

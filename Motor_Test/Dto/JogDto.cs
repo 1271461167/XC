@@ -2,6 +2,7 @@
 using Motor_Test.Common;
 using Motor_Test.Common.GTS;
 using Motor_Test.Global;
+using Motor_Test.MapsterConfig;
 using Motor_Test.Model;
 using System;
 
@@ -40,13 +41,8 @@ namespace Motor_Test.Dto
 
         private void JogNDown()
         {
-            double Vel_Tem = Vel * Pul / 1000.0;
-            double AccTime = Vel_Tem / Acc;
-            double DecTime = Vel_Tem / Dec;
-            AccTime.Adapt(_model.Acc);
-            DecTime.Adapt(_model.Dec);
-            Vel = -Vel;
-            Vel.Adapt(_model.Vel);
+            MappingConfig.JogModelConfigure(false);
+            ApplyChanges();
             RunController.Jog(short.Parse((Axis + 1).ToString()), _model);
         }
 
@@ -62,12 +58,8 @@ namespace Motor_Test.Dto
 
         private void JogPDown()
         {
-            double Vel_Tem = Vel * Pul / 1000.0;
-            double AccTime = Vel_Tem / Acc;
-            double DecTime = Vel_Tem / Dec;
-            AccTime.Adapt(_model.Acc);
-            DecTime.Adapt(_model.Dec);
-            Vel.Adapt(_model.Vel);
+            MappingConfig.JogModelConfigure(true);
+            ApplyChanges();
             RunController.Jog(short.Parse((Axis + 1).ToString()),_model);
         }
 

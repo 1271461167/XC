@@ -2,6 +2,7 @@
 using Motor_Test.Common;
 using Motor_Test.Common.ArrayMotor;
 using Motor_Test.Common.GTS;
+using Motor_Test.MapsterConfig;
 using Motor_Test.Model;
 using System;
 using System.Collections.ObjectModel;
@@ -82,13 +83,14 @@ namespace Motor_Test.Dto
 
         private void ArrayRun(object obj)
         {
-            ApplyChanges();
             foreach (var item in this.Points)
             {
                 foreach (var i in item.RowPoints)
                 {
                     if (i.IsChecked == true)
                     {
+                        MappingConfig.ArrayModelConfigure(1);
+                        ApplyChanges();
                         controller.Trap(1, new TrapModel()
                         {
                             Acc = _model.Acc,
@@ -97,6 +99,8 @@ namespace Motor_Test.Dto
                             Vel = _model.Vel,
                             Position = Convert.ToInt32(i.Point.X * Pul1)
                         });
+                        MappingConfig.ArrayModelConfigure(2);
+                        ApplyChanges();
                         controller.Trap(2, new TrapModel()
                         {
                             Acc = _model.Acc,
@@ -108,17 +112,21 @@ namespace Motor_Test.Dto
                         Task[] tasks = new Task[2];
                         tasks[0] = Task.Run(() =>
                         {
+                            int AxisState;
+                            uint clk;
                             //do
                             //{
-                            //    mc.GT_GetSts(1,out AxisState,1,out clk);
-                            //}while (((AxisState & 0x400) != 0)&&((AxisState&0x800)!=0));
+                            //    mc.GT_GetSts(1, out AxisState, 1, out clk);
+                            //} while (((AxisState & 0x400) != 0) || ((AxisState & 0x800) == 0));
                         });
                         tasks[1] = Task.Run(() =>
                         {
+                            int AxisState;
+                            uint clk;
                             //do
                             //{
                             //    mc.GT_GetSts(2, out AxisState, 1, out clk);
-                            //} while (((AxisState & 0x400) != 0) && ((AxisState & 0x800) != 0));
+                            //} while (((AxisState & 0x400) != 0) || ((AxisState & 0x800) == 0));
                         });
                         Task.WaitAll(tasks);
                     }
