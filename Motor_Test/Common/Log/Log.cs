@@ -4,6 +4,7 @@ using System.Windows.Media;
 using System.Windows.Documents;
 using System;
 using System.Windows.Threading;
+using System.Threading.Tasks;
 
 namespace Motor_Test.Common
 {
@@ -55,8 +56,8 @@ namespace Motor_Test.Common
         }
 
         private static void AppendText(Brush color, string format, params object[] args)
-        {
-            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() =>
+        {    
+            textControl.Dispatcher.BeginInvoke(new Action(() =>
             {
                 textControl.BeginChange();
                 StringBuilder builder = new StringBuilder();

@@ -202,7 +202,7 @@
                         <Label Content="回零状态：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Grid.Row="2"/>
                         <Label Content="IO停止：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Grid.Row="3"/>
                         <controls:myLED Grid.Column="1" IsTrue="{Binding stsModel.Enable}" Height="20" Style="{StaticResource myLED}" Grid.Row="0"/>
-                        <controls:myLED Grid.Column="1" IsTrue="{Binding stsModel.Runover}" Height="20" Style="{StaticResource myLED}" Grid.Row="1"/>
+                        <controls:myLED Grid.Column="1" IsTrue="{Binding stsModel.RunOver}" Height="20" Style="{StaticResource myLED}" Grid.Row="1"/>
                         <controls:myLED Grid.Column="1" IsTrue="False" Height="20" Style="{StaticResource myLED}" Grid.Row="2"/>
                         <controls:myLED Grid.Column="1" IsTrue="False" Height="20" Style="{StaticResource myLED}" Grid.Row="3"/>
                     </Grid>
@@ -309,6 +309,11 @@
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <ComboBox SelectedIndex="{Binding prfMotorModel.Axis}" Foreground="#AAA" Style="{StaticResource cmbstyle}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="20" Margin="0,2.5,0,2.5">
+                                    <behaviour:Interaction.Triggers>
+                                        <behaviour:EventTrigger EventName="SelectionChanged">
+                                            <behaviour:InvokeCommandAction Command="{Binding prfMotorModel.SelectChangedCommand}"/>
+                                        </behaviour:EventTrigger>
+                                    </behaviour:Interaction.Triggers>
                                     <ComboBoxItem Foreground="#AAA">1</ComboBoxItem>
                                     <ComboBoxItem Foreground="#AAA">2</ComboBoxItem>
                                 </ComboBox>
@@ -350,9 +355,9 @@
                                 <Label Content="行间距:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="列间距:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="起始点:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="速度(P/ms):" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="加速度:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
-                                <Label Content="减速度:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="速度:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="加速时间:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
+                                <Label Content="减速时间:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                                 <Label Content="平滑时间:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#AAA" Height="25"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">

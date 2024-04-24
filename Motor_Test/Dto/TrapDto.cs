@@ -12,8 +12,8 @@ namespace Motor_Test.Dto
     {
         private readonly TrapModel _model;
         private IRunController gTS = GTS.GetGTS();
-        private MotorStsModel mSts = MotorStsModel.GetInstance();
         public CommandAndNotifyBase PrfCommand { get; set; } = new CommandAndNotifyBase();
+        public CommandAndNotifyBase SelectChangedCommand { get; set; } = new CommandAndNotifyBase();
         public TrapDto(TrapModel model) 
         {
             _model = model;
@@ -21,7 +21,15 @@ namespace Motor_Test.Dto
             Pul = int.Parse(CreateIni.ReadIni("Axis" + Axis.ToString(), "Puls", ""));
             PrfCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             PrfCommand.DoExecute = new Action<object>((obj) => { PrfRun(obj); });
+            SelectChangedCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            SelectChangedCommand.DoExecute = new Action<object>((obj) => { SelectChanged(); });
         }
+
+        private void SelectChanged()
+        {
+            Pul = int.Parse(CreateIni.ReadIni("Axis" + Axis.ToString(), "Puls", ""));
+        }
+
         public short Axis { get; set; }
         public double Vel { get; set; }
         public double Acc { get; set; }
@@ -34,14 +42,7 @@ namespace Motor_Test.Dto
         public void DiscardChanges() => _model.Adapt(this);
         private void TrapRun()
         {
-            double Vel_Tem = Vel * Pul / 1000.0;
-            double AccTime = Vel_Tem / Acc;
-            double DecTime = Vel_Tem / Dec;
-            int Position_Tem = Position * Pul;
             ApplyChanges();
-            Position_Tem.Adapt(_model.Position);
-            AccTime.Adapt(_model.Acc);
-            DecTime.Adapt(_model.Dec);
             gTS.Trap(short.Parse((Axis + 1).ToString()),_model);
         }
 
@@ -49,22 +50,26 @@ namespace Motor_Test.Dto
         {
             for (int i = 0; i < this.Count; i++)
             {
-                double Vel_Tem = Vel * Pul / 1000.0;
-                double AccTime = Vel_Tem / Acc;
-                double DecTime = Vel_Tem / Dec;
                 ApplyChanges();
-                AccTime.Adapt(_model.Acc);
-                DecTime.Adapt(_model.Dec);
                 gTS.Trap(short.Parse((Axis + 1).ToString()), _model);
                 await Task.Run(async () =>
                 {
-                    while (mSts.RunOver) { }
+                    int AxisState;
+                    //do
+                    //{
+                    //    gTS.GetSts(short.Parse((Axis + 1).ToString()), out AxisState);
+                    //} while (((AxisState & 0x400) != 0) || ((AxisState & 0x800) == 0));
                     await Task.Delay(1000);
                 });
-                gTS.Trap(short.Parse((Axis + 1).ToString()), _model);
+
+                gTS.Trap(short.Parse((Axis + 1).ToString()), new TrapModel(_model) {Position=0 });
                 await Task.Run(async () =>
                 {
-                    while (mSts.RunOver) { }
+                    int AxisState;
+                    //do
+                    //{
+                    //    gTS.GetSts(short.Parse((Axis + 1).ToString()), out AxisState);
+                    //} while (((AxisState & 0x400) != 0) || ((AxisState & 0x800) == 0));
                     await Task.Delay(1000);
                 });
             }

@@ -2,6 +2,7 @@
 using Motor_Test.Common;
 using Motor_Test.Common.ArrayMotor;
 using Motor_Test.Common.GTS;
+using Motor_Test.MapsterConfig;
 using Motor_Test.Model;
 using System;
 using System.Collections.ObjectModel;
@@ -26,7 +27,8 @@ namespace Motor_Test.Dto
             _model = array;
             _model.Adapt(this);
             this.Points = _model.PointList;
-
+            Pul1 = int.Parse(CreateIni.ReadIni("Axis0", "Puls", ""));
+            Pul2 = int.Parse(CreateIni.ReadIni("Axis1", "Puls", ""));
             FirstArrayCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             FirstArrayCommand.DoExecute = new Action<object>((obj) => { FirstArrayFunction(); });
             SecondArrayCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
@@ -42,6 +44,8 @@ namespace Motor_Test.Dto
             CheckNonCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             CheckNonCommand.DoExecute = new Action<object>((obj) => { CheckNon(); });
         }
+        public int Pul1 { get; set; }
+        public int Pul2 { get; set; }   
         public int Row { get; set; }
         public int Col { get; set; }
         public double RowSpace { get; set; }
@@ -79,41 +83,57 @@ namespace Motor_Test.Dto
 
         private void ArrayRun(object obj)
         {
-            ApplyChanges();
             foreach (var item in this.Points)
             {
                 foreach (var i in item.RowPoints)
                 {
                     if (i.IsChecked == true)
                     {
+                        MappingConfig.ArrayModelConfigure(1);
+                        ApplyChanges();
+                        controller.Trap(1, new TrapModel()
+                        {
+                            Acc = _model.Acc,
+                            Dec = _model.Dec,
+                            SmoothTime = _model.SmoothTime,
+                            Vel = _model.Vel,
+                            Position = Convert.ToInt32(i.Point.X * Pul1)
+                        });
+                        MappingConfig.ArrayModelConfigure(2);
+                        ApplyChanges();
+                        controller.Trap(2, new TrapModel()
+                        {
+                            Acc = _model.Acc,
+                            Dec = _model.Dec,
+                            SmoothTime = _model.SmoothTime,
+                            Vel = _model.Vel,
+                            Position = Convert.ToInt32(i.Point.Y * Pul2)
+                        });
                         Task[] tasks = new Task[2];
                         tasks[0] = Task.Run(() =>
                         {
-                            controller.Trap(1, new TrapModel()
-                            {
-                                Acc = _model.Acc,
-                                Dec = _model.Dec,
-                                SmoothTime = _model.SmoothTime,
-                                Vel = _model.Vel,
-                                Position = i.Point.X,
-                            });
+                            int AxisState;
+                            uint clk;
+                            //do
+                            //{
+                            //    mc.GT_GetSts(1, out AxisState, 1, out clk);
+                            //} while (((AxisState & 0x400) != 0) || ((AxisState & 0x800) == 0));
                         });
                         tasks[1] = Task.Run(() =>
                         {
-                            controller.Trap(2, new TrapModel()
-                            {
-                                Acc = _model.Acc,
-                                Dec = _model.Dec,
-                                SmoothTime = _model.SmoothTime,
-                                Vel = _model.Vel,
-                                Position = i.Point.X,
-                            });
+                            int AxisState;
+                            uint clk;
+                            //do
+                            //{
+                            //    mc.GT_GetSts(2, out AxisState, 1, out clk);
+                            //} while (((AxisState & 0x400) != 0) || ((AxisState & 0x800) == 0));
                         });
+                        Task.WaitAll(tasks);
                     }
                 }
             }
         }
-
+        #region 四象限阵列
         private void FourthArrayFunction()
         {
             this.Points.Clear();
@@ -165,5 +185,6 @@ namespace Motor_Test.Dto
                 }
             }
         }
+        #endregion
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Motor_Test.Common;
 using Motor_Test.Dto;
 using Motor_Test.Global;
+using Motor_Test.MapsterConfig;
 using Motor_Test.Model;
 using System;
 using System.Collections.Generic;
@@ -22,8 +23,7 @@ namespace Motor_Test.ViewModel
         public TrapDto prfMotorModel { get; set; }=new TrapDto(new TrapModel());
         public MotorPageViewModel()
         {
-
-                       
+            MappingConfig.Configure();
         }
 
     }
