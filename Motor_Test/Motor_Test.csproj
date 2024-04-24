@@ -67,10 +67,7 @@
     <Compile Include="Common\ArrayMotor\RowPoint.cs" />
     <Compile Include="Common\CreateIni.cs" />
     <Compile Include="Common\GTS\GTS.cs" />
-    <Compile Include="Common\GTS\HomePrm.cs" />
-    <Compile Include="Common\GTS\JogPrm.cs" />
     <Compile Include="Common\GTS\mc.cs" />
-    <Compile Include="Common\GTS\TrapPrm.cs" />
     <Compile Include="Common\IMarkController.cs" />
     <Compile Include="Common\IRunController.cs" />
     <Compile Include="Common\JCZ\JczHandler.cs" />
@@ -78,16 +75,20 @@
     <Compile Include="Common\JCZ\JczLmc.cs" />
     <Compile Include="Common\Log\Log.cs" />
     <Compile Include="Converter\EnableConverter.cs" />
+    <Compile Include="Dto\ArrayModelDto.cs" />
+    <Compile Include="Dto\BandSettingsDto.cs" />
     <Compile Include="Dto\JogDto.cs" />
-    <Compile Include="Global\MotorSet.cs" />
+    <Compile Include="Dto\TrapDto.cs" />
     <Compile Include="Control\myLED.cs" />
     <Compile Include="Converter\AxisModeConverter.cs" />
-    <Compile Include="Global\MotorSettings.cs" />
-    <Compile Include="Model\MotorModel.cs" />
+    <Compile Include="Global\User.cs" />
+    <Compile Include="Model\ArrayModel.cs" />
+    <Compile Include="Model\BandSettings.cs" />
+    <Compile Include="Model\HomeModel.cs" />
+    <Compile Include="Model\JogModel.cs" />
     <Compile Include="Model\MotorArrayModel.cs" />
-    <Compile Include="Model\MotorSettingsModel.cs" />
     <Compile Include="Model\MotorStsModel.cs" />
-    <Compile Include="Model\PrfMotorModel.cs" />
+    <Compile Include="Model\TrapModel.cs" />
     <Compile Include="ViewModel\MotorPageViewModel.cs" />
     <Compile Include="View\MarkPage.xaml.cs">
       <DependentUpon>MarkPage.xaml</DependentUpon>

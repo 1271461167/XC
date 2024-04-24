@@ -80,3 +80,4 @@ C:\Users\ywh\Desktop\Code\Motor_Test\obj\Debug\View\MarkPage.g.cs
 C:\Users\ywh\Desktop\Code\Motor_Test\obj\Debug\View\MarkPage.baml
 C:\Users\ywh\Desktop\Code\Motor_Test\obj\Debug\Motor_Test.csproj.CopyComplete
 C:\Users\ywh\Desktop\Code\Motor_Test\bin\Debug\Mapster.dll
+C:\Users\ywh\Desktop\XiChun\Motor_Test\bin\Debug\Mapster.dll

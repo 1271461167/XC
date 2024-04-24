@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Text;
+﻿using Motor_Test.Model;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -41,7 +37,7 @@ namespace Motor_Test.Common.GTS
             }
         }
 
-        public async void Home(short axis, HomePrm home)
+        public async void Home(short axis, HomeModel home)
         {
             ZeroPos(axis);
             homePrm.mode = (short)home.Mode;
@@ -81,7 +77,7 @@ namespace Motor_Test.Common.GTS
             throw new NotImplementedException();
         }
 
-        public void Jog(short axis, JogPrm jog)
+        public void Jog(short axis, JogModel jog)
         {
             try
             {
@@ -140,18 +136,18 @@ namespace Motor_Test.Common.GTS
             }
         }
 
-        public void Trap(short axis,TrapPrm trap)
+        public void Trap(short axis,TrapModel trap)
         {
             try
             {
-                //Command(mc.GT_PrfTrap(axis));
-                //trapPrm.acc = acc;
-                //trapPrm.dec = dec;
-                //trapPrm.smoothTime = smoothtime;
-                //Command(mc.GT_SetTrapPrm(axis, ref trapPrm));
-                //Command(mc.GT_SetVel(axis, vel));
-                //Command(mc.GT_SetPos(axis, pos));
-                //Command(mc.GT_Update(1 << (axis - 1)));
+                Command(mc.GT_PrfTrap(axis));
+                trapPrm.acc = trap.Acc;
+                trapPrm.dec = trap.Dec;
+                trapPrm.smoothTime = (short)trap.SmoothTime;
+                Command(mc.GT_SetTrapPrm(axis, ref trapPrm));
+                Command(mc.GT_SetVel(axis, trap.Vel));
+                Command(mc.GT_SetPos(axis, trap.Position));
+                Command(mc.GT_Update(1 << (axis - 1)));
             }
             catch (Exception e)
             {
@@ -186,7 +182,7 @@ namespace Motor_Test.Common.GTS
             }
         }
 
-        public void GetAxisBand(short axis, out int band, out int time)
+        public void GetAxisBand(short axis,  out int band,  out int time)
         {
             try
             {
@@ -226,7 +222,14 @@ namespace Motor_Test.Common.GTS
 
         public void ClrSts(short axis, int count)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Command(mc.GT_ClrSts(axis,(short)count));
+            }
+            catch(Exception e)
+            {
+                Log.Error(e.Message);
+            }
         }
 
         public void UnEnable(short axis)

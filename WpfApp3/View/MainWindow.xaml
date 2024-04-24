@@ -1,0 +1,86 @@
+﻿<Window x:Class="WpfApp3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp3"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1250">
+    <Window.Resources>
+        <ControlTemplate TargetType="Button" x:Key="myButton">
+            <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                <Grid>
+                    <Border x:Name="over" CornerRadius="4" Background="#22FFFFFF" Visibility="Hidden"/>
+                    <Border x:Name="press" CornerRadius="4" Background="#55FFFFFF" Visibility="Hidden"/>
+                    <Border x:Name="unenable" CornerRadius="4" Background="Gray" Visibility="Hidden"/>
+                    <ContentControl Content="{TemplateBinding Content}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Foreground="{TemplateBinding Foreground}"
+                    FontSize="{TemplateBinding FontSize}"
+                    />
+                </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Visibility" Value="Visible" TargetName="over"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Visibility" Value="Visible" TargetName="press"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Visibility" Value="Visible" TargetName="unenable"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    <Border Margin="5" Background="White" CornerRadius="10">
+        <Border.Effect>
+            <DropShadowEffect Color="gray" ShadowDepth="0" BlurRadius="5" Opacity="0.3" Direction="0"/>
+        </Border.Effect>
+        <Grid>
+            <Border Background="#3a77bf" Height="200" VerticalAlignment="Top" CornerRadius="10,10,0,0"/>
+            <Grid Margin="50,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="65"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Image Width="100" Height="50" Source="../Assets/Images/Dunkin-Logo.png"/>
+                    <TextBlock Margin="10,0,10,0" Text="XXXXXXXX系统" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="30" Foreground="White"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <RadioButton Content="首页" Style="{StaticResource NavRadioButton}"  IsChecked="True" Command="{Binding NavChangedCommand}" CommandParameter="MainPage"/>
+                    <RadioButton Content="电机" Style="{StaticResource NavRadioButton}" />
+                    <RadioButton Content="标刻" Style="{StaticResource NavRadioButton}" />
+                    <RadioButton Content="插补" Style="{StaticResource NavRadioButton}" />
+                </StackPanel>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="31*"/>
+                        <ColumnDefinition Width="254*"/>
+                        <ColumnDefinition Width="95*"/>
+                    </Grid.ColumnDefinitions>
+                    <ContentControl Content="{Binding MainContent}" Grid.ColumnSpan="2"/>
+                    <Border Grid.Column="2" CornerRadius="5" Background="White" Margin="10,10,10,10">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
+                        </Border.Effect>
+                        <Grid Margin="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="80"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="提示信息" Foreground="#AAA"/>
+                            <RichTextBox Grid.Row="1" x:Name="richBox" IsReadOnly="True" BorderThickness="0"/>
+                            <Button Grid.Row="2"  Margin="30,15" Content="清除记录" Command="{Binding ClearLogCommand}" Template="{StaticResource myButton}" Background="#3a77bf" Foreground="White"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

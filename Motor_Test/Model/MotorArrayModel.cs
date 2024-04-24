@@ -1,5 +1,6 @@
 ﻿using Motor_Test.Common;
 using Motor_Test.Common.ArrayMotor;
+using Motor_Test.Common.GTS;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,7 @@ namespace Motor_Test.Model
 {
     public class MotorArrayModel : CommandAndNotifyBase
     {
+        private IRunController controller = GTS.GetGTS();
         public CommandAndNotifyBase FirstArrayCommand { get; set; } = new CommandAndNotifyBase();
         public CommandAndNotifyBase SecondArrayCommand { get; set; } = new CommandAndNotifyBase();
         public CommandAndNotifyBase ThirdArrayCommand { get; set; } = new CommandAndNotifyBase();
@@ -107,7 +109,7 @@ namespace Motor_Test.Model
                 {
                     if (i.IsChecked == true)
                     {
-                      //  i.IsChecked = false;
+                        controller.Trap(1,new TrapModel() {});
                     }
                 }
             }

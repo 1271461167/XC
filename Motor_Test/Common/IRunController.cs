@@ -1,4 +1,5 @@
 ﻿using Motor_Test.Common.GTS;
+using Motor_Test.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace Motor_Test.Common
         void GetAxisBand(short axis, out int band, out int time);
         #endregion
         void Init();
-        void Jog(short axis,JogPrm jog);
-        void Trap(short axis,TrapPrm trap);
-        void Home(short axis,HomePrm home);
+        void Jog(short axis, JogModel jog);
+        void Trap(short axis,TrapModel trap);
+        void Home(short axis,HomeModel home);
         void Stop(short axis);
         void Command(short st);
         string ReturnInfo(short s);
