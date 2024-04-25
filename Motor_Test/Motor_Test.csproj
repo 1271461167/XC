@@ -93,6 +93,9 @@
     <Compile Include="View\MarkPage.xaml.cs">
       <DependentUpon>MarkPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MotorImputation.xaml.cs">
+      <DependentUpon>MotorImputation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MotorPage.xaml.cs">
       <DependentUpon>MotorPage.xaml</DependentUpon>
     </Compile>
@@ -127,6 +130,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\MarkPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MotorImputation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
