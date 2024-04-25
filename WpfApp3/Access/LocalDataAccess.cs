@@ -1,0 +1,139 @@
+﻿using System;
+using MySql.Data.MySqlClient;
+using System.Configuration;
+using System.Collections.Generic;
+using WpfApp3.Model;
+using System.Data;
+
+namespace WpfApp3.Access
+{
+    public class LocalDataAccess
+    {
+        private LocalDataAccess() { }
+        public static LocalDataAccess Instance;
+        public static LocalDataAccess GetInstance()
+        {
+            if (Instance == null)
+                Instance = new LocalDataAccess();
+            return Instance;
+        }
+        MySqlConnection conn;
+        MySqlCommand cmd;
+        MySqlDataAdapter adapter;
+        private void Dispose()
+        {
+            if (conn != null)
+            {
+                conn.Close();
+                conn.Dispose();
+            }
+            if (cmd != null)
+            {
+                cmd.Dispose();
+                cmd = null;
+            }
+            if (adapter != null)
+            {
+                adapter.Dispose();
+                adapter = null;
+            }
+        }
+
+        private bool DBConnection()
+        {
+            string connStr = ConfigurationManager.ConnectionStrings["db"].ConnectionString;
+            if (conn == null)
+                conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }      
+        public List<ProductionData> GetProductions()
+        {
+            if(DBConnection())
+            {
+                List<ProductionData> productions = new List<ProductionData>(); 
+                try
+                {
+                    DataSet dataSet = new DataSet();
+                    string sql = @"select * from production order by Timeat,typeis";
+                    cmd = new MySqlCommand();
+                    cmd.CommandText = sql;
+                    cmd.Connection = conn;
+                    cmd.CommandType = CommandType.Text;
+                    adapter = new MySqlDataAdapter(cmd);
+                    adapter.Fill(dataSet);
+                    ProductionData data = null;
+                    foreach (DataRow row in dataSet.Tables[0].Rows)
+                    {
+                        data = new ProductionData();
+                        data.DayProcessNumber= row.Field<int>("ProcessNumber");
+                        data.Time= row.Field<DateTime>("Timeat").ToString("yyyy-MM-dd");
+                        data.Type= row.Field<string>("typeis");
+                        data.PassRate= row.Field<double>("PassRate");
+                        productions.Add(data);
+                    }
+                        return productions;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("数据库连接失败");
+                }
+                finally 
+                {
+                    Dispose();
+                }
+            }
+            else
+                throw new Exception("数据库打开失败");
+        }
+        public List<ProductData> GetProducts()
+        {
+            if (DBConnection())
+            {
+                List<ProductData> productions = new List<ProductData>();
+                try
+                {
+                    DataSet dataSet = new DataSet();
+                    string sql = @"select * from product order by CreateAt limit 30";
+                    cmd = new MySqlCommand();
+                    cmd.CommandText = sql;
+                    cmd.Connection = conn;
+                    cmd.CommandType = CommandType.Text;
+                    adapter = new MySqlDataAdapter(cmd);
+                    adapter.Fill(dataSet);
+                    ProductData data = null;
+                    foreach (DataRow row in dataSet.Tables[0].Rows)
+                    {
+                        data = new ProductData();
+                        data.ProductionID = row.Field<string>("ID");
+                        data.Time = row.Field<DateTime>("CreateAt").ToString();
+                        data.Type = row.Field<string>("typeis");
+                        data.ZHeight = row.Field<double>("ZHeight");
+                        data.ProcessTime = TimeSpan.FromSeconds(double.Parse(row.Field<string>("ProcessTime")));
+                        data.Power = row.Field<double>("Power");
+                        data.IsPass = row.Field<bool>("IsPass");
+                        productions.Add(data);
+                    }
+                    return productions;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("数据库连接失败");
+                }
+                finally
+                {
+                    Dispose();
+                }
+            }
+            else
+                throw new Exception("数据库打开失败");
+        }
+    }
+}
