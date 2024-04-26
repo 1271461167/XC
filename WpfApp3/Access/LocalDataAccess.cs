@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Collections.Generic;
 using WpfApp3.Model;
 using System.Data;
+using System.Windows.Documents;
+using MySqlX.XDevAPI.Relational;
 
 namespace WpfApp3.Access
 {
@@ -101,7 +103,7 @@ namespace WpfApp3.Access
                 try
                 {
                     DataSet dataSet = new DataSet();
-                    string sql = @"select * from product order by CreateAt limit 30";
+                    string sql = @"select * from product order by id";
                     cmd = new MySqlCommand();
                     cmd.CommandText = sql;
                     cmd.Connection = conn;
@@ -112,7 +114,7 @@ namespace WpfApp3.Access
                     foreach (DataRow row in dataSet.Tables[0].Rows)
                     {
                         data = new ProductData();
-                        data.ProductionID = row.Field<string>("ID");
+                        data.ProductionID = row.Field<string>("ProductID");
                         data.Time = row.Field<DateTime>("CreateAt").ToString();
                         data.Type = row.Field<string>("typeis");
                         data.ZHeight = row.Field<double>("ZHeight");
@@ -134,6 +136,88 @@ namespace WpfApp3.Access
             }
             else
                 throw new Exception("数据库打开失败");
+        }
+        public List<ProductData> GetProducts(MySqlParameter[] parameters)
+        {
+            if (DBConnection())
+            {
+                List<ProductData> productions = new List<ProductData>();
+                try
+                {
+                    DataSet dataSet = new DataSet();
+                    string sql = @"select * from product order by id limit @start,@count";
+                    cmd = new MySqlCommand();
+                    cmd.CommandText = sql;
+                    cmd.Connection = conn;
+                    cmd.CommandType = CommandType.Text;
+                    foreach (var parameter in parameters)
+                    {
+                        if (parameter.Value == null || parameter.Value.ToString() == "")
+                        {
+                            parameter.Value = DBNull.Value;
+                        }
+                        cmd.Parameters.Add(parameter);
+                    }
+                    adapter = new MySqlDataAdapter(cmd);
+                    adapter.Fill(dataSet);
+                    ProductData data = null;
+                    foreach (DataRow row in dataSet.Tables[0].Rows)
+                    {
+                        data = new ProductData();
+                        data.ProductionID = row.Field<string>("ProductID");
+                        data.Time = row.Field<DateTime>("CreateAt").ToString();
+                        data.Type = row.Field<string>("typeis");
+                        data.ZHeight = row.Field<double>("ZHeight");
+                        data.ProcessTime = TimeSpan.FromMilliseconds(double.Parse(row.Field<string>("ProcessTime")));
+                        data.Power = row.Field<double>("Power");
+                        data.IsPass = row.Field<bool>("IsPass");
+                        productions.Add(data);
+                    }
+                    return productions;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("数据库连接失败");
+                }
+                finally
+                {
+                    Dispose();
+                }
+            }
+            else
+                throw new Exception("数据库打开失败");
+        }
+        public int GetRecordCount(params object[] args)
+        {
+            int count = 0;
+            if (DBConnection())
+            {
+                try
+                {
+                    DataSet dataSet = new DataSet();
+                    string str = "select count(1) from {0}";
+                    string sql = string.Format(str, (object[])args);
+                    cmd = new MySqlCommand();
+                    cmd.CommandText = sql;
+                    cmd.Connection = conn;
+                    cmd.CommandType = CommandType.Text;
+                    adapter = new MySqlDataAdapter(cmd);
+                    adapter.Fill(dataSet);
+                    count = Convert.ToInt32(dataSet.Tables[0].Rows[0].ItemArray[0]);
+                    return count;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("数据库连接失败");
+                }
+                finally
+                {
+                    Dispose();
+                }
+            }
+            else
+                throw new Exception("数据库打开失败");
+        
         }
     }
 }
