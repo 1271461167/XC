@@ -55,8 +55,8 @@ namespace WpfApp3.ViewModel
                 strings.Add(data.Time);
                 types.Add(data.Type);
             }
-            strings.Distinct().ToList().ForEach(x => Labels.Add(x));
-            types.Distinct().ToList().ForEach(x => Types.Add(x));
+            strings.Distinct().ToList().ForEach(x => Labels.Add(x));//去除重复项
+            types.Distinct().ToList().ForEach(x => Types.Add(x));//同上
             strings.Clear();
             types.Clear();
             for (int i = 0; i < Types.Count; i++)
@@ -110,7 +110,10 @@ namespace WpfApp3.ViewModel
             {
                 Products.Clear();
                 _pageIndex -= _pageSize;
+                if (_pageIndex >= 0)
                 turnToPage();
+                else
+                    _pageIndex = 0;
             }
         }
     }

@@ -9,8 +9,8 @@ namespace WpfApp3.Model
 {
     public class MainPageModel
     {
-        public List<ProductionData> ProductionDatas { get; set; }=new List<ProductionData>();
-        public List<ProductData> ProductDatas { get; set; } = new List<ProductData>();
+        public List<ProductionData> ProductionDatas { get; set; }
+        public List<ProductData> ProductDatas { get; set; } 
 
     }
 }

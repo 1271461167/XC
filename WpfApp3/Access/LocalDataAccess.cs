@@ -28,6 +28,7 @@ namespace WpfApp3.Access
             {
                 conn.Close();
                 conn.Dispose();
+                conn = null;
             }
             if (cmd != null)
             {
