@@ -42,7 +42,7 @@ xmlns:lvcs="clr-namespace:LiveCharts;assembly=LiveCharts"
             <RowDefinition Height="45"/>
             <RowDefinition Height="45"/>
             <RowDefinition/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
         <UniformGrid Columns="2">
             <Border CornerRadius="5" Background="White" Margin="10">
@@ -96,6 +96,16 @@ xmlns:lvcs="clr-namespace:LiveCharts;assembly=LiveCharts"
         </UniformGrid>
         <TextBlock Grid.Row="1" Margin="10" Text="历史加工数据" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBox x:Name="id" Width="100" Margin="10" VerticalContentAlignment="Center">
+                <TextBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <Button Content="查询" Foreground="White" Width="100" Margin="5" Template="{StaticResource myButton}" Command="{Binding SelectCommand}" CommandParameter="{Binding ElementName=id}"/>
             <Button Content="上一页" Foreground="White" Width="100" Margin="5" Template="{StaticResource myButton}" Command="{Binding PageUpCommand}"/>
             <Button Content="下一页" Foreground="White" Width="100" Margin="5" Template="{StaticResource myButton}" Command="{Binding PageDownCommand}"/>
         </StackPanel>
@@ -140,8 +150,23 @@ xmlns:lvcs="clr-namespace:LiveCharts;assembly=LiveCharts"
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <StackPanel Grid.Row="4" Orientation="Horizontal">
-            
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Label Content="跳转到：" Margin="10" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding TargetPage}" Margin="10" VerticalAlignment="Center" Width="50">
+                <TextBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <Button Content="跳转" Foreground="White" Width="45" Margin="10" Template="{StaticResource myButton}" Command="{Binding TurnToPageCommand}"/>
+            <Label Content="页码：" Margin="10" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding CurrentPage}" Margin="10" VerticalAlignment="Center"/>
+            <Label Content="共：" Margin="10" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding PageCount}" Margin="10" VerticalAlignment="Center"/>
+            <Label Content="页" Margin="10" VerticalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </UserControl>

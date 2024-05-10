@@ -6,6 +6,7 @@ using WpfApp3.Model;
 using System.Data;
 using System.Windows.Documents;
 using MySqlX.XDevAPI.Relational;
+using System.Security.Cryptography;
 
 namespace WpfApp3.Access
 {
@@ -41,7 +42,6 @@ namespace WpfApp3.Access
                 adapter = null;
             }
         }
-
         private bool DBConnection()
         {
             string connStr = ConfigurationManager.ConnectionStrings["db"].ConnectionString;
@@ -219,6 +219,54 @@ namespace WpfApp3.Access
             else
                 throw new Exception("数据库打开失败");
         
+        }
+        public ProductData SelectProduct(MySqlParameter[] parameters)
+        {           
+            if (DBConnection())
+            {
+                ProductData data = new ProductData();
+                try
+                {
+                    DataSet dataSet = new DataSet();
+                    string sql = "select * from product where ProductID=@productname";
+                    cmd = new MySqlCommand();
+                    cmd.CommandText = sql;
+                    cmd.Connection = conn;
+                    cmd.CommandType = CommandType.Text;
+                    foreach (var parameter in parameters)
+                    {
+                        if (parameter.Value == null || parameter.Value.ToString() == "")
+                        {
+                            parameter.Value = DBNull.Value;
+                        }
+                        cmd.Parameters.Add(parameter);
+                    }
+                    adapter = new MySqlDataAdapter(cmd);
+                    adapter.Fill(dataSet);
+                    foreach (DataRow row in dataSet.Tables[0].Rows)
+                    {
+                        data.ProductionID = row.Field<string>("ProductID");
+                        data.Time = row.Field<DateTime>("CreateAt").ToString();
+                        data.Type = row.Field<string>("typeis");
+                        data.ZHeight = row.Field<double>("ZHeight");
+                        data.ProcessTime = TimeSpan.FromMilliseconds(double.Parse(row.Field<string>("ProcessTime")));
+                        data.Power = row.Field<double>("Power");
+                        data.IsPass = row.Field<bool>("IsPass");
+                    }
+                    return data;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("数据库连接失败");
+                }
+                finally
+                {
+                    Dispose();
+                }
+            }
+            else
+                throw new Exception("数据库打开失败");
+
         }
     }
 }

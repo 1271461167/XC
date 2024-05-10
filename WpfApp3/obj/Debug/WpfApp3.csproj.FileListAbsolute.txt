@@ -82,3 +82,5 @@ C:\Users\ywh\Desktop\XiChun\WpfApp3\bin\Debug\System.Threading.Tasks.Extensions.
 C:\Users\ywh\Desktop\XiChun\WpfApp3\bin\Debug\System.Numerics.Vectors.dll
 C:\Users\ywh\Desktop\XiChun\WpfApp3\bin\Debug\System.Buffers.dll
 C:\Users\ywh\Desktop\XiChun\WpfApp3\bin\Debug\MySql.Data.xml
+C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\View\MarkPage.g.cs
+C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\View\MarkPage.baml
