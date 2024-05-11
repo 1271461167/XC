@@ -69,6 +69,8 @@
     </ApplicationDefinition>
     <Compile Include="Common\IMarkController.cs" />
     <Compile Include="Common\LMC\JczLmc.cs" />
+    <Compile Include="Common\LMC\LMC.cs" />
+    <Compile Include="ViewModel\MarkPageViewModel.cs" />
     <Compile Include="View\MarkPage.xaml.cs">
       <DependentUpon>MarkPage.xaml</DependentUpon>
     </Compile>

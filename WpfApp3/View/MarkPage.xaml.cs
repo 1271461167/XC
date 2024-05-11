@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp3.ViewModel;
 
 namespace WpfApp3.View
 {
@@ -23,6 +24,7 @@ namespace WpfApp3.View
         public MarkPage()
         {
             InitializeComponent();
+            this.DataContext = new MarkPageViewModel();
         }
     }
 }

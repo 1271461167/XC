@@ -24,13 +24,14 @@ namespace WpfApp3.ViewModel
             NavChangedCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             NavChangedCommand.DoExecute = new Action<object>((obj) => { DoNavChanged(obj); });
             DoNavChanged("MainPage");
+            
         }
 
         private void DoNavChanged(object obj)
         {
-            Type type = Type.GetType("WpfApp3.View." + obj.ToString());                //获取对象类型                    
+            Type type = Type.GetType("WpfApp3.View." + obj.ToString());                 //获取对象类型                    
             ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
-            MainContent = (FrameworkElement)constructor.Invoke(null); //返回该对象一个实例
+            MainContent = (FrameworkElement)constructor.Invoke(null);                   //返回该对象一个实例
         }
 
     }
