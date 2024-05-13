@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:behaviour="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:WpfApp3.View"
              mc:Ignorable="d" 
              d:DesignHeight="750" d:DesignWidth="800">
@@ -52,10 +53,86 @@
                     <ColumnDefinition Width="400"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Image x:Name="image" Margin="10" Source="{Binding PriviewImage}"/>
+                <Image x:Name="image" Width="380" Height="360" Source="{Binding PriviewImage}"/>
                 <StackPanel Grid.Column="1" Margin="10">
                     <Button Height="25" Content="加载模板" Foreground="White" Margin="0,10" Template="{StaticResource myButton}" Command="{Binding LoadFileCommand}" CommandParameter="{Binding ElementName=image}"/>
-                    <Button Height="25" Content="加载模板" Foreground="White" Margin="0,10" Template="{StaticResource myButton}"/>
+                    <Button Height="25" Content="刷新预览" Foreground="White" Margin="0,10" Template="{StaticResource myButton}" Command="{Binding RefreshCommand}" CommandParameter="{Binding ElementName=image}"/>
+                    <Button Height="25" Content="加工" Foreground="White" Margin="0,10" Template="{StaticResource myButton}" Command="{Binding MarkCommand}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Grid Grid.Column="1" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Margin="10" Text="今日加工数据" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock Margin="10" Text="今日产量：" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
+                <TextBlock Margin="10" Text="今日产量" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <TextBlock Margin="10" Text="今日合格率：" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
+                <TextBlock Margin="10" Text="今日合格率" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
+            </StackPanel>
+            <Border Grid.Row="3" CornerRadius="10" Background="White" Margin="0,10">
+                <Border.Effect>
+                    <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="10" Opacity="0.2" Direction="0"/>
+                </Border.Effect>
+                <UniformGrid Columns="7">
+                    <TextBlock Text="ID" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="类型" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="功率" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Z轴高度" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="加工时间" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="是否合格" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="加工日期" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </UniformGrid>
+            </Border>
+            <ScrollViewer Grid.Row="4" VerticalScrollBarVisibility="Hidden">
+                <ItemsControl ItemsSource="{Binding Products}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="White" CornerRadius="10" Margin="1,5">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="10" Opacity="0.2" Direction="0"/>
+                                </Border.Effect>
+                                <UniformGrid Height="40" Columns="7">
+                                    <TextBlock Text="{Binding ProductionID}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Type}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Power}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding ZHeight}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding ProcessTime}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding IsPass}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Time}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </UniformGrid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+        <Border Grid.Row="1" CornerRadius="5" Background="White" Margin="10">
+            <Border.Effect>
+                <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="10" Text="类型：" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBox Margin="10" Text="" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </StackPanel>
             </Grid>
         </Border>

@@ -23,8 +23,7 @@ namespace WpfApp3.ViewModel
         {
             NavChangedCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             NavChangedCommand.DoExecute = new Action<object>((obj) => { DoNavChanged(obj); });
-            DoNavChanged("MainPage");
-            
+            DoNavChanged("MainPage");           
         }
 
         private void DoNavChanged(object obj)

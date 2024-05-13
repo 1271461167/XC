@@ -220,11 +220,11 @@ namespace WpfApp3.Access
                 throw new Exception("数据库打开失败");
         
         }
-        public ProductData SelectProduct(MySqlParameter[] parameters)
+        public List<ProductData> SelectProduct(MySqlParameter[] parameters)
         {           
             if (DBConnection())
             {
-                ProductData data = new ProductData();
+                List<ProductData> datas= new List<ProductData>();
                 try
                 {
                     DataSet dataSet = new DataSet();
@@ -245,6 +245,7 @@ namespace WpfApp3.Access
                     adapter.Fill(dataSet);
                     foreach (DataRow row in dataSet.Tables[0].Rows)
                     {
+                        ProductData data = new ProductData();
                         data.ProductionID = row.Field<string>("ProductID");
                         data.Time = row.Field<DateTime>("CreateAt").ToString();
                         data.Type = row.Field<string>("typeis");
@@ -252,8 +253,9 @@ namespace WpfApp3.Access
                         data.ProcessTime = TimeSpan.FromMilliseconds(double.Parse(row.Field<string>("ProcessTime")));
                         data.Power = row.Field<double>("Power");
                         data.IsPass = row.Field<bool>("IsPass");
+                        datas.Add(data);
                     }
-                    return data;
+                    return datas;
                 }
                 catch (Exception)
                 {

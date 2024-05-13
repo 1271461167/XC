@@ -82,7 +82,7 @@ namespace WpfApp3.ViewModel
                 new MySqlParameter("@productname",box.Text.Trim())
            };
                 Products.Clear();
-                Products.Add(LocalDataAccess.GetInstance().SelectProduct(sp));
+                LocalDataAccess.GetInstance().SelectProduct(sp).ForEach(product => Products.Add(product));
             });
         }
         private void SeriesInit()

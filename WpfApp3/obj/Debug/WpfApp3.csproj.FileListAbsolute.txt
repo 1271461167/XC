@@ -84,3 +84,6 @@ C:\Users\ywh\Desktop\XiChun\WpfApp3\bin\Debug\System.Buffers.dll
 C:\Users\ywh\Desktop\XiChun\WpfApp3\bin\Debug\MySql.Data.xml
 C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\View\MarkPage.g.cs
 C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\View\MarkPage.baml
+C:\Users\ywh\Desktop\XiChun\WpfApp3\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\ywh\Desktop\XiChun\WpfApp3\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\ywh\Desktop\XiChun\WpfApp3\bin\Debug\Microsoft.Xaml.Behaviors.xml

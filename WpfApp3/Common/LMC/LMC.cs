@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -69,12 +70,12 @@ namespace WpfApp3.Common.LMC
         {
             throw new NotImplementedException();
         }
-
         public ImageSource GetCurPreviewImage(int bmpwidth, int bmpheight)
         {
-            IntPtr pBmp = JczLmc.GetCurPrevBitmap(bmpwidth, bmpheight);
-            ImageSource img = Imaging.CreateBitmapSourceFromHBitmap(pBmp,IntPtr.Zero,Int32Rect.Empty,BitmapSizeOptions.FromEmptyOptions());
-            if(!JczLmc.DeleteObject(pBmp))
+            Bitmap bmp = new Bitmap(JczLmc.GetCurPreviewImage(bmpwidth, bmpheight));           
+            IntPtr hBitmap = bmp.GetHbitmap();
+            ImageSource img = Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero,Int32Rect.Empty,BitmapSizeOptions.FromEmptyOptions());
+            if(!JczLmc.DeleteObject(hBitmap))
             {
                 throw new Exception("内存释放错误");
             }
