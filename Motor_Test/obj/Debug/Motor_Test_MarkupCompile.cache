@@ -4,31 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\ywh\Desktop\Code\Motor_Test\obj\Debug\
+C:\Users\ywh\Desktop\XiChun\Motor_Test\obj\Debug\
 Motor_Test
 none
 false
 DEBUG;TRACE
-<<<<<<< HEAD
 C:\Users\ywh\Desktop\XiChun\Motor_Test\App.xaml
 8-678258673
 
 38-193165685
 16714854202
 Control\MyComBox.xaml;Control\myLED.xaml;Control\MyTextBox.xaml;Control\NavRadioButton.xaml;View\MainWindow.xaml;View\MarkPage.xaml;View\MotorImputation.xaml;View\MotorPage.xaml;
-=======
-C:\Users\ywh\Desktop\Code\Motor_Test\App.xaml
-7-944494295
 
-<<<<<<< HEAD
-381690031105
-16-1960920758
-=======
-37-1303276943
-16714854202
->>>>>>> 4a51256bf3d1a4672ab5549e05fe12f56b54d3dc
-Control\MyComBox.xaml;Control\myLED.xaml;Control\MyTextBox.xaml;Control\NavRadioButton.xaml;View\MainWindow.xaml;View\MarkPage.xaml;View\MotorPage.xaml;
->>>>>>> 1d72ec696df242b77e5f17012f9d9e74c72b2929
-
-True
+False
 

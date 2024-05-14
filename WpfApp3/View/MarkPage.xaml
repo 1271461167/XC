@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:behaviour="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:WpfApp3.View"
+             x:Name="markpage"
              mc:Ignorable="d" 
              d:DesignHeight="750" d:DesignWidth="800">
     <UserControl.Resources>
@@ -128,12 +129,56 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="45"/>
                     <RowDefinition Height="45"/>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="45"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Margin="10" Text="类型：" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBox Margin="10" Text="" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Margin="10" Width="50" Text="类型：" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBox Margin="10" Text="{Binding Kind}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <TextBlock Width="50" Margin="10" Text="编号：" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBox Margin="10" Text="{Binding Kind}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Button IsEnabled="{Binding ElementName=enable,Path=IsChecked}" Content="开启轴运动" Margin="190,10" Width="70" Foreground="White" Template="{StaticResource myButton}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <TextBlock Margin="10" Width="50" Text="工位数：" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBox  x:Name="workbox" IsEnabled="False" Margin="10" Text="{Binding WorkCount}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Margin="10" Width="50" Text="等待位：" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBox x:Name="waitbox" IsEnabled="False" Margin="10" Text="{Binding WaitPoint}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="enable" Content="启用轴" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <behaviour:Interaction.Triggers>
+                            <behaviour:EventTrigger EventName="Checked">
+                                <behaviour:InvokeCommandAction Command="{Binding AxisIsChecked}" CommandParameter="{Binding ElementName=markpage}"/>
+                            </behaviour:EventTrigger>
+                            <behaviour:EventTrigger EventName="Unchecked">
+                                <behaviour:InvokeCommandAction Command="{Binding AxisUnChecked}" CommandParameter="{Binding ElementName=markpage}"/>
+                            </behaviour:EventTrigger>
+                        </behaviour:Interaction.Triggers>
+                    </CheckBox>
+                </StackPanel>
+                <UniformGrid Grid.Row="3" Columns="2">
+                    <TextBlock Text="位置" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="操作" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </UniformGrid>
+                <ScrollViewer Grid.Row="4" VerticalScrollBarVisibility="Hidden">
+                    <ItemsControl ItemsSource="{Binding WorkPoints}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <UniformGrid Height="40" Columns="2">
+                                    <TextBox BorderThickness="0" IsEnabled="{Binding ElementName=enable,Path=IsChecked}" Text="{Binding Path=.}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <Button IsEnabled="{Binding ElementName=enable,Path=IsChecked}" Content="移动到" Margin="10" Width="50" Foreground="White" Template="{StaticResource myButton}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl},Path=DataContext.MoveCommand}" CommandParameter="{Binding}"/>
+                                </UniformGrid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
             </Grid>
         </Border>
     </Grid>
