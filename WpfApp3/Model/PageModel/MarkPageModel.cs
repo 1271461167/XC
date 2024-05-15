@@ -10,5 +10,6 @@ namespace WpfApp3.Model.PageModel
     public class MarkPageModel
     {
         public List<ProductData> TodayProductDatas { get; set; }
+        public Dictionary<string,int> keyValuePairs { get; set; }= new Dictionary<string,int>();
     }
 }

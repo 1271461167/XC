@@ -73,12 +73,25 @@
     <Compile Include="Common\IMarkController.cs" />
     <Compile Include="Common\LMC\JczLmc.cs" />
     <Compile Include="Common\LMC\LMC.cs" />
+    <Compile Include="Control\LED.cs" />
     <Compile Include="Model\PageModel\MarkPageModel.cs" />
+    <Compile Include="ViewModel\IOPageViewModel.cs" />
     <Compile Include="ViewModel\MarkPageViewModel.cs" />
+    <Compile Include="View\IOParameter.xaml.cs">
+      <DependentUpon>IOParameter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MarkPage.xaml.cs">
       <DependentUpon>MarkPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Control\LED.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Control\NavRadioButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IOParameter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

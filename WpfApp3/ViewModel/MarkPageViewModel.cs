@@ -17,6 +17,48 @@ namespace WpfApp3.ViewModel
         private MarkPageModel _markModel=new MarkPageModel();
         private static bool ini=false;
         public Point WaitPoint {  get; set; }=new Point();
+        private string _kind = "";
+
+        public string Kind
+        {
+            get { return _kind; }
+            set 
+            {                 
+                _kind = value;
+                this.DoNotify();
+                if (value == "") { return; }
+                if (_markModel.keyValuePairs.ContainsKey(_kind.ToUpper()))
+                {
+                    ID = _markModel.keyValuePairs[_kind.ToUpper()];
+                }
+                else
+                {
+                    _markModel.keyValuePairs.Add(_kind.ToUpper(), 0);
+                    ID = 0;
+                }
+            }
+        }
+
+        private int id;
+
+        public int ID
+        {
+            get { return id; }
+            set 
+            { 
+                id = value;
+                this.DoNotify();
+                _markModel.keyValuePairs[Kind.ToUpper()]= id;
+            }
+        }
+        private int count;
+
+        public int Count
+        {
+            get { return count; }
+            set { count = value;this.DoNotify(); }
+        }
+
         public ObservableCollection<ProductData> Products { get; set; } = new ObservableCollection<ProductData>();
         public ObservableCollection<Point> WorkPoints { get; set; } = new ObservableCollection<Point>();
         private static ImageSource _image;
@@ -31,10 +73,7 @@ namespace WpfApp3.ViewModel
         public CommandBase MoveCommand { get; set; }=new CommandBase();
         public CommandBase AxisIsChecked {  get; set; } = new CommandBase();
         public CommandBase AxisUnChecked { get; set; } = new CommandBase();
-        private string _kind;
-
         private int workcount;
-
         public int WorkCount
         {
             get { return workcount; }
@@ -50,12 +89,8 @@ namespace WpfApp3.ViewModel
 
             }
         }
-
-        public string Kind
-        {
-            get { return _kind; }
-            set { _kind = value;this.DoNotify(); }
-        }
+        public CommandBase ZeroYieldCommand { get; set; } = new CommandBase();
+        public CommandBase StartIOWindow { get; set; } = new CommandBase();
 
         public MarkPageViewModel() 
         {
@@ -77,8 +112,12 @@ namespace WpfApp3.ViewModel
             MarkCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             MarkCommand.DoExecute = new Action<object>((obj) =>
             {
-                Products.Add(new ProductData { IsPass = true, Power = 50, ProductionID = "Z-001", ProcessTime = TimeSpan.FromSeconds(2), Time = DateTime.Now.ToString(), Type = "Z", ZHeight = 30 });
-                WorkPoints.Add(new Point(10, 0));
+                if(Kind!="")
+                {
+                    Products.Add(new ProductData { IsPass = true, Power = 50, ProductionID =Kind.ToUpper()+"-"+DateTime.Now.ToString("yyyy-MM-dd").Replace("-","")+"-"+ID, ProcessTime = TimeSpan.FromSeconds(2), Time = DateTime.Now.ToString(), Type =Kind.ToUpper(), ZHeight = 30 });
+                    ID++;
+                    Count++;
+                }               
             });
             MoveCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             MoveCommand.DoExecute = new Action<object>((obj) =>
@@ -98,6 +137,17 @@ namespace WpfApp3.ViewModel
                 MarkPage markPage = (MarkPage)obj;
                 markPage.workbox.IsEnabled = false;
                 markPage.waitbox.IsEnabled = false;
+            });
+            ZeroYieldCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            ZeroYieldCommand.DoExecute = new Action<object>((obj) =>
+            {
+                Count = 0;
+            });
+            StartIOWindow.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            StartIOWindow.DoExecute = new Action<object>((obj) =>
+            {
+                IOParameter iOParameter = new IOParameter();
+                iOParameter.Show();
             });
         }
 

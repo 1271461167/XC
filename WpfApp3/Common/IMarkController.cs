@@ -180,7 +180,7 @@ namespace WpfApp3.Common
         /// Bit15是In15的状态,Bit15=1表示In15为高电平,Bit15=0表示In15为低电平
         /// </param>
         /// <returns></returns>
-        int ReadPort(ref ushort data);
+        void ReadPort(ref ushort data);
         /// <summary>
         /// 设置当前输出端口输出
         /// </summary>
@@ -203,7 +203,7 @@ namespace WpfApp3.Common
         /// Bit15是In15的状态,Bit15=1表示In15为高电平,Bit15=0表示In15为低电平</param>
         /// </param>
         /// <returns></returns>
-        int GetOutPort(ref ushort data);
+        void GetOutPort(ref ushort data);
         #endregion
         #region 文本
         /// <summary>

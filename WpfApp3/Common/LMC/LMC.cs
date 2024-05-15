@@ -97,9 +97,9 @@ namespace WpfApp3.Common.LMC
             throw new NotImplementedException();
         }
 
-        public int GetOutPort(ref ushort data)
+        public void GetOutPort(ref ushort data)
         {
-            throw new NotImplementedException();
+            JczLmc.GetOutPort(ref data);
         }
 
         public int GetPenDisableState(int nPenNo, ref bool bDisableMark)
@@ -162,9 +162,9 @@ namespace WpfApp3.Common.LMC
             throw new NotImplementedException();
         }
 
-        public int ReadPort(ref ushort data)
+        public void ReadPort(ref ushort data)
         {
-            throw new NotImplementedException();
+            JczLmc.ReadPort(ref data);
         }
 
         public int RedLightMarkByEnt(string EntName, bool bContour)

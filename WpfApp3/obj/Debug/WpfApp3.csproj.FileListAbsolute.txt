@@ -87,3 +87,7 @@ C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\View\MarkPage.baml
 C:\Users\ywh\Desktop\XiChun\WpfApp3\bin\Debug\Microsoft.Xaml.Behaviors.dll
 C:\Users\ywh\Desktop\XiChun\WpfApp3\bin\Debug\Microsoft.Xaml.Behaviors.pdb
 C:\Users\ywh\Desktop\XiChun\WpfApp3\bin\Debug\Microsoft.Xaml.Behaviors.xml
+C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\View\IOParameter.g.cs
+C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\View\IOParameter.baml
+C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\Control\LED.baml
