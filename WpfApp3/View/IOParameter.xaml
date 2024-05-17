@@ -3,10 +3,44 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:behaviour="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:WpfApp3.View"
         xmlns:controls="clr-namespace:WpfApp3.Control"
         mc:Ignorable="d"
         Title="IOParameter" Height="600" Width="450">
+    <behaviour:Interaction.Triggers>
+        <behaviour:EventTrigger EventName="FormClosing">
+            <behaviour:InvokeCommandAction Command="{Binding CloseCommand}"/>
+        </behaviour:EventTrigger>
+    </behaviour:Interaction.Triggers>
+    <Window.Resources>
+        <ControlTemplate TargetType="Button" x:Key="myButton">
+            <Border Background="#3a77bf" CornerRadius="5">
+                <Grid>
+                    <Border x:Name="over" CornerRadius="4" Background="#22FFFFFF" Visibility="Hidden"/>
+                    <Border x:Name="press" CornerRadius="4" Background="#55FFFFFF" Visibility="Hidden"/>
+                    <Border x:Name="unenable" CornerRadius="4" Background="Gray" Visibility="Hidden"/>
+                    <ContentControl Content="{TemplateBinding Content}"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+        Foreground="{TemplateBinding Foreground}"
+        FontSize="{TemplateBinding FontSize}"
+        />
+                </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Visibility" Value="Visible" TargetName="over"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Visibility" Value="Visible" TargetName="press"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Visibility" Value="Visible" TargetName="unenable"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
     <Border Margin="5" Background="White" CornerRadius="10">
         <Border.Effect>
             <DropShadowEffect Color="gray" ShadowDepth="0" BlurRadius="5" Opacity="0.3" Direction="0"/>
@@ -143,6 +177,32 @@
                     <Border.Effect>
                         <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
                     </Border.Effect>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="设置IO状态" VerticalAlignment="Center" Foreground="#AAA"/>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <ComboBox x:Name="iocom" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20" Style="{StaticResource cmbstyle}">
+                                <ComboBoxItem IsSelected="True">0</ComboBoxItem>
+                                <ComboBoxItem>1</ComboBoxItem>
+                                <ComboBoxItem>2</ComboBoxItem>
+                                <ComboBoxItem>3</ComboBoxItem>
+                                <ComboBoxItem>4</ComboBoxItem>
+                                <ComboBoxItem>5</ComboBoxItem>
+                                <ComboBoxItem>6</ComboBoxItem>
+                                <ComboBoxItem>7</ComboBoxItem>
+                            </ComboBox>
+                            <RadioButton IsChecked="True" Margin="150,0,10,0" Content="high" VerticalAlignment="Center"  Width="50"/>
+                            <RadioButton Content="low" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Button Grid.Row="2" Content="设置" Foreground="White" Width="100" Margin="5" Template="{StaticResource myButton}"/>
+
+                    </Grid>
                 </Border>
             </Grid>
         </Grid>
