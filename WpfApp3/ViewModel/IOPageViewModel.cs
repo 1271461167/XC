@@ -18,6 +18,43 @@ namespace WpfApp3.ViewModel
         IMarkController _markController = LMC.GetInstance();
         public CommandBase CloseCommand { get; set; } = new CommandBase();
         public CancellationTokenSource CancellationTokenSource { get; set; } = new CancellationTokenSource();
+        private ushort _in;
+
+        public ushort IN
+        {
+            get { return _in; }
+            set 
+            { 
+                if (_in != value)
+                {
+                    _in = value;
+                    for(int i=0;i<8;i++)
+                    {
+                        INS[i] = (value&(1<<i))!=0 ? true : false;
+                    }
+                }
+
+            }
+        }
+        private ushort _out;
+
+        public ushort OUT
+        {
+            get { return _out; }
+            set
+            {
+                if (_out != value)
+                {
+                    _out = value;
+                    for (int i = 0; i < 8; i++)
+                    {
+                        OUTS[i] = (value & (1 << i)) != 0 ? true : false;
+                    }
+                }
+
+            }
+        }
+
         public ObservableCollection<bool> INS { get; set; } = new ObservableCollection<bool>() { false, false, false, false, false, false, false, false };
         public ObservableCollection<bool> OUTS { get; set; } = new ObservableCollection<bool>() { false, false, false, false, false, false, false, false };
 
@@ -42,15 +79,13 @@ namespace WpfApp3.ViewModel
                 {
                     break;
                 }
-                ushort outs = 0;
                 ushort ins = 0;
-                _markController.GetOutPort(ref outs);
+                ushort outs = 0;
                 _markController.ReadPort(ref ins);
-                for (int i = 0; i < INS.Count; i++)
-                {
-                    INS[i] = true;
-                }
-
+                _markController.GetOutPort(ref outs);
+                IN = ins;
+                OUT = outs;
+                
             }
 
         }

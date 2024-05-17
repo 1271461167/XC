@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="IOParameter" Height="600" Width="450">
     <behaviour:Interaction.Triggers>
-        <behaviour:EventTrigger EventName="FormClosing">
+        <behaviour:EventTrigger EventName="Closed">
             <behaviour:InvokeCommandAction Command="{Binding CloseCommand}"/>
         </behaviour:EventTrigger>
     </behaviour:Interaction.Triggers>
