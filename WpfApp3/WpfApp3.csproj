@@ -70,11 +70,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\CSV\CSVHelper.cs" />
     <Compile Include="Common\IMarkController.cs" />
     <Compile Include="Common\LMC\JczLmc.cs" />
     <Compile Include="Common\LMC\LMC.cs" />
+    <Compile Include="Common\LOG\Log.cs" />
     <Compile Include="Control\LED.cs" />
     <Compile Include="Model\PageModel\MarkPageModel.cs" />
+    <Compile Include="Pub_Sub\Events\CSVEvents.cs" />
+    <Compile Include="Pub_Sub\Events\MyEventArgs.cs" />
+    <Compile Include="Pub_Sub\Pub.cs" />
+    <Compile Include="Pub_Sub\Sub.cs" />
     <Compile Include="ViewModel\IOPageViewModel.cs" />
     <Compile Include="ViewModel\MarkPageViewModel.cs" />
     <Compile Include="View\IOParameter.xaml.cs">
@@ -166,8 +172,6 @@
   <ItemGroup>
     <Resource Include="Assets\Images\Dunkin-Logo.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CSV\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

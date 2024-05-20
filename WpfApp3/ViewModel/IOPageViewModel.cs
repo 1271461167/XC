@@ -19,7 +19,6 @@ namespace WpfApp3.ViewModel
         public CommandBase CloseCommand { get; set; } = new CommandBase();
         public CancellationTokenSource CancellationTokenSource { get; set; } = new CancellationTokenSource();
         private ushort _in;
-
         public ushort IN
         {
             get { return _in; }
@@ -37,7 +36,6 @@ namespace WpfApp3.ViewModel
             }
         }
         private ushort _out;
-
         public ushort OUT
         {
             get { return _out; }

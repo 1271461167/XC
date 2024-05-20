@@ -5,8 +5,11 @@ using System.Drawing;
 using System.Windows.Media;
 using WpfApp3.Common;
 using WpfApp3.Common.LMC;
+using WpfApp3.Common.LOG;
 using WpfApp3.Model;
 using WpfApp3.Model.PageModel;
+using WpfApp3.Pub_Sub;
+using WpfApp3.Pub_Sub.Events;
 using WpfApp3.View;
 
 namespace WpfApp3.ViewModel
@@ -58,7 +61,7 @@ namespace WpfApp3.ViewModel
             get { return count; }
             set { count = value;this.DoNotify(); }
         }
-
+        private Pub _markModelPub=new Pub();
         public ObservableCollection<ProductData> Products { get; set; } = new ObservableCollection<ProductData>();
         public ObservableCollection<Point> WorkPoints { get; set; } = new ObservableCollection<Point>();
         private static ImageSource _image;
@@ -97,8 +100,10 @@ namespace WpfApp3.ViewModel
             if (!ini)
             {
                 _markController.Initialize(System.Environment.CurrentDirectory, true);
+                Log.Suc("打标卡初始化成功");
                 ini = true;
             }
+            _markModelPub.subscribe("CSV",RecordCSV);
             LoadFileCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             LoadFileCommand.DoExecute = new Action<object>((obj) =>
             {
@@ -115,8 +120,10 @@ namespace WpfApp3.ViewModel
                 if(Kind!="")
                 {
                     Products.Add(new ProductData { IsPass = true, Power = 50, ProductionID =Kind.ToUpper()+"-"+DateTime.Now.ToString("yyyy-MM-dd").Replace("-","")+"-"+ID, ProcessTime = TimeSpan.FromSeconds(2), Time = DateTime.Now.ToString(), Type =Kind.ToUpper(), ZHeight = 30 });
+                    _markModelPub.publish("CSV",new CSVEvents(new ProductData { IsPass = true, Power = 50, ProductionID = Kind.ToUpper() + "-" + DateTime.Now.ToString("yyyy-MM-dd").Replace("-", "") + "-" + ID, ProcessTime = TimeSpan.FromSeconds(2), Time = DateTime.Now.ToString(), Type = Kind.ToUpper(), ZHeight = 30 }));
                     ID++;
                     Count++;
+
                 }               
             });
             MoveCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
@@ -168,6 +175,11 @@ namespace WpfApp3.ViewModel
         {
             System.Windows.Controls.Image image = obj as System.Windows.Controls.Image;
             PriviewImage = _markController.GetCurPreviewImage((int)image.Width, (int)image.Height);
+        }
+        private void RecordCSV(object sender,EventArgs e)
+        {
+            CSVEvents cSV=e as CSVEvents;
+
         }
     }
 }
