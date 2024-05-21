@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Windows.Media;
 using WpfApp3.Common;
+using WpfApp3.Common.CSV;
 using WpfApp3.Common.LMC;
 using WpfApp3.Common.LOG;
 using WpfApp3.Model;
@@ -16,11 +17,13 @@ namespace WpfApp3.ViewModel
 {
     public class MarkPageViewModel:NotifyBase
     {
+        private static string[] m_strAllEntNameList;
+        private static int m_nAllEntCount;
         IMarkController _markController = LMC.GetInstance();
-        private MarkPageModel _markModel=new MarkPageModel();
+        private static MarkPageModel _markModel=new MarkPageModel();
         private static bool ini=false;
         public Point WaitPoint {  get; set; }=new Point();
-        private string _kind = "";
+        private static string _kind = "";
 
         public string Kind
         {
@@ -42,7 +45,7 @@ namespace WpfApp3.ViewModel
             }
         }
 
-        private int id;
+        private static int id;
 
         public int ID
         {
@@ -54,14 +57,14 @@ namespace WpfApp3.ViewModel
                 _markModel.keyValuePairs[Kind.ToUpper()]= id;
             }
         }
-        private int count;
+        private static int count;
 
         public int Count
         {
             get { return count; }
             set { count = value;this.DoNotify(); }
         }
-        private Pub _markModelPub=new Pub();
+        private Pub pub=new Pub();
         public ObservableCollection<ProductData> Products { get; set; } = new ObservableCollection<ProductData>();
         public ObservableCollection<Point> WorkPoints { get; set; } = new ObservableCollection<Point>();
         private static ImageSource _image;
@@ -103,7 +106,8 @@ namespace WpfApp3.ViewModel
                 Log.Suc("打标卡初始化成功");
                 ini = true;
             }
-            _markModelPub.subscribe("CSV",RecordCSV);
+            pub.subscribe("CSV",RecordCSV);
+            _markModel.TodayProductDatas?.ForEach(data => { Products.Add(data); });
             LoadFileCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             LoadFileCommand.DoExecute = new Action<object>((obj) =>
             {
@@ -117,14 +121,7 @@ namespace WpfApp3.ViewModel
             MarkCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             MarkCommand.DoExecute = new Action<object>((obj) =>
             {
-                if(Kind!="")
-                {
-                    Products.Add(new ProductData { IsPass = true, Power = 50, ProductionID =Kind.ToUpper()+"-"+DateTime.Now.ToString("yyyy-MM-dd").Replace("-","")+"-"+ID, ProcessTime = TimeSpan.FromSeconds(2), Time = DateTime.Now.ToString(), Type =Kind.ToUpper(), ZHeight = 30 });
-                    _markModelPub.publish("CSV",new CSVEvents(new ProductData { IsPass = true, Power = 50, ProductionID = Kind.ToUpper() + "-" + DateTime.Now.ToString("yyyy-MM-dd").Replace("-", "") + "-" + ID, ProcessTime = TimeSpan.FromSeconds(2), Time = DateTime.Now.ToString(), Type = Kind.ToUpper(), ZHeight = 30 }));
-                    ID++;
-                    Count++;
-
-                }               
+                Mark();
             });
             MoveCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             MoveCommand.DoExecute = new Action<object>((obj) =>
@@ -169,6 +166,14 @@ namespace WpfApp3.ViewModel
                 string filename = dlg.FileName;
                 _markController.LoadEzdFile(filename);
                 PriviewImage = _markController.GetCurPreviewImage((int)image.Width, (int)image.Height);
+                m_nAllEntCount=_markController.GetEntityCount();
+                m_strAllEntNameList=new string[m_nAllEntCount];
+                for(int i=0;i<m_nAllEntCount;i++)
+                {
+                    string str = i.ToString();
+                    _markController.SetEntityNameByIndex(i,str);
+                    m_strAllEntNameList[i] = _markController.GetEntityNameByIndex(i);
+                }
             }            
         }
         private void RefreshPreview(object obj)
@@ -179,7 +184,29 @@ namespace WpfApp3.ViewModel
         private void RecordCSV(object sender,EventArgs e)
         {
             CSVEvents cSV=e as CSVEvents;
-
+            CSVHelper.WriteCsv(CSVHelper._toString<ProductData>(cSV.ProductData));
+        }
+        private void Mark()
+        {
+            int nMarkLoop = 0, nFreq = 0, nStartTC = 0, nLaserOffTC = 0, nEndTC = 0, nPolyTC = 0, nJumpPosTC = 0, nJumpDistTC = 0, nPulseNum = 0;
+            double dMarkSpeed = 0, dPowerRatio = 0, dCurrent = 0, dQPulseWidth = 0, dJumpSpeed = 0, dEndComp = 0, dAccDist = 0, dPointTime = 0, dFlySpeed = 0;
+            bool bPulsePointMode = false;
+            if (Kind != "")
+            {
+                if (Products.Count >= 100)
+                {
+                    Products.RemoveAt(0);
+                }
+                _markController.Mark(false);
+                ProductData product=new ProductData();
+                int tem= _markController.GetPenNumberFromEnt(m_strAllEntNameList[0]);
+                _markController.GetPenParam(tem, ref nMarkLoop, ref dMarkSpeed, ref dPowerRatio, ref dCurrent, ref nFreq, ref dQPulseWidth, ref nStartTC, ref nLaserOffTC, ref nEndTC, ref nPolyTC, ref dJumpSpeed, ref nJumpPosTC, ref nJumpDistTC, ref dEndComp, ref dAccDist, ref dPointTime, ref bPulsePointMode, ref nPulseNum, ref dFlySpeed);
+                ProductData data= new ProductData() { IsPass = true, Power = dPowerRatio, ProductionID = Kind.ToUpper() + "-" + DateTime.Now.ToString("yyyy-MM-dd").Replace("-", "") + "-" + ID, ProcessTime = TimeSpan.FromSeconds(2), Time = DateTime.Now.ToString(), Type = Kind.ToUpper(), ZHeight = 30 };
+                Products.Add(data);
+                pub.publish("CSV", new CSVEvents(data));
+                ID++;
+                Count++;
+            }
         }
     }
 }

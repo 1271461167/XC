@@ -92,3 +92,5 @@ C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\View\IOParameter.baml
 C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\Control\LED.baml
 C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\Control\MyComBox.baml
+C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\View\MarkingSettingsPage.g.cs
+C:\Users\ywh\Desktop\XiChun\WpfApp3\obj\Debug\View\MarkingSettingsPage.baml

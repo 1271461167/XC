@@ -30,7 +30,7 @@ namespace WpfApp3.Common
         /// </summary>
         /// <param name="Fly">是否飞行标刻</param>
         /// <returns></returns>
-        int Mark(bool Fly);
+        void Mark(bool Fly);
         /// <summary>
         /// 加工指定对象
         /// </summary>
@@ -152,14 +152,14 @@ namespace WpfApp3.Common
         /// <param name="nEntityIndex">索引号</param>
         /// <param name="entname">名称</param>
         /// <returns></returns>
-        int lmc1_GetEntityNameByIndex(int nEntityIndex, StringBuilder entname);
+        string GetEntityNameByIndex(int nEntityIndex);
         /// <summary>
         /// 设定指定索引号的对象的名称
         /// </summary>
         /// <param name="nEntityIndex">索引号</param>
         /// <param name="entname">名称</param>
         /// <returns></returns>
-        int SetEntityNameByIndex(int nEntityIndex, string entname);
+        void SetEntityNameByIndex(int nEntityIndex, string entname);
         /// <summary>
         /// 重命名指定名称对象
         /// </summary>
@@ -246,7 +246,7 @@ namespace WpfApp3.Common
         /// <param name="nPulseNum">打点个数</param>
         /// <param name="dFlySpeed">流水线速度 mm/s或者inch/mm</param>
         /// <returns></returns>
-        int GetPenParam(int nPenNo,
+        void GetPenParam(int nPenNo,
                      ref int nMarkLoop,
                      ref double dMarkSpeed,
                      ref double dPowerRatio,

@@ -60,6 +60,7 @@
                     <Button Height="25" Content="刷新预览" Foreground="White" Margin="0,10" Template="{StaticResource myButton}" Command="{Binding RefreshCommand}" CommandParameter="{Binding ElementName=image}"/>
                     <Button Height="25" Content="加工" Foreground="White" Margin="0,10" Template="{StaticResource myButton}" Command="{Binding MarkCommand}"/>
                     <Button Height="25" Content="IO界面" Foreground="White" Margin="0,10" Template="{StaticResource myButton}" Command="{Binding StartIOWindow}"/>
+                    <Button Height="25" Content="设置界面" Foreground="White" Margin="0,10" Template="{StaticResource myButton}"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -78,8 +79,8 @@
                 <Button Width="70" Content="产量清零" Foreground="White" Margin="0,10" Template="{StaticResource myButton}" Command="{Binding ZeroYieldCommand}"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <TextBlock Margin="10" Text="今日合格率：" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
-                <TextBlock Margin="10" Text="今日合格率" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
+                <TextBlock Margin="10" Text="加工时间：" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
+                <TextBlock Margin="10" Text="加工时间" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
             </StackPanel>
             <Border Grid.Row="3" CornerRadius="10" Background="White" Margin="0,10">
                 <Border.Effect>
@@ -138,11 +139,14 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="10" Width="50" Text="类型：" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <TextBox Margin="10" Text="{Binding Kind}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Margin="10" Width="50" Text="Z轴高度：" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBox Margin="10" IsEnabled="{Binding ElementName=enable,Path=IsChecked}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Button IsEnabled="{Binding ElementName=enable,Path=IsChecked}" Content="Z轴运动" Margin="0,10" Width="70" Foreground="White" Template="{StaticResource myButton}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                     <TextBlock Width="50" Margin="10" Text="编号：" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <TextBox Margin="10" Text="{Binding ID}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <Button IsEnabled="{Binding ElementName=enable,Path=IsChecked}" Content="开启轴运动" Margin="190,10" Width="70" Foreground="White" Template="{StaticResource myButton}"/>
+                    <Button IsEnabled="{Binding ElementName=enable,Path=IsChecked}" Content="开启自动流程" Margin="190,10" Width="70" Foreground="White" Template="{StaticResource myButton}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Orientation="Horizontal">
                     <TextBlock Margin="10" Width="50" Text="工位数：" HorizontalAlignment="Left" VerticalAlignment="Center"/>

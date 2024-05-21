@@ -14,7 +14,7 @@ namespace WpfApp3.Common.CSV
         public static void WriteCsv(string result)
         {
             string path = Environment.CurrentDirectory;//保存路径
-            string fileName = path + DateTime.Now.ToString("yyyy-MM-dd") + ".csv";//文件名
+            string fileName = path+"//"+ DateTime.Now.ToString("yyyy-MM-dd") + ".csv";//文件名
             string Datedate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//年月日小时分钟秒
             if (!Directory.Exists(path))
             {
@@ -23,7 +23,7 @@ namespace WpfApp3.Common.CSV
             if (!File.Exists(fileName))
             {
                 StreamWriter sw = new StreamWriter(fileName, true, Encoding.UTF8);
-                string str1 = "ID" + "," + "类型" + "," + "功率" + "," + "Z轴高度"+","+"是否合格"+","+"加工时间"+","+"加工日期" + "\t\n";
+                string str1 = "ID" + "," + "类型" + "," + "功率" + "," + "Z轴高度"+","+"加工时间"+","+"加工日期"+","+"是否合格" + "\t\n";
                 sw.Write(str1);
                 sw.Close();
             }
@@ -68,9 +68,32 @@ namespace WpfApp3.Common.CSV
             }
 
         }
-        public static T _toString<T>(T a)
+        public static string _toString<T>(T a)
         {
-            return a;
+            string str = string.Empty;
+            if(a==null)
+            {
+                return str;
+            }
+            System.Reflection.PropertyInfo[] properties= a.GetType().GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
+            if (properties.Length<=0)
+            {
+                return str;
+            }
+            foreach (System.Reflection.PropertyInfo item in properties)
+            {
+                //string name = item.Name;
+                object value = item.GetValue(a, null);
+                if (item.PropertyType.IsValueType || item.PropertyType.Name.StartsWith("String"))
+                {
+                    str += string.Format("{0},",value);
+                }
+                else
+                {
+                    _toString(value);
+                }
+            }
+            return str.TrimEnd(',');
         }
     }
 }

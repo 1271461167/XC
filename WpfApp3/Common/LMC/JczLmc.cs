@@ -1110,7 +1110,7 @@ namespace WpfApp3.Common.LMC
         ///<summary>
         ///获取指定名称对象笔号
         ///<summary>
-        [DllImport("MarkEzd", EntryPoint = "lmc1_GetPenNumberFromName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("MarkEzd", EntryPoint = "lmc1_GetPenNumberFromName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
         public static extern int GetPenNumberFromName(string strEntName);
 
         /// <summary>
@@ -1118,7 +1118,7 @@ namespace WpfApp3.Common.LMC
         /// </summary>
         /// <param name="strEntName"></param>
         /// <returns></returns>
-        [DllImport("MarkEzd", EntryPoint = "lmc1_GetPenNumberFromEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("MarkEzd", EntryPoint = "lmc1_GetPenNumberFromEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
         public static extern int GetPenNumberFromEnt(string strEntName);
 
         ///<summary>

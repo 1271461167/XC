@@ -15,12 +15,13 @@ namespace WpfApp3.ViewModel
     public class MainPageViewModel : NotifyBase
     {
 
-        private int _pageIndex = 0;
-        private int _pageSize = 5;
-        private int _currentPage = 1;
-        public int TargetPage { get; set; } = 1;
-        public int PageCount { get; set; } = 0;
-        public MainPageModel model = new MainPageModel();
+        private static int _pageIndex = 0;
+        private static int _pageSize = 5;
+        private static int _currentPage = 1;
+        private static bool init=false;
+        public static int TargetPage { get; set; } = 1;
+        public static int PageCount { get; set; } = 0;
+        public static MainPageModel model = new MainPageModel();
         public ObservableCollection<string> Labels { get; set; }
         public ObservableCollection<ProductData> Products { get; set; } = new ObservableCollection<ProductData>();
         public SeriesCollection ProcessNumberSeries { get; set; }
@@ -36,8 +37,12 @@ namespace WpfApp3.ViewModel
         }
         public MainPageViewModel()
         {
-            PageCount = (int)Math.Ceiling((double)LocalDataAccess.GetInstance().GetRecordCount("product") / _pageSize);
-            model.ProductionDatas = LocalDataAccess.GetInstance().GetProductions();
+            if(!init)
+            {
+                PageCount = (int)Math.Ceiling((double)LocalDataAccess.GetInstance().GetRecordCount("product") / _pageSize);
+                model.ProductionDatas = LocalDataAccess.GetInstance().GetProductions();
+                init = true;
+            }
             SeriesInit();
             turnToPage();                                 
             PageUpCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });

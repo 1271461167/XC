@@ -89,7 +89,7 @@ namespace WpfApp3.Common.LMC
 
         public ushort GetEntityCount()
         {
-            throw new NotImplementedException();
+            return JczLmc.GetEntityCount();
         }
 
         public int GetEntSize(string strEntName, ref double dMinx, ref double dMiny, ref double dMaxx, ref double dMaxy, ref double dz)
@@ -109,17 +109,17 @@ namespace WpfApp3.Common.LMC
 
         public int GetPenNumberFromEnt(string strEntName)
         {
-            throw new NotImplementedException();
+            return JczLmc.GetPenNumberFromEnt(strEntName);
         }
 
         public int GetPenNumberFromName(string strEntName)
-        {
+        {           
             throw new NotImplementedException();
         }
 
-        public int GetPenParam(int nPenNo, ref int nMarkLoop, ref double dMarkSpeed, ref double dPowerRatio, ref double dCurrent, ref int nFreq, ref double dQPulseWidth, ref int nStartTC, ref int nLaserOffTC, ref int nEndTC, ref int nPolyTC, ref double dJumpSpeed, ref int nJumpPosTC, ref int nJumpDistTC, ref double dEndComp, ref double dAccDist, ref double dPointTime, ref bool bPulsePointMode, ref int nPulseNum, ref double dFlySpeed)
+        public void GetPenParam(int nPenNo, ref int nMarkLoop, ref double dMarkSpeed, ref double dPowerRatio, ref double dCurrent, ref int nFreq, ref double dQPulseWidth, ref int nStartTC, ref int nLaserOffTC, ref int nEndTC, ref int nPolyTC, ref double dJumpSpeed, ref int nJumpPosTC, ref int nJumpDistTC, ref double dEndComp, ref double dAccDist, ref double dPointTime, ref bool bPulsePointMode, ref int nPulseNum, ref double dFlySpeed)
         {
-            throw new NotImplementedException();
+            JczLmc.GetPenParam( nPenNo,ref nMarkLoop, ref dMarkSpeed, ref dPowerRatio, ref dCurrent, ref nFreq, ref dQPulseWidth, ref nStartTC, ref nLaserOffTC, ref nEndTC, ref nPolyTC, ref dJumpSpeed, ref nJumpPosTC, ref nJumpDistTC, ref dEndComp, ref dAccDist, ref dPointTime, ref bPulsePointMode, ref nPulseNum, ref dFlySpeed);
         }
 
         public int GetTextByName(string strEntName, StringBuilder Text)
@@ -132,9 +132,9 @@ namespace WpfApp3.Common.LMC
             CommandHandler(JczLmc.Initialize(PathName, bTestMode));
         }
 
-        public int lmc1_GetEntityNameByIndex(int nEntityIndex, StringBuilder entname)
+        public string GetEntityNameByIndex(int nEntityIndex)
         {
-            throw new NotImplementedException();
+            return JczLmc.GetEntityNameByIndex(nEntityIndex);
         }
 
         public void LoadEzdFile(string FileName)
@@ -142,9 +142,9 @@ namespace WpfApp3.Common.LMC
             JczLmc.LoadEzdFile(FileName);
         }
 
-        public int Mark(bool Fly)
+        public void Mark(bool Fly)
         {
-            throw new NotImplementedException();
+           JczLmc.Mark(Fly);
         }
 
         public int MarkEntity(string EntName)
@@ -202,9 +202,9 @@ namespace WpfApp3.Common.LMC
             throw new NotImplementedException();
         }
 
-        public int SetEntityNameByIndex(int nEntityIndex, string entname)
+        public void SetEntityNameByIndex(int nEntityIndex, string entname)
         {
-            throw new NotImplementedException();
+            JczLmc.SetEntityNameByIndex(nEntityIndex, entname);
         }
 
         public int SetPenDisableState(int nPenNo, bool bDisableMark)
