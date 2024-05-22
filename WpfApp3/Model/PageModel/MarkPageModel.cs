@@ -9,7 +9,7 @@ namespace WpfApp3.Model.PageModel
 {
     public class MarkPageModel
     {
-        public List<ProductData> TodayProductDatas { get; set; }
+        public List<ProductData> TodayProductDatas { get; set; }=new List<ProductData>();
         public Dictionary<string,int> keyValuePairs { get; set; }= new Dictionary<string,int>();
     }
 }

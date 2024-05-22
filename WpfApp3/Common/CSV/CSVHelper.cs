@@ -13,7 +13,7 @@ namespace WpfApp3.Common.CSV
     {
         public static void WriteCsv(string result)
         {
-            string path = Environment.CurrentDirectory;//保存路径
+            string path = Environment.CurrentDirectory+"//"+ "CSV";//保存路径
             string fileName = path+"//"+ DateTime.Now.ToString("yyyy-MM-dd") + ".csv";//文件名
             string Datedate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//年月日小时分钟秒
             if (!Directory.Exists(path))

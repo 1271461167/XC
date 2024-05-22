@@ -83,6 +83,7 @@
     <Compile Include="Pub_Sub\Sub.cs" />
     <Compile Include="ViewModel\IOPageViewModel.cs" />
     <Compile Include="ViewModel\MarkPageViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="View\IOParameter.xaml.cs">
       <DependentUpon>IOParameter.xaml</DependentUpon>
     </Compile>

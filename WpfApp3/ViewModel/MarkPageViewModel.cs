@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Media;
 using WpfApp3.Common;
@@ -23,6 +24,14 @@ namespace WpfApp3.ViewModel
         private static MarkPageModel _markModel=new MarkPageModel();
         private static bool ini=false;
         public Point WaitPoint {  get; set; }=new Point();
+        private TimeSpan processingtime;
+
+        public TimeSpan ProcessingTime
+        {
+            get { return processingtime; }
+            set { processingtime = value;this.DoNotify(); }
+        }
+
         private static string _kind = "";
 
         public string Kind
@@ -97,17 +106,16 @@ namespace WpfApp3.ViewModel
         }
         public CommandBase ZeroYieldCommand { get; set; } = new CommandBase();
         public CommandBase StartIOWindow { get; set; } = new CommandBase();
+        public CommandBase LoadCommand { get; set; } = new CommandBase();
+        public CommandBase SettingsCommand { get; set; } = new CommandBase();
 
         public MarkPageViewModel() 
-        {
-            if (!ini)
+        {           
+            LoadCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            LoadCommand.DoExecute = new Action<object>((obj) =>
             {
-                _markController.Initialize(System.Environment.CurrentDirectory, true);
-                Log.Suc("打标卡初始化成功");
-                ini = true;
-            }
-            pub.subscribe("CSV",RecordCSV);
-            _markModel.TodayProductDatas?.ForEach(data => { Products.Add(data); });
+                Loaded();
+            });
             LoadFileCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             LoadFileCommand.DoExecute = new Action<object>((obj) =>
             {
@@ -153,6 +161,24 @@ namespace WpfApp3.ViewModel
                 IOParameter iOParameter = new IOParameter();
                 iOParameter.Show();
             });
+            SettingsCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
+            SettingsCommand.DoExecute = new Action<object>((obj) =>
+            {
+                MarkingSettingsPage settings = new MarkingSettingsPage();
+                settings.ShowDialog();
+            });
+        }
+
+        private void Loaded()
+        {
+            if (!ini)
+            {
+                _markController.Initialize(System.Environment.CurrentDirectory, true);
+                Log.Suc("打标卡初始化成功");
+                ini = true;
+            }
+            pub.subscribe("CSV", RecordCSV);
+            _markModel.TodayProductDatas?.ForEach(data => { Products.Add(data); });
         }
 
         private void LoadEdzFile(object obj)
@@ -188,25 +214,34 @@ namespace WpfApp3.ViewModel
         }
         private void Mark()
         {
-            int nMarkLoop = 0, nFreq = 0, nStartTC = 0, nLaserOffTC = 0, nEndTC = 0, nPolyTC = 0, nJumpPosTC = 0, nJumpDistTC = 0, nPulseNum = 0;
-            double dMarkSpeed = 0, dPowerRatio = 0, dCurrent = 0, dQPulseWidth = 0, dJumpSpeed = 0, dEndComp = 0, dAccDist = 0, dPointTime = 0, dFlySpeed = 0;
-            bool bPulsePointMode = false;
-            if (Kind != "")
-            {
-                if (Products.Count >= 100)
-                {
-                    Products.RemoveAt(0);
-                }
-                _markController.Mark(false);
-                ProductData product=new ProductData();
-                int tem= _markController.GetPenNumberFromEnt(m_strAllEntNameList[0]);
-                _markController.GetPenParam(tem, ref nMarkLoop, ref dMarkSpeed, ref dPowerRatio, ref dCurrent, ref nFreq, ref dQPulseWidth, ref nStartTC, ref nLaserOffTC, ref nEndTC, ref nPolyTC, ref dJumpSpeed, ref nJumpPosTC, ref nJumpDistTC, ref dEndComp, ref dAccDist, ref dPointTime, ref bPulsePointMode, ref nPulseNum, ref dFlySpeed);
-                ProductData data= new ProductData() { IsPass = true, Power = dPowerRatio, ProductionID = Kind.ToUpper() + "-" + DateTime.Now.ToString("yyyy-MM-dd").Replace("-", "") + "-" + ID, ProcessTime = TimeSpan.FromSeconds(2), Time = DateTime.Now.ToString(), Type = Kind.ToUpper(), ZHeight = 30 };
-                Products.Add(data);
-                pub.publish("CSV", new CSVEvents(data));
-                ID++;
-                Count++;
-            }
+            //int nMarkLoop = 0, nFreq = 0, nStartTC = 0, nLaserOffTC = 0, nEndTC = 0, nPolyTC = 0, nJumpPosTC = 0, nJumpDistTC = 0, nPulseNum = 0;
+            //double dMarkSpeed = 0, dPowerRatio = 0, dCurrent = 0, dQPulseWidth = 0, dJumpSpeed = 0, dEndComp = 0, dAccDist = 0, dPointTime = 0, dFlySpeed = 0;
+            //bool bPulsePointMode = false;
+            //if(m_nAllEntCount==0)
+            //{
+            //    return;
+            //}
+            //if (Kind != "")
+            //{
+            //    if (Products.Count >= 100)
+            //    {
+            //        Products.RemoveAt(0);
+            //        _markModel.TodayProductDatas.RemoveAt(0);
+            //    }
+            //    Stopwatch stopwatch = Stopwatch.StartNew();
+            //    stopwatch.Start();
+            //    _markController.Mark(false);
+            //    stopwatch.Stop();
+            //    ProcessingTime = stopwatch.Elapsed;
+            //    ProductData product=new ProductData();
+            //    int tem= _markController.GetPenNumberFromEnt(m_strAllEntNameList[0]);
+            //    _markController.GetPenParam(tem, ref nMarkLoop, ref dMarkSpeed, ref dPowerRatio, ref dCurrent, ref nFreq, ref dQPulseWidth, ref nStartTC, ref nLaserOffTC, ref nEndTC, ref nPolyTC, ref dJumpSpeed, ref nJumpPosTC, ref nJumpDistTC, ref dEndComp, ref dAccDist, ref dPointTime, ref bPulsePointMode, ref nPulseNum, ref dFlySpeed);
+            //    ProductData data= new ProductData() { IsPass = true, Power = dPowerRatio, ProductionID = Kind.ToUpper() + "-" + DateTime.Now.ToString("yyyy-MM-dd").Replace("-", "") + "-" + ID, ProcessTime = ProcessingTime, Time = DateTime.Now.ToString(), Type = Kind.ToUpper(), ZHeight = 30 };             
+            //    Products.Add(data);
+            //    pub.publish("CSV", new CSVEvents(data));
+            //    ID++;
+            //    Count++;
+            //}
         }
     }
 }

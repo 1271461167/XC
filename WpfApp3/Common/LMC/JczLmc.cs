@@ -844,7 +844,7 @@ namespace WpfApp3.Common.LMC
         /// nPulseNum 打点个数
         /// dFlySpeed 流水线速度 mm/s或者inch/mm
         /// </summary> 
-        [DllImport("MarkEzd", EntryPoint = "lmc1_GetPenParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("MarkEzd", EntryPoint = "lmc1_GetPenParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
         public static extern int GetPenParam(int nPenNo,
                      ref int nMarkLoop,
                      ref double dMarkSpeed,

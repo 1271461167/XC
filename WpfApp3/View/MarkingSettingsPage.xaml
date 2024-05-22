@@ -5,8 +5,152 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp3.View"
         mc:Ignorable="d"
-        Title="MarkingSettingsPage" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="MarkingSettingsPage" Height="800" Width="600">
+    <Window.Resources>
+        <ControlTemplate TargetType="Button" x:Key="myButton">
+            <Border Background="#3a77bf" CornerRadius="5">
+                <Grid>
+                    <Border x:Name="over" CornerRadius="4" Background="#22FFFFFF" Visibility="Hidden"/>
+                    <Border x:Name="press" CornerRadius="4" Background="#55FFFFFF" Visibility="Hidden"/>
+                    <Border x:Name="unenable" CornerRadius="4" Background="Gray" Visibility="Hidden"/>
+                    <ContentControl Content="{TemplateBinding Content}"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+        Foreground="{TemplateBinding Foreground}"
+        FontSize="{TemplateBinding FontSize}"
+        />
+                </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Visibility" Value="Visible" TargetName="over"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Visibility" Value="Visible" TargetName="press"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Visibility" Value="Visible" TargetName="unenable"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    <Border Margin="5" Background="White" CornerRadius="10">
+        <Border.Effect>
+            <DropShadowEffect Color="gray" ShadowDepth="0" BlurRadius="5" Opacity="0.3" Direction="0"/>
+        </Border.Effect>
+        <Grid>
+            <Border Background="#3a77bf" Height="150" VerticalAlignment="Top" CornerRadius="10,10,0,0"/>
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="信号设置" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="20"/>
+                <Border Grid.Row="1" CornerRadius="5" Background="White" Margin="10">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
+                    </Border.Effect>
+                    <UniformGrid Rows="15">
+                        <TextBlock Text="输入信号" VerticalAlignment="Center" Margin="10" Foreground="#AAA"/>
+                        <StackPanel Orientation="Horizontal">
+                          <Label Width="100" Content="触发信号：" VerticalAlignment="Center"/>
+                          <ComboBox VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20" Style="{StaticResource cmbstyle}">
+                                <ComboBoxItem IsSelected="True">0</ComboBoxItem>
+                                <ComboBoxItem>1</ComboBoxItem>
+                                <ComboBoxItem>2</ComboBoxItem>
+                                <ComboBoxItem>3</ComboBoxItem>
+                                <ComboBoxItem>4</ComboBoxItem>
+                                <ComboBoxItem>5</ComboBoxItem>
+                                <ComboBoxItem>6</ComboBoxItem>
+                                <ComboBoxItem>7</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Width="100" Content="激光器报警信号：" VerticalAlignment="Center"/>
+                            <ComboBox VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20" Style="{StaticResource cmbstyle}">
+                                <ComboBoxItem IsSelected="True">0</ComboBoxItem>
+                                <ComboBoxItem>1</ComboBoxItem>
+                                <ComboBoxItem>2</ComboBoxItem>
+                                <ComboBoxItem>3</ComboBoxItem>
+                                <ComboBoxItem>4</ComboBoxItem>
+                                <ComboBoxItem>5</ComboBoxItem>
+                                <ComboBoxItem>6</ComboBoxItem>
+                                <ComboBoxItem>7</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Width="100" Content="清报警：" VerticalAlignment="Center"/>
+                            <ComboBox VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20" Style="{StaticResource cmbstyle}">
+                                <ComboBoxItem IsSelected="True">0</ComboBoxItem>
+                                <ComboBoxItem>1</ComboBoxItem>
+                                <ComboBoxItem>2</ComboBoxItem>
+                                <ComboBoxItem>3</ComboBoxItem>
+                                <ComboBoxItem>4</ComboBoxItem>
+                                <ComboBoxItem>5</ComboBoxItem>
+                                <ComboBoxItem>6</ComboBoxItem>
+                                <ComboBoxItem>7</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <TextBlock Text="输出信号" VerticalAlignment="Center" Margin="10" Foreground="#AAA"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Width="100" Content="激光器准备好：" VerticalAlignment="Center"/>
+                            <ComboBox VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20" Style="{StaticResource cmbstyle}">
+                                <ComboBoxItem IsSelected="True">0</ComboBoxItem>
+                                <ComboBoxItem>1</ComboBoxItem>
+                                <ComboBoxItem>2</ComboBoxItem>
+                                <ComboBoxItem>3</ComboBoxItem>
+                                <ComboBoxItem>4</ComboBoxItem>
+                                <ComboBoxItem>5</ComboBoxItem>
+                                <ComboBoxItem>6</ComboBoxItem>
+                                <ComboBoxItem>7</ComboBoxItem>
+                            </ComboBox>
+                            <RadioButton Margin="10" IsChecked="True" Content="high" VerticalAlignment="Center"  Width="50"/>
+                            <RadioButton Margin="10" Content="low" VerticalAlignment="Center"/>
+                            <Label Width="70" Content="持续时间：" VerticalAlignment="Center"/>
+                            <TextBox Width="100" Margin="10"/>
+                            <Label Content="ms" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Width="100" Content="打标完成：" VerticalAlignment="Center"/>
+                            <ComboBox VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20" Style="{StaticResource cmbstyle}">
+                                <ComboBoxItem IsSelected="True">0</ComboBoxItem>
+                                <ComboBoxItem>1</ComboBoxItem>
+                                <ComboBoxItem>2</ComboBoxItem>
+                                <ComboBoxItem>3</ComboBoxItem>
+                                <ComboBoxItem>4</ComboBoxItem>
+                                <ComboBoxItem>5</ComboBoxItem>
+                                <ComboBoxItem>6</ComboBoxItem>
+                                <ComboBoxItem>7</ComboBoxItem>
+                            </ComboBox>
+                            <RadioButton Margin="10" IsChecked="True" Content="high" VerticalAlignment="Center"  Width="50"/>
+                            <RadioButton Margin="10" Content="low" VerticalAlignment="Center"/>
+                            <Label Width="70" Content="持续时间：" VerticalAlignment="Center"/>
+                            <TextBox Width="100" Margin="10"/>
+                            <Label Content="ms" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Width="100" Content="报警信号：" VerticalAlignment="Center"/>
+                            <ComboBox VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20" Style="{StaticResource cmbstyle}">
+                                <ComboBoxItem IsSelected="True">0</ComboBoxItem>
+                                <ComboBoxItem>1</ComboBoxItem>
+                                <ComboBoxItem>2</ComboBoxItem>
+                                <ComboBoxItem>3</ComboBoxItem>
+                                <ComboBoxItem>4</ComboBoxItem>
+                                <ComboBoxItem>5</ComboBoxItem>
+                                <ComboBoxItem>6</ComboBoxItem>
+                                <ComboBoxItem>7</ComboBoxItem>
+                            </ComboBox>
+                            <RadioButton Margin="10" IsChecked="True" Content="high" VerticalAlignment="Center"  Width="50"/>
+                            <RadioButton Margin="10" Content="low" VerticalAlignment="Center"/>
+                            <Label Width="70" Content="持续时间：" VerticalAlignment="Center"/>
+                            <TextBox Width="100" Margin="10"/>
+                            <Label Content="ms" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </UniformGrid>
+                </Border>
+                <Button HorizontalAlignment="Right" Grid.Row="2" Content="保存" Foreground="White" Width="100" Margin="5" Template="{StaticResource myButton}"/>
+            </Grid>
+        </Grid>
+    </Border>
 </Window>
