@@ -72,11 +72,14 @@
     </ApplicationDefinition>
     <Compile Include="Common\CSV\CSVHelper.cs" />
     <Compile Include="Common\IMarkController.cs" />
+    <Compile Include="Common\Ini\CreateIni.cs" />
     <Compile Include="Common\LMC\JczLmc.cs" />
     <Compile Include="Common\LMC\LMC.cs" />
     <Compile Include="Common\LOG\Log.cs" />
     <Compile Include="Control\LED.cs" />
+    <Compile Include="Model\IOSettings.cs" />
     <Compile Include="Model\PageModel\MarkPageModel.cs" />
+    <Compile Include="Model\Settings.cs" />
     <Compile Include="Pub_Sub\Events\CSVEvents.cs" />
     <Compile Include="Pub_Sub\Events\MyEventArgs.cs" />
     <Compile Include="Pub_Sub\Pub.cs" />

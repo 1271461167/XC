@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Media;
 using WpfApp3.Common;
@@ -13,6 +12,7 @@ using WpfApp3.Model.PageModel;
 using WpfApp3.Pub_Sub;
 using WpfApp3.Pub_Sub.Events;
 using WpfApp3.View;
+using System.Runtime.InteropServices;
 
 namespace WpfApp3.ViewModel
 {
@@ -177,8 +177,7 @@ namespace WpfApp3.ViewModel
                 Log.Suc("打标卡初始化成功");
                 ini = true;
             }
-            pub.subscribe("CSV", RecordCSV);
-            _markModel.TodayProductDatas?.ForEach(data => { Products.Add(data); });
+            pub.subscribe("CSV", RecordCSV);            
         }
 
         private void LoadEdzFile(object obj)

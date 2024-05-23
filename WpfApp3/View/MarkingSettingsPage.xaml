@@ -51,8 +51,83 @@
                     <Border.Effect>
                         <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
                     </Border.Effect>
-                    <UniformGrid Rows="15">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
                         <TextBlock Text="输入信号" VerticalAlignment="Center" Margin="10" Foreground="#AAA"/>
+                        <ItemsControl Grid.Row="1" ItemsSource="{Binding IN_Settings}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5"  Orientation="Horizontal">
+                                        <Label Width="100" Content="{Binding Name}" VerticalAlignment="Center" />
+                                        <ComboBox  SelectedIndex="{Binding Index}" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20" Style="{StaticResource cmbstyle}">
+                                            <ComboBoxItem>0</ComboBoxItem>
+                                            <ComboBoxItem>1</ComboBoxItem>
+                                            <ComboBoxItem>2</ComboBoxItem>
+                                            <ComboBoxItem>3</ComboBoxItem>
+                                            <ComboBoxItem>4</ComboBoxItem>
+                                            <ComboBoxItem>5</ComboBoxItem>
+                                            <ComboBoxItem>6</ComboBoxItem>
+                                            <ComboBoxItem>7</ComboBoxItem>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Grid.Row="2" Text="输出信号" VerticalAlignment="Center" Margin="10" Foreground="#AAA"/>
+                        <ItemsControl Grid.Row="3" ItemsSource="{Binding OUT_Settings}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5" Orientation="Horizontal">
+                                        <Label Width="100" Content="{Binding Name}" VerticalAlignment="Center"/>
+                                        <ComboBox SelectedIndex="{Binding Index}" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20" Style="{StaticResource cmbstyle}">
+                                            <ComboBoxItem>0</ComboBoxItem>
+                                            <ComboBoxItem>1</ComboBoxItem>
+                                            <ComboBoxItem>2</ComboBoxItem>
+                                            <ComboBoxItem>3</ComboBoxItem>
+                                            <ComboBoxItem>4</ComboBoxItem>
+                                            <ComboBoxItem>5</ComboBoxItem>
+                                            <ComboBoxItem>6</ComboBoxItem>
+                                            <ComboBoxItem>7</ComboBoxItem>
+                                        </ComboBox>
+                                        <RadioButton Margin="10" IsChecked="{Binding Level}" Content="high" VerticalAlignment="Center"  Width="50"/>
+                                        <RadioButton Margin="10" Content="low" VerticalAlignment="Center"/>
+                                        <Label Width="70" Content="持续时间：" VerticalAlignment="Center"/>
+                                        <TextBox Text="{Binding Width}" Width="100" Margin="10"/>
+                                        <Label Content="ms" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                    <!--<UniformGrid Rows="15">
+                        <TextBlock Text="输入信号" VerticalAlignment="Center" Margin="10" Foreground="#AAA"/>
+                        <ItemsControl ItemsSource="{Binding OUTS}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                         <StackPanel Orientation="Horizontal">
                           <Label Width="100" Content="触发信号：" VerticalAlignment="Center"/>
                           <ComboBox VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20" Style="{StaticResource cmbstyle}">
@@ -147,9 +222,9 @@
                             <TextBox Width="100" Margin="10"/>
                             <Label Content="ms" VerticalAlignment="Center"/>
                         </StackPanel>
-                    </UniformGrid>
+                    </UniformGrid>-->
                 </Border>
-                <Button HorizontalAlignment="Right" Grid.Row="2" Content="保存" Foreground="White" Width="100" Margin="5" Template="{StaticResource myButton}"/>
+                <Button Command="{Binding SaveCommand}" HorizontalAlignment="Right" Grid.Row="2" Content="保存" Foreground="White" Width="100" Margin="5" Template="{StaticResource myButton}"/>
             </Grid>
         </Grid>
     </Border>

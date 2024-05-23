@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp3.ViewModel;
 
 namespace WpfApp3.View
 {
@@ -22,6 +23,7 @@ namespace WpfApp3.View
         public MarkingSettingsPage()
         {
             InitializeComponent();
+            this.DataContext = new SettingsViewModel();
         }
     }
 }
