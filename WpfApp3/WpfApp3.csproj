@@ -71,6 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\CSV\CSVHelper.cs" />
+    <Compile Include="Common\Global\MarkingSettings.cs" />
     <Compile Include="Common\IMarkController.cs" />
     <Compile Include="Common\Ini\CreateIni.cs" />
     <Compile Include="Common\LMC\JczLmc.cs" />

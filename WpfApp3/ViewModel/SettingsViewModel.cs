@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfApp3.Common;
+using WpfApp3.Common.Global;
 using WpfApp3.Common.Ini;
 using WpfApp3.Common.LOG;
 using WpfApp3.Model;
@@ -19,9 +20,9 @@ namespace WpfApp3.ViewModel
         public ObservableCollection<IOSettings> OUT_Settings { get; set; }=new ObservableCollection<IOSettings>();
         public SettingsViewModel() 
         {
-            IN_Settings.Add(new IOSettings() {Index=7,Name="触发信号：" });
-            IN_Settings.Add(new IOSettings() { Index = 6, Name = "清报警：" });
-            OUT_Settings.Add(new IOSettings() { Index = 5, Name = "完成信号：", Level = true, Width = 100 });
+            MarkingSettings.Refresh();
+            MarkingSettings.INS.ForEach(i => { IN_Settings.Add(i); });
+            MarkingSettings.OUTS.ForEach(i => { OUT_Settings.Add(i); });
             SaveCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             SaveCommand.DoExecute = new Action<object>((obj) =>
             {
